@@ -229,3 +229,41 @@ align-items:center;
 font-size:30px;
 text-decoration:none;
 }
+.stats{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+padding:60px 20px;
+background:#1565c0;
+color:#fff;
+text-align:center;
+}
+
+.stat-box{
+padding:25px;
+}
+
+.stat-box h2{
+font-size:40px;
+margin-bottom:10px;
+}
+
+.testimonial{
+padding:60px 20px;
+text-align:center;
+background:#fff;
+}
+
+.review{
+max-width:700px;
+margin:20px auto;
+padding:25px;
+background:#f7f7f7;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+.review h4{
+margin-top:15px;
+color:#0d47a1;
+}
