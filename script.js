@@ -1,3 +1,23 @@
+// Firebase
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "rohila-e-mitra.firebaseapp.com",
+  projectId: "rohila-e-mitra",
+  storageBucket: "rohila-e-mitra.firebasestorage.app",
+  messagingSenderId: "630734393676",
+  appId: "YOUR_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 // =============================
 // ROHILA E-MITRA CENTER
 // script.js
