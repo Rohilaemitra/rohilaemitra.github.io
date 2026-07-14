@@ -156,5 +156,37 @@ behavior:"smooth"
 
 };
 
+
+
+
+
+
+
+
+
+
+import { db } from "./firebase.js";
+
+import {
+doc,
+getDoc
+}
+from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+
+async function loadNotice(){
+
+const snap =
+await getDoc(doc(db,"website","notice"));
+
+if(snap.exists()){
+
+document.getElementById("noticeArea").innerHTML =
+snap.data().text;
+
+}
+
+}
+
+loadNotice();
 // Console Message
 console.log("ROHILA E-MITRA CENTER Loaded Successfully");
