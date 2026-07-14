@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Print Receipt</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+.receipt{
+width:700px;
+margin:auto;
+padding:20px;
+border:2px solid #000;
+background:#fff;
+}
+table{
+width:100%;
+border-collapse:collapse;
+}
+td{
+padding:8px;
+border:1px solid #000;
+}
+button{
+padding:10px 20px;
+margin:20px 5px;
+cursor:pointer;
+}
+@media print{
+button{
+display:none;
+}
+}
+</style>
+
+</head>
+<body>
+
+<div class="receipt" id="receipt">
+
+<h2 align="center">ROHILA E-MITRA CENTER</h2>
+
+<p align="center">
+Sikar, Rajasthan
+</p>
+
+<hr>
+
+<table>
+
+<tr>
+<td>Receipt No.</td>
+<td id="rno">1001</td>
+</tr>
+
+<tr>
+<td>Customer Name</td>
+<td id="cname">Rakesh Kumar</td>
+</tr>
+
+<tr>
+<td>Service</td>
+<td id="service">PAN Card</td>
+</tr>
+
+<tr>
+<td>Amount</td>
+<td id="amount">₹200</td>
+</tr>
+
+<tr>
+<td>Date</td>
+<td id="date"></td>
+</tr>
+
+</table>
+
+</div>
+
+<center>
+
+<button onclick="window.print()">
+Print / Save PDF
+</button>
+
+</center>
+
+<script>
+document.getElementById("date").innerHTML =
+new Date().toLocaleDateString();
+</script>
+
+</body>
+</html>
