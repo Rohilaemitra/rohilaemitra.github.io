@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Service Manager</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<h2>Service Manager</h2>
+
+<input
+type="text"
+id="serviceName"
+placeholder="Service Name">
+
+<input
+type="text"
+id="price"
+placeholder="Price">
+
+<button onclick="addService()">
+
+Add Service
+
+</button>
+
+<hr>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Service</th>
+
+<th>Price</th>
+
+<th>Delete</th>
+
+</tr>
+
+</thead>
+
+<tbody id="serviceTable">
+
+</tbody>
+
+</table>
+
+<script type="module" src="services.js"></script>
+
+</body>
+
+</html>
