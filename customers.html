@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Customer Manager</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h2>Customer Management</h2>
+
+<input type="text" id="name" placeholder="Customer Name">
+
+<input type="text" id="mobile" placeholder="Mobile">
+
+<input type="text" id="service" placeholder="Service">
+
+<input type="number" id="amount" placeholder="Amount">
+
+<button onclick="saveCustomer()">
+
+Save Customer
+
+</button>
+
+<hr>
+
+<table border="1" width="100%">
+
+<thead>
+
+<tr>
+
+<th>Name</th>
+
+<th>Mobile</th>
+
+<th>Service</th>
+
+<th>Amount</th>
+
+<th>Delete</th>
+
+</tr>
+
+</thead>
+
+<tbody id="customerTable">
+
+</tbody>
+
+</table>
+
+<script type="module" src="customers.js"></script>
+
+</body>
+
+</html>
