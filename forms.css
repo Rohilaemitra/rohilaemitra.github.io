@@ -1,50 +1,59 @@
 body{
+    font-family: Arial, sans-serif;
+    background:#f5f5f5;
     margin:0;
-    font-family:Arial, sans-serif;
-    background:#f4f6f9;
+    padding:0;
+}
+
+header{
+    background:#0a7d32;
+    color:#fff;
+    padding:15px;
+    text-align:center;
+}
+
+nav{
+    margin-top:10px;
+}
+
+nav a{
+    color:#fff;
+    text-decoration:none;
+    margin:0 10px;
+    font-weight:bold;
 }
 
 .hero{
-    background:#1565c0;
-    color:white;
     text-align:center;
-    padding:40px 20px;
-}
-
-.hero h2{
-    margin-bottom:10px;
+    padding:30px;
+    background:#ffffff;
 }
 
 #searchForm{
     width:90%;
     max-width:500px;
     padding:12px;
-    border:none;
+    border:1px solid #ccc;
     border-radius:8px;
     font-size:16px;
-    margin-top:20px;
 }
 
 .forms{
-    padding:40px 20px;
-}
-
-.forms h2{
-    text-align:center;
-    color:#1565c0;
-    margin-bottom:30px;
+    padding:30px;
 }
 
 #formsList{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
     gap:20px;
 }
+
 .form-card{
     background:#fff;
-    border-radius:10px;
     padding:20px;
-    box-shadow:0 4px 12px rgba(0,0,0,.12);
+    border-radius:10px;
+    box-shadow:0 3px 8px rgba(0,0,0,.15);
+    text-align:center;
     transition:.3s;
 }
 
@@ -53,44 +62,29 @@ body{
 }
 
 .form-card h3{
+    color:#0a7d32;
     font-size:18px;
-    color:#1565c0;
-    margin-bottom:15px;
 }
 
 .form-card a{
     display:inline-block;
-    text-decoration:none;
-    background:#28a745;
+    margin-top:12px;
+    background:#0a7d32;
     color:#fff;
     padding:10px 18px;
     border-radius:6px;
-    transition:.3s;
+    text-decoration:none;
+    font-weight:bold;
 }
 
 .form-card a:hover{
-    background:#218838;
+    background:#066427;
 }
 
 footer{
     background:#222;
     color:#fff;
     text-align:center;
-    padding:25px;
+    padding:20px;
     margin-top:40px;
-}
-
-@media(max-width:768px){
-
-    #formsList{
-        grid-template-columns:1fr;
-    }
-
-    .hero h2{
-        font-size:28px;
-    }
-
-    #searchForm{
-        width:95%;
-    }
 }
