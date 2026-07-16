@@ -143,3 +143,24 @@ observer.observe(sec);
 // ===== Visitor Console =====
 
 console.log("ROHILA E-MITRA Website Loaded Successfully");
+
+
+function updateDateTime() {
+    const now = new Date();
+
+    const options = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+    };
+
+    const date = now.toLocaleDateString("en-IN", options);
+    const time = now.toLocaleTimeString("en-IN");
+
+    document.getElementById("datetime").innerHTML =
+        "📅 " + date + " | 🕒 " + time;
+}
+
+updateDateTime();
+setInterval(updateDateTime, 1000);
