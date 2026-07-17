@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Customers | ROHILA E-MITRA CENTER</title>
 
 <link rel="stylesheet" href="style.css">
@@ -33,25 +31,20 @@ margin-bottom:20px;
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:20px;
-margin-bottom:25px;
+margin-bottom:20px;
 }
 
 .box{
 background:#fff;
 padding:20px;
 border-radius:10px;
-text-align:center;
 box-shadow:0 5px 15px rgba(0,0,0,.15);
-}
-
-.box h3{
-margin:0;
-color:#555;
+text-align:center;
 }
 
 .box h2{
-margin-top:10px;
 color:#1565c0;
+margin-top:10px;
 }
 
 .form{
@@ -69,17 +62,13 @@ border:1px solid #ccc;
 border-radius:6px;
 }
 
-button{
-padding:12px;
-font-size:16px;
-border:none;
-border-radius:6px;
-cursor:pointer;
-}
-
 .save{
 background:#1565c0;
-color:white;
+color:#fff;
+border:none;
+padding:12px;
+cursor:pointer;
+border-radius:6px;
 }
 
 .search{
@@ -95,12 +84,12 @@ font-size:16px;
 table{
 width:100%;
 border-collapse:collapse;
-background:white;
+background:#fff;
 }
 
 th,td{
-padding:12px;
 border:1px solid #ddd;
+padding:10px;
 text-align:center;
 }
 
@@ -109,21 +98,23 @@ background:#1565c0;
 color:white;
 }
 
+.receipt{
+background:green;
+color:white;
+border:none;
+padding:8px 12px;
+cursor:pointer;
+}
+
 .delete{
 background:red;
 color:white;
-padding:8px 15px;
-}
-
-.edit{
-background:orange;
-color:white;
-padding:8px 15px;
-margin-right:5px;
+border:none;
+padding:8px 12px;
+cursor:pointer;
 }
 
 </style>
-
 </head>
 
 <body>
@@ -183,17 +174,16 @@ margin-right:5px;
 <input type="number" id="paid" placeholder="Paid Amount">
 
 <button class="save" onclick="saveCustomer()">
+
 Save Customer
+
 </button>
 
 </div>
 
 <div class="search">
 
-<input
-type="text"
-id="search"
-placeholder="Search Customer...">
+<input type="text" id="search" placeholder="Search Customer...">
 
 </div>
 
@@ -204,20 +194,14 @@ placeholder="Search Customer...">
 <tr>
 
 <th>Name</th>
-
 <th>Mobile</th>
-
 <th>Service</th>
-
 <th>Total</th>
-
 <th>Paid</th>
-
 <th>Due</th>
-
 <th>Date</th>
-
-<th>Action</th>
+<th>Receipt</th>
+<th>Delete</th>
 
 </tr>
 
