@@ -1,84 +1,237 @@
-import { db } from "./firebase.js";
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
-import {
-collection,
-addDoc,
-getDocs,
-deleteDoc,
-doc
-}
-from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-window.saveCustomer = async () => {
+<title>Customers | ROHILA E-MITRA CENTER</title>
 
-await addDoc(collection(db,"customers"),{
+<link rel="stylesheet" href="style.css">
 
-name:document.getElementById("name").value,
+<style>
 
-mobile:document.getElementById("mobile").value,
-
-service:document.getElementById("service").value,
-
-amount:document.getElementById("amount").value,
-
-date:new Date()
-
-});
-
-alert("Customer Saved");
-
-loadCustomers();
-
+body{
+font-family:Arial,sans-serif;
+background:#f5f5f5;
+margin:0;
+padding:20px;
 }
 
-async function loadCustomers(){
+.container{
+max-width:1300px;
+margin:auto;
+}
 
-const snapshot=await getDocs(collection(db,"customers"));
+h1{
+text-align:center;
+color:#1565c0;
+margin-bottom:20px;
+}
 
-let html="";
+.dashboard{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+margin-bottom:25px;
+}
 
-snapshot.forEach((d)=>{
+.box{
+background:#fff;
+padding:20px;
+border-radius:10px;
+text-align:center;
+box-shadow:0 5px 15px rgba(0,0,0,.15);
+}
 
-const c=d.data();
+.box h3{
+margin:0;
+color:#555;
+}
 
-html+=`
+.box h2{
+margin-top:10px;
+color:#1565c0;
+}
+
+.form{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+margin-bottom:20px;
+}
+
+.form input,
+.form select{
+padding:12px;
+font-size:16px;
+border:1px solid #ccc;
+border-radius:6px;
+}
+
+button{
+padding:12px;
+font-size:16px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+.save{
+background:#1565c0;
+color:white;
+}
+
+.search{
+margin:20px 0;
+}
+
+.search input{
+width:100%;
+padding:12px;
+font-size:16px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:white;
+}
+
+th,td{
+padding:12px;
+border:1px solid #ddd;
+text-align:center;
+}
+
+th{
+background:#1565c0;
+color:white;
+}
+
+.delete{
+background:red;
+color:white;
+padding:8px 15px;
+}
+
+.edit{
+background:orange;
+color:white;
+padding:8px 15px;
+margin-right:5px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>👥 Customer Management</h1>
+
+<div class="dashboard">
+
+<div class="box">
+<h3>Total Customers</h3>
+<h2 id="totalCustomers">0</h2>
+</div>
+
+<div class="box">
+<h3>Total Services</h3>
+<h2 id="totalServices">0</h2>
+</div>
+
+<div class="box">
+<h3>Total Collection</h3>
+<h2 id="totalCollection">₹0</h2>
+</div>
+
+<div class="box">
+<h3>Pending Amount</h3>
+<h2 id="pendingAmount">₹0</h2>
+</div>
+
+</div>
+
+<div class="form">
+
+<input type="text" id="name" placeholder="Customer Name">
+
+<input type="text" id="mobile" placeholder="Mobile Number">
+
+<select id="service">
+
+<option>PAN Card</option>
+<option>Aadhaar</option>
+<option>Jan Aadhaar</option>
+<option>Ayushman Card</option>
+<option>Passport</option>
+<option>Police Verification</option>
+<option>Income Certificate</option>
+<option>Caste Certificate</option>
+<option>Domicile Certificate</option>
+<option>Electricity Bill</option>
+<option>Water Bill</option>
+
+</select>
+
+<input type="number" id="total" placeholder="Total Amount">
+
+<input type="number" id="paid" placeholder="Paid Amount">
+
+<button class="save" onclick="saveCustomer()">
+Save Customer
+</button>
+
+</div>
+
+<div class="search">
+
+<input
+type="text"
+id="search"
+placeholder="Search Customer...">
+
+</div>
+
+<table>
+
+<thead>
 
 <tr>
 
-<td>${c.name}</td>
+<th>Name</th>
 
-<td>${c.mobile}</td>
+<th>Mobile</th>
 
-<td>${c.service}</td>
+<th>Service</th>
 
-<td>${c.amount}</td>
+<th>Total</th>
 
-<td>
+<th>Paid</th>
 
-<button onclick="deleteCustomer('${d.id}')">
+<th>Due</th>
 
-Delete
+<th>Date</th>
 
-</button>
-
-</td>
+<th>Action</th>
 
 </tr>
 
-`;
+</thead>
 
-});
+<tbody id="customerTable">
 
-document.getElementById("customerTable").innerHTML=html;
+</tbody>
 
-}
+</table>
 
-window.deleteCustomer=async(id)=>{
+</div>
 
-await deleteDoc(doc(db,"customers",id));
+<script type="module" src="customers.js"></script>
 
-loadCustomers();
-
-}
-
-loadCustomers();
+</body>
+</html>
