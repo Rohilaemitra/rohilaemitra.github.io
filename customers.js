@@ -1,161 +1,109 @@
-import { db } from "./firebase.js";
-
-import {
-collection,
-addDoc,
-getDocs,
-deleteDoc,
-doc
-} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
-
-const customerTable = document.getElementById("customerTable");
-const totalCustomers = document.getElementById("totalCustomers");
-const totalServices = document.getElementById("totalServices");
-const totalCollection = document.getElementById("totalCollection");
-const pendingAmount = document.getElementById("pendingAmount");
-
-window.saveCustomer = async () => {
-
-const name = document.getElementById("name").value;
-const mobile = document.getElementById("mobile").value;
-const service = document.getElementById("service").value;
-const total = Number(document.getElementById("total").value);
-const paid = Number(document.getElementById("paid").value);
-
-if(name=="" || mobile==""){
-alert("Please fill all fields");
-return;
-}
-
-await addDoc(collection(db,"customers"),{
-
-name,
-mobile,
-service,
-total,
-paid,
-due: total-paid,
-date:new Date().toLocaleDateString()
-
-});
-
-alert("Customer Saved Successfully");
-
-loadCustomers();
-
-document.getElementById("name").value="";
-document.getElementById("mobile").value="";
-document.getElementById("total").value="";
-document.getElementById("paid").value="";
-
-}
-async function loadCustomers() {
-
-const snapshot = await getDocs(collection(db,"customers"));
-
-let html = "";
-
-let customerCount = 0;
-let serviceCount = 0;
-let collection = 0;
-let pending = 0;
-
-snapshot.forEach((d)=>{
-
-const c = d.data();
-
-customerCount++;
-serviceCount++;
-
-collection += Number(c.paid || 0);
-pending += Number(c.due || 0);
-
-html += `
-
-<tr>
-
-<td>${c.name}</td>
-
-<td>${c.mobile}</td>
-
-<td>${c.service}</td>
-
-<td>₹${c.total}</td>
-
-<td style="color:green;">₹${c.paid}</td>
-
-<td style="color:red;">₹${c.due}</td>
-
-<td>${c.date}</td>
-
 <td>
-
-<button class="delete"
-onclick="deleteCustomer('${d.id}')">
-
-Delete
-
+<button onclick="printReceipt(
+'${c.name}',
+'${c.mobile}',
+'${c.service}',
+'${c.total}',
+'${c.paid}',
+'${c.due}',
+'${c.date}'
+)">
+🧾 Receipt
 </button>
-
 </td>
 
+<td>
+<button class="delete"
+onclick="deleteCustomer('${d.id}')">
+🗑 Delete
+</button>
+</td>
+// ================= RECEIPT PRINT =================
+
+window.printReceipt = function(name,mobile,service,total,paid,due,date){
+
+const w = window.open("", "_blank", "width=700,height=700");
+
+w.document.write(`
+<!DOCTYPE html>
+<html>
+<head>
+<title>Receipt</title>
+<style>
+body{
+font-family:Arial;
+padding:25px;
+}
+h2{
+text-align:center;
+color:#1565c0;
+}
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+td{
+border:1px solid #000;
+padding:10px;
+}
+</style>
+</head>
+<body>
+
+<h2>ROHILA E-MITRA CENTER</h2>
+<h3 style="text-align:center;">Payment Receipt</h3>
+
+<table>
+
+<tr>
+<td><b>Name</b></td>
+<td>${name}</td>
 </tr>
 
-`;
+<tr>
+<td><b>Mobile</b></td>
+<td>${mobile}</td>
+</tr>
 
-});
+<tr>
+<td><b>Service</b></td>
+<td>${service}</td>
+</tr>
 
-customerTable.innerHTML = html;
+<tr>
+<td><b>Total Amount</b></td>
+<td>₹${total}</td>
+</tr>
 
-totalCustomers.innerHTML = customerCount;
+<tr>
+<td><b>Paid</b></td>
+<td>₹${paid}</td>
+</tr>
 
-totalServices.innerHTML = serviceCount;
+<tr>
+<td><b>Due</b></td>
+<td>₹${due}</td>
+</tr>
 
-totalCollection.innerHTML = "₹"+collection;
+<tr>
+<td><b>Date</b></td>
+<td>${date}</td>
+</tr>
 
-pendingAmount.innerHTML = "₹"+pending;
+</table>
 
-}
-// ================= DELETE CUSTOMER =================
+<br><br>
 
-window.deleteCustomer = async (id) => {
+<p style="text-align:center;">
+Thank You For Visiting
+</p>
 
-    const ok = confirm("Delete this customer?");
+</body>
+</html>
+`);
 
-    if (!ok) return;
-
-    await deleteDoc(doc(db, "customers", id));
-
-    loadCustomers();
+w.document.close();
+w.print();
 
 };
-
-
-// ================= SEARCH CUSTOMER =================
-
-const search = document.getElementById("search");
-
-search.addEventListener("keyup", function () {
-
-    const value = this.value.toLowerCase();
-
-    const rows = document.querySelectorAll("#customerTable tr");
-
-    rows.forEach((row) => {
-
-        const text = row.innerText.toLowerCase();
-
-        if (text.includes(value)) {
-            row.style.display = "";
-        } else {
-            row.style.display = "none";
-        }
-
-    });
-
-});
-
-
-// ================= FIRST LOAD =================
-
-loadCustomers();
