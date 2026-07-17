@@ -259,3 +259,4 @@ win.document.close();
 win.print();
 
 };
+document.getElementById("saveBtn").addEventListener("click", saveCustomer);
