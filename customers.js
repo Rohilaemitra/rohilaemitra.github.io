@@ -124,3 +124,138 @@ async function loadCustomers() {
 }
 
 loadCustomers();
+// ================= DELETE CUSTOMER =================
+
+window.deleteCustomer = async function(id){
+
+    if(!confirm("Delete this customer?")) return;
+
+    await deleteDoc(doc(db,"customers",id));
+
+    loadCustomers();
+
+};
+
+
+// ================= SEARCH =================
+
+document.getElementById("search").addEventListener("keyup",function(){
+
+    let value=this.value.toLowerCase();
+
+    let rows=document.querySelectorAll("#customerTable tr");
+
+    rows.forEach((row)=>{
+
+        row.style.display=row.innerText.toLowerCase().includes(value)
+        ? ""
+        : "none";
+
+    });
+
+});
+
+
+// ================= RECEIPT PRINT =================
+
+window.printReceipt=function(name,mobile,service,total,paid,due,date){
+
+let win=window.open("","","width=700,height=700");
+
+win.document.write(`
+
+<html>
+
+<head>
+
+<title>Receipt</title>
+
+<style>
+
+body{
+font-family:Arial;
+padding:30px;
+}
+
+h2{
+text-align:center;
+color:#1565c0;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+td{
+border:1px solid #000;
+padding:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h2>ROHILA E-MITRA CENTER</h2>
+
+<h3 style="text-align:center;">Customer Receipt</h3>
+
+<table>
+
+<tr>
+<td>Name</td>
+<td>${name}</td>
+</tr>
+
+<tr>
+<td>Mobile</td>
+<td>${mobile}</td>
+</tr>
+
+<tr>
+<td>Service</td>
+<td>${service}</td>
+</tr>
+
+<tr>
+<td>Total Amount</td>
+<td>₹${total}</td>
+</tr>
+
+<tr>
+<td>Paid</td>
+<td>₹${paid}</td>
+</tr>
+
+<tr>
+<td>Due</td>
+<td>₹${due}</td>
+</tr>
+
+<tr>
+<td>Date</td>
+<td>${date}</td>
+</tr>
+
+</table>
+
+<br><br>
+
+<p style="text-align:center;">
+Thank You
+</p>
+
+</body>
+
+</html>
+
+`);
+
+win.document.close();
+
+win.print();
+
+};
