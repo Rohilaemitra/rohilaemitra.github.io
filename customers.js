@@ -1,237 +1,161 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+import { db } from "./firebase.js";
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+import {
+collection,
+addDoc,
+getDocs,
+deleteDoc,
+doc
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
-<title>Customers | ROHILA E-MITRA CENTER</title>
+const customerTable = document.getElementById("customerTable");
+const totalCustomers = document.getElementById("totalCustomers");
+const totalServices = document.getElementById("totalServices");
+const totalCollection = document.getElementById("totalCollection");
+const pendingAmount = document.getElementById("pendingAmount");
 
-<link rel="stylesheet" href="style.css">
+window.saveCustomer = async () => {
 
-<style>
+const name = document.getElementById("name").value;
+const mobile = document.getElementById("mobile").value;
+const service = document.getElementById("service").value;
+const total = Number(document.getElementById("total").value);
+const paid = Number(document.getElementById("paid").value);
 
-body{
-font-family:Arial,sans-serif;
-background:#f5f5f5;
-margin:0;
-padding:20px;
+if(name=="" || mobile==""){
+alert("Please fill all fields");
+return;
 }
 
-.container{
-max-width:1300px;
-margin:auto;
+await addDoc(collection(db,"customers"),{
+
+name,
+mobile,
+service,
+total,
+paid,
+due: total-paid,
+date:new Date().toLocaleDateString()
+
+});
+
+alert("Customer Saved Successfully");
+
+loadCustomers();
+
+document.getElementById("name").value="";
+document.getElementById("mobile").value="";
+document.getElementById("total").value="";
+document.getElementById("paid").value="";
+
 }
+async function loadCustomers() {
 
-h1{
-text-align:center;
-color:#1565c0;
-margin-bottom:20px;
-}
+const snapshot = await getDocs(collection(db,"customers"));
 
-.dashboard{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
-margin-bottom:25px;
-}
+let html = "";
 
-.box{
-background:#fff;
-padding:20px;
-border-radius:10px;
-text-align:center;
-box-shadow:0 5px 15px rgba(0,0,0,.15);
-}
+let customerCount = 0;
+let serviceCount = 0;
+let collection = 0;
+let pending = 0;
 
-.box h3{
-margin:0;
-color:#555;
-}
+snapshot.forEach((d)=>{
 
-.box h2{
-margin-top:10px;
-color:#1565c0;
-}
+const c = d.data();
 
-.form{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:15px;
-margin-bottom:20px;
-}
+customerCount++;
+serviceCount++;
 
-.form input,
-.form select{
-padding:12px;
-font-size:16px;
-border:1px solid #ccc;
-border-radius:6px;
-}
+collection += Number(c.paid || 0);
+pending += Number(c.due || 0);
 
-button{
-padding:12px;
-font-size:16px;
-border:none;
-border-radius:6px;
-cursor:pointer;
-}
-
-.save{
-background:#1565c0;
-color:white;
-}
-
-.search{
-margin:20px 0;
-}
-
-.search input{
-width:100%;
-padding:12px;
-font-size:16px;
-}
-
-table{
-width:100%;
-border-collapse:collapse;
-background:white;
-}
-
-th,td{
-padding:12px;
-border:1px solid #ddd;
-text-align:center;
-}
-
-th{
-background:#1565c0;
-color:white;
-}
-
-.delete{
-background:red;
-color:white;
-padding:8px 15px;
-}
-
-.edit{
-background:orange;
-color:white;
-padding:8px 15px;
-margin-right:5px;
-}
-
-</style>
-
-</head>
-
-<body>
-
-<div class="container">
-
-<h1>👥 Customer Management</h1>
-
-<div class="dashboard">
-
-<div class="box">
-<h3>Total Customers</h3>
-<h2 id="totalCustomers">0</h2>
-</div>
-
-<div class="box">
-<h3>Total Services</h3>
-<h2 id="totalServices">0</h2>
-</div>
-
-<div class="box">
-<h3>Total Collection</h3>
-<h2 id="totalCollection">₹0</h2>
-</div>
-
-<div class="box">
-<h3>Pending Amount</h3>
-<h2 id="pendingAmount">₹0</h2>
-</div>
-
-</div>
-
-<div class="form">
-
-<input type="text" id="name" placeholder="Customer Name">
-
-<input type="text" id="mobile" placeholder="Mobile Number">
-
-<select id="service">
-
-<option>PAN Card</option>
-<option>Aadhaar</option>
-<option>Jan Aadhaar</option>
-<option>Ayushman Card</option>
-<option>Passport</option>
-<option>Police Verification</option>
-<option>Income Certificate</option>
-<option>Caste Certificate</option>
-<option>Domicile Certificate</option>
-<option>Electricity Bill</option>
-<option>Water Bill</option>
-
-</select>
-
-<input type="number" id="total" placeholder="Total Amount">
-
-<input type="number" id="paid" placeholder="Paid Amount">
-
-<button class="save" onclick="saveCustomer()">
-Save Customer
-</button>
-
-</div>
-
-<div class="search">
-
-<input
-type="text"
-id="search"
-placeholder="Search Customer...">
-
-</div>
-
-<table>
-
-<thead>
+html += `
 
 <tr>
 
-<th>Name</th>
+<td>${c.name}</td>
 
-<th>Mobile</th>
+<td>${c.mobile}</td>
 
-<th>Service</th>
+<td>${c.service}</td>
 
-<th>Total</th>
+<td>₹${c.total}</td>
 
-<th>Paid</th>
+<td style="color:green;">₹${c.paid}</td>
 
-<th>Due</th>
+<td style="color:red;">₹${c.due}</td>
 
-<th>Date</th>
+<td>${c.date}</td>
 
-<th>Action</th>
+<td>
+
+<button class="delete"
+onclick="deleteCustomer('${d.id}')">
+
+Delete
+
+</button>
+
+</td>
 
 </tr>
 
-</thead>
+`;
 
-<tbody id="customerTable">
+});
 
-</tbody>
+customerTable.innerHTML = html;
 
-</table>
+totalCustomers.innerHTML = customerCount;
 
-</div>
+totalServices.innerHTML = serviceCount;
 
-<script type="module" src="customers.js"></script>
+totalCollection.innerHTML = "₹"+collection;
 
-</body>
-</html>
+pendingAmount.innerHTML = "₹"+pending;
+
+}
+// ================= DELETE CUSTOMER =================
+
+window.deleteCustomer = async (id) => {
+
+    const ok = confirm("Delete this customer?");
+
+    if (!ok) return;
+
+    await deleteDoc(doc(db, "customers", id));
+
+    loadCustomers();
+
+};
+
+
+// ================= SEARCH CUSTOMER =================
+
+const search = document.getElementById("search");
+
+search.addEventListener("keyup", function () {
+
+    const value = this.value.toLowerCase();
+
+    const rows = document.querySelectorAll("#customerTable tr");
+
+    rows.forEach((row) => {
+
+        const text = row.innerText.toLowerCase();
+
+        if (text.includes(value)) {
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
+        }
+
+    });
+
+});
+
+
+// ================= FIRST LOAD =================
+
+loadCustomers();
