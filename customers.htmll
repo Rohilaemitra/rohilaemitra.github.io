@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Customers | ROHILA E-MITRA</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+body{
+font-family:Arial,sans-serif;
+background:#f5f5f5;
+margin:0;
+padding:20px;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+}
+
+h1{
+text-align:center;
+color:#1565c0;
+}
+
+.dashboard{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+margin:20px 0;
+}
+
+.box{
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 3px 10px rgba(0,0,0,.2);
+text-align:center;
+}
+
+.box h2{
+margin:10px 0;
+color:#1565c0;
+}
+
+.controls{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:10px;
+margin-bottom:20px;
+}
+
+.controls input,
+.controls select,
+.controls button{
+padding:10px;
+font-size:16px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:white;
+}
+
+th,td{
+padding:10px;
+border:1px solid #ddd;
+text-align:center;
+}
+
+th{
+background:#1565c0;
+color:white;
+}
+
+button{
+cursor:pointer;
+}
+
+.save{
+background:green;
+color:white;
+border:none;
+}
+
+.delete{
+background:red;
+color:white;
+border:none;
+}
+
+.edit{
+background:orange;
+color:white;
+border:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>👥 Customer Management</h1>
+
+<div class="dashboard">
+
+<div class="box">
+<h3>Total Customers</h3>
+<h2 id="totalCustomers">0</h2>
+</div>
+
+<div class="box">
+<h3>Total Collection</h3>
+<h2 id="totalCollection">₹0</h2>
+</div>
+
+<div class="box">
+<h3>Pending Amount</h3>
+<h2 id="pendingAmount">₹0</h2>
+</div>
+
+<div class="box">
+<h3>Total Services</h3>
+<h2 id="totalServices">0</h2>
+</div>
+
+</div>
+
+<div class="controls">
+
+<input type="text" id="name" placeholder="Customer Name">
+
+<input type="text" id="mobile" placeholder="Mobile Number">
+
+<select id="service">
+
+<option>PAN Card</option>
+<option>Aadhaar</option>
+<option>Jan Aadhaar</option>
+<option>Passport</option>
+<option>Ayushman Card</option>
+<option>Income Certificate</option>
+<option>Caste Certificate</option>
+<option>Domicile Certificate</option>
+<option>Electricity Bill</option>
+<option>Water Bill</option>
+
+</select>
+
+<input type="number" id="total" placeholder="Total Amount">
+
+<input type="number" id="paid" placeholder="Paid Amount">
+
+<button class="save">Save Customer</button>
+
+</div>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Name</th>
+<th>Mobile</th>
+<th>Service</th>
+<th>Total</th>
+<th>Paid</th>
+<th>Due</th>
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="customerTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+<script src="customers.js"></script>
+
+</body>
+</html>
