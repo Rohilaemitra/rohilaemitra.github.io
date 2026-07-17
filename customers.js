@@ -1,109 +1,126 @@
-<td>
-<button onclick="printReceipt(
-'${c.name}',
-'${c.mobile}',
-'${c.service}',
-'${c.total}',
-'${c.paid}',
-'${c.due}',
-'${c.date}'
-)">
-🧾 Receipt
-</button>
-</td>
+import { db } from "./firebase.js";
 
-<td>
-<button class="delete"
-onclick="deleteCustomer('${d.id}')">
-🗑 Delete
-</button>
-</td>
-// ================= RECEIPT PRINT =================
+import {
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
-window.printReceipt = function(name,mobile,service,total,paid,due,date){
+const customerTable = document.getElementById("customerTable");
+const totalCustomers = document.getElementById("totalCustomers");
+const totalServices = document.getElementById("totalServices");
+const totalCollection = document.getElementById("totalCollection");
+const pendingAmount = document.getElementById("pendingAmount");
 
-const w = window.open("", "_blank", "width=700,height=700");
+window.saveCustomer = async function () {
 
-w.document.write(`
-<!DOCTYPE html>
-<html>
-<head>
-<title>Receipt</title>
-<style>
-body{
-font-family:Arial;
-padding:25px;
-}
-h2{
-text-align:center;
-color:#1565c0;
-}
-table{
-width:100%;
-border-collapse:collapse;
-margin-top:20px;
-}
-td{
-border:1px solid #000;
-padding:10px;
-}
-</style>
-</head>
-<body>
+  const name = document.getElementById("name").value.trim();
+  const mobile = document.getElementById("mobile").value.trim();
+  const service = document.getElementById("service").value;
+  const total = Number(document.getElementById("total").value);
+  const paid = Number(document.getElementById("paid").value);
 
-<h2>ROHILA E-MITRA CENTER</h2>
-<h3 style="text-align:center;">Payment Receipt</h3>
+  if (!name || !mobile || !total) {
+    alert("Please fill all fields");
+    return;
+  }
 
-<table>
+  await addDoc(collection(db, "customers"), {
+    name,
+    mobile,
+    service,
+    total,
+    paid,
+    due: total - paid,
+    date: new Date().toLocaleDateString()
+  });
 
-<tr>
-<td><b>Name</b></td>
-<td>${name}</td>
-</tr>
+  alert("Customer Saved");
 
-<tr>
-<td><b>Mobile</b></td>
-<td>${mobile}</td>
-</tr>
+  document.getElementById("name").value = "";
+  document.getElementById("mobile").value = "";
+  document.getElementById("total").value = "";
+  document.getElementById("paid").value = "";
 
-<tr>
-<td><b>Service</b></td>
-<td>${service}</td>
-</tr>
-
-<tr>
-<td><b>Total Amount</b></td>
-<td>₹${total}</td>
-</tr>
-
-<tr>
-<td><b>Paid</b></td>
-<td>₹${paid}</td>
-</tr>
-
-<tr>
-<td><b>Due</b></td>
-<td>₹${due}</td>
-</tr>
-
-<tr>
-<td><b>Date</b></td>
-<td>${date}</td>
-</tr>
-
-</table>
-
-<br><br>
-
-<p style="text-align:center;">
-Thank You For Visiting
-</p>
-
-</body>
-</html>
-`);
-
-w.document.close();
-w.print();
-
+  loadCustomers();
 };
+async function loadCustomers() {
+
+    const snapshot = await getDocs(collection(db, "customers"));
+
+    let html = "";
+
+    let customerCount = 0;
+    let serviceCount = 0;
+    let collectionAmount = 0;
+    let pending = 0;
+
+    snapshot.forEach((d) => {
+
+        const c = d.data();
+
+        customerCount++;
+        serviceCount++;
+
+        collectionAmount += Number(c.paid || 0);
+        pending += Number(c.due || 0);
+
+        html += `
+        <tr>
+
+        <td>${c.name}</td>
+
+        <td>${c.mobile}</td>
+
+        <td>${c.service}</td>
+
+        <td>₹${c.total}</td>
+
+        <td style="color:green;">₹${c.paid}</td>
+
+        <td style="color:red;">₹${c.due}</td>
+
+        <td>${c.date}</td>
+
+        <td>
+        <button class="receipt"
+        onclick="printReceipt(
+        '${c.name}',
+        '${c.mobile}',
+        '${c.service}',
+        '${c.total}',
+        '${c.paid}',
+        '${c.due}',
+        '${c.date}'
+        )">
+        🧾 Receipt
+        </button>
+        </td>
+
+        <td>
+        <button class="delete"
+        onclick="deleteCustomer('${d.id}')">
+        🗑 Delete
+        </button>
+        </td>
+
+        </tr>
+        `;
+
+    });
+
+    customerTable.innerHTML = html;
+
+    totalCustomers.innerHTML = customerCount;
+
+    totalServices.innerHTML = serviceCount;
+
+    totalCollection.innerHTML = "₹" + collectionAmount;
+
+    pendingAmount.innerHTML = "₹" + pending;
+
+}
+
+loadCustomers();
