@@ -1,27 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-<url>
-<loc>https://rohilaemitra.github.io/</loc>
-<changefreq>weekly</changefreq>
-<priority>1.0</priority>
-</url>
+  <url>
+    <loc>https://rohilaemitra.github.io/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
 
-<url>
-<loc>https://rohilaemitra.github.io/services.html</loc>
-</url>
+  <url>
+    <loc>https://rohilaemitra.github.io/forms.html</loc>
+  </url>
 
-<url>
-<loc>https://rohilaemitra.github.io/forms.html</loc>
-</url>
+  <url>
+    <loc>https://rohilaemitra.github.io/customers.html</loc>
+  </url>
 
-<url>
-<loc>https://rohilaemitra.github.io/contact.html</loc>
-</url>
-
-<url>
-<loc>https://rohilaemitra.github.io/about.html</loc>
-</url>
+  <url>
+    <loc>https://rohilaemitra.github.io/receipt.html</loc>
+  </url>
 
 </urlset>
