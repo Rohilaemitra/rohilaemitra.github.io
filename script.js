@@ -230,3 +230,54 @@ else if(month==1 && day==1){
 showFestival("🎉 Happy New Year 🎉","#6a1b9a");
 
 }
+const banner = document.getElementById("festivalBanner");
+
+const today = new Date();
+const day = today.getDate();
+const month = today.getMonth() + 1;
+
+function festival(msg, cssClass){
+
+banner.classList.add("show");
+banner.classList.add(cssClass);
+
+banner.innerHTML = msg;
+
+document.body.classList.add("theme-"+cssClass);
+
+}
+
+// New Year
+if(month==1 && day==1){
+festival("🎉 Happy New Year 🎉","newyear");
+}
+
+// Republic Day
+if(month==1 && day==26){
+festival("🇮🇳 Happy Republic Day 🇮🇳","republic");
+}
+
+// Holi (Date Change Every Year)
+if(month==3 && day==14){
+festival("🌈 Happy Holi 🌈","holi");
+}
+
+// Independence Day
+if(month==8 && day==15){
+festival("🇮🇳 Happy Independence Day 🇮🇳","independence");
+}
+
+// Gandhi Jayanti
+if(month==10 && day==2){
+festival("🙏 Gandhi Jayanti 🙏","independence");
+}
+
+// Diwali (Change Every Year)
+if(month==10 && day==20){
+festival("🪔 Happy Diwali 🪔","diwali");
+}
+
+// Christmas
+if(month==12 && day==25){
+festival("🎄 Merry Christmas 🎄","christmas");
+}
