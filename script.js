@@ -281,3 +281,22 @@ festival("🪔 Happy Diwali 🪔","diwali");
 if(month==12 && day==25){
 festival("🎄 Merry Christmas 🎄","christmas");
 }
+function updateDateTime() {
+    const now = new Date();
+
+    const options = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+    };
+
+    const date = now.toLocaleDateString("en-IN", options);
+    const time = now.toLocaleTimeString("en-IN");
+
+    document.getElementById("datetime").innerHTML =
+        "📅 " + date + " | 🕒 " + time;
+}
+
+updateDateTime();
+setInterval(updateDateTime, 1000);
