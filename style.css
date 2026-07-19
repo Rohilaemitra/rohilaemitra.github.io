@@ -279,3 +279,20 @@ grid-template-columns:1fr;
 }
 
 }
+#festivalBanner{
+display:none;
+padding:15px;
+font-size:28px;
+font-weight:bold;
+text-align:center;
+color:#fff;
+border-radius:10px;
+margin-bottom:20px;
+animation:blink 2s infinite;
+}
+
+@keyframes blink{
+50%{
+opacity:.6;
+}
+}
