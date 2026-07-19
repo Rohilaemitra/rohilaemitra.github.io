@@ -296,3 +296,145 @@ animation:blink 2s infinite;
 opacity:.6;
 }
 }
+/* ===========================
+   FESTIVAL SYSTEM
+=========================== */
+
+:root{
+    --theme:#1565c0;
+    --theme2:#0d47a1;
+}
+
+body{
+    transition:.6s;
+}
+
+.festival-banner{
+    width:100%;
+    padding:18px;
+    text-align:center;
+    color:#fff;
+    font-size:30px;
+    font-weight:bold;
+    letter-spacing:1px;
+    display:none;
+    position:relative;
+    overflow:hidden;
+    animation:fade 1s;
+}
+
+@keyframes fade{
+from{
+opacity:0;
+transform:translateY(-30px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+.festival-banner.show{
+display:block;
+}
+
+.diwali{
+background:linear-gradient(90deg,#ff9800,#ff5722,#ffeb3b);
+}
+
+.holi{
+background:linear-gradient(90deg,#ff0080,#ffeb3b,#00bcd4,#4caf50);
+}
+
+.independence{
+background:linear-gradient(90deg,#ff9933,#ffffff,#138808);
+color:#000;
+}
+
+.republic{
+background:linear-gradient(90deg,#ff9933,#ffffff,#138808);
+color:#000;
+}
+
+.eid{
+background:linear-gradient(90deg,#0f9d58,#43a047);
+}
+
+.christmas{
+background:linear-gradient(90deg,#2e7d32,#d50000);
+}
+
+.newyear{
+background:linear-gradient(90deg,#6a1b9a,#e91e63);
+}
+
+.navbar,
+header{
+transition:.5s;
+}
+
+.theme-diwali{
+background:#fff7e6;
+}
+
+.theme-holi{
+background:#fff;
+}
+
+.theme-eid{
+background:#f0fff5;
+}
+
+.theme-xmas{
+background:#eefdf0;
+}
+
+.theme-india{
+background:#ffffff;
+}
+
+/* Decorative Lights */
+
+.lights{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+display:flex;
+justify-content:space-around;
+z-index:9999;
+pointer-events:none;
+}
+
+.lights span{
+
+width:16px;
+height:16px;
+border-radius:50%;
+display:block;
+
+animation:blink 1s infinite alternate;
+}
+
+.lights span:nth-child(1){background:red;}
+.lights span:nth-child(2){background:yellow;}
+.lights span:nth-child(3){background:green;}
+.lights span:nth-child(4){background:blue;}
+.lights span:nth-child(5){background:orange;}
+.lights span:nth-child(6){background:pink;}
+.lights span:nth-child(7){background:cyan;}
+.lights span:nth-child(8){background:white;}
+
+@keyframes blink{
+
+from{
+opacity:.2;
+transform:scale(.8);
+}
+
+to{
+opacity:1;
+transform:scale(1.3);
+}
+
+}
