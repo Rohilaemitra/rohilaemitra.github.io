@@ -164,3 +164,69 @@ function updateDateTime() {
 
 updateDateTime();
 setInterval(updateDateTime, 1000);
+const today = new Date();
+
+const month = today.getMonth()+1;
+
+const day = today.getDate();
+
+const banner = document.getElementById("festivalBanner");
+
+function showFestival(msg,color){
+
+banner.style.display="block";
+
+banner.style.background=color;
+
+banner.innerHTML=msg;
+
+}
+
+// Republic Day
+if(month==1 && day==26){
+
+showFestival("🇮🇳 Happy Republic Day 🇮🇳","#ff6f00");
+
+}
+
+// Holi
+else if(month==3 && day==14){
+
+showFestival("🌈 Happy Holi 🌈","#e91e63");
+
+}
+
+// Independence Day
+else if(month==8 && day==15){
+
+showFestival("🇮🇳 Happy Independence Day 🇮🇳","#2e7d32");
+
+}
+
+// Gandhi Jayanti
+else if(month==10 && day==2){
+
+showFestival("🙏 Gandhi Jayanti 🙏","#1976d2");
+
+}
+
+// Diwali (Date change every year)
+else if(month==10 && day==20){
+
+showFestival("🪔 Happy Diwali 🪔","#ff9800");
+
+}
+
+// Christmas
+else if(month==12 && day==25){
+
+showFestival("🎄 Merry Christmas 🎄","#c62828");
+
+}
+
+// New Year
+else if(month==1 && day==1){
+
+showFestival("🎉 Happy New Year 🎉","#6a1b9a");
+
+}
