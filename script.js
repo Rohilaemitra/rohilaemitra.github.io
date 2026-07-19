@@ -300,3 +300,13 @@ function updateDateTime() {
 
 updateDateTime();
 setInterval(updateDateTime, 1000);
+function updateDateTime() {
+    const now = new Date();
+
+    document.getElementById("datetime").innerHTML =
+        "📅 " + now.toLocaleDateString("en-IN") +
+        " | 🕒 " + now.toLocaleTimeString("en-IN");
+}
+
+updateDateTime();
+setInterval(updateDateTime, 1000);
