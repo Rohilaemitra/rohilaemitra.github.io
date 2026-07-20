@@ -2,7 +2,7 @@
 // ROHILA E-MITRA CENTER
 // Clean Script - Part 1
 // ================================
-
+alert("Script Loaded");
 // ===== Smooth Scroll =====
 document.querySelectorAll("nav a").forEach(link => {
     link.addEventListener("click", function (e) {
