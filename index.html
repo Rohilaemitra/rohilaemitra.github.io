@@ -128,10 +128,25 @@ Available Services
 <h2>Available Services
 </h2>
 
-<div id="datetime" style="font-size:18px;font-weight:bold;color:#0a7d32;text-align:center;padding:10px;">
-Loading Date & Time...
-</div>
+<div id="datetime">Loading Date & Time...</div>
 
+<script>
+  function updateDateTime() {
+    let now = new Date();
+    let options = { 
+      timeZone: "Asia/Kolkata", 
+      hour: "2-digit", 
+      minute: "2-digit", 
+      second: "2-digit", 
+      day: "2-digit", 
+      month: "short", 
+      year: "numeric" 
+    };
+    document.getElementById("datetime").innerHTML = now.toLocaleString("en-IN", options);
+  }
+  setInterval(updateDateTime, 1000);
+  updateDateTime();
+</script>
 
 
 
