@@ -1,11 +1,23 @@
+// ================================
+// ROHILA E-MITRA CENTER
+// Clean Script - Part 1
+// ================================
+
 // ===== Smooth Scroll =====
-document.querySelectorAll('nav a').forEach(link => {
-    link.addEventListener('click', function(e) {
-        if (this.getAttribute('href').startsWith('#')) {
+document.querySelectorAll("nav a").forEach(link => {
+    link.addEventListener("click", function (e) {
+        const href = this.getAttribute("href");
+
+        if (href && href.startsWith("#")) {
             e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
+
+            const target = document.querySelector(href);
+
+            if (target) {
+                target.scrollIntoView({
+                    behavior: "smooth"
+                });
+            }
         }
     });
 });
@@ -18,12 +30,15 @@ const heroImages = [
 ];
 
 let currentImage = 0;
+
 const hero = document.querySelector(".hero");
 
 function changeHeroImage() {
+
     if (!hero) return;
 
     currentImage++;
+
     if (currentImage >= heroImages.length) {
         currentImage = 0;
     }
@@ -32,44 +47,65 @@ function changeHeroImage() {
         `linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),url('${heroImages[currentImage]}')`;
 }
 
-setInterval(changeHeroImage, 4000);
+if (hero) {
+    changeHeroImage();
+    setInterval(changeHeroImage, 4000);
+}
 
 // ===== Contact Form Validation =====
 const form = document.getElementById("contactForm");
 
 if (form) {
-    form.addEventListener("submit", function(e) {
 
-        const name = document.getElementById("name").value.trim();
-        const mobile = document.getElementById("mobile").value.trim();
-        const message = document.getElementById("message").value.trim();
+    form.addEventListener("submit", function (e) {
+
+        const name =
+            document.getElementById("name").value.trim();
+
+        const mobile =
+            document.getElementById("mobile").value.trim();
+
+        const message =
+            document.getElementById("message").value.trim();
 
         if (name.length < 3) {
+
             alert("Enter valid name");
+
             e.preventDefault();
+
             return;
         }
 
         if (!/^[0-9]{10}$/.test(mobile)) {
+
             alert("Enter valid mobile number");
+
             e.preventDefault();
+
             return;
         }
 
         if (message.length < 5) {
+
             alert("Message is too short");
+
             e.preventDefault();
+
             return;
         }
+
     });
+
 }
-// ===== Scroll To Top Button =====
+
+// ===== Scroll To Top =====
 
 const topBtn = document.createElement("button");
 
-topBtn.innerHTML = "↑";
-
 topBtn.id = "topBtn";
+
+topBtn.innerHTML = "↑";
 
 document.body.appendChild(topBtn);
 
@@ -84,59 +120,59 @@ topBtn.style.zIndex = "999";
 
 window.addEventListener("scroll", () => {
 
-if(window.scrollY > 300){
+    if (window.scrollY > 300) {
 
-topBtn.style.display = "block";
+        topBtn.style.display = "block";
 
-}else{
+    } else {
 
-topBtn.style.display = "none";
+        topBtn.style.display = "none";
 
-}
+    }
 
 });
 
 topBtn.onclick = () => {
 
-window.scrollTo({
+    window.scrollTo({
 
-top:0,
+        top: 0,
 
-behavior:"smooth"
+        behavior: "smooth"
 
-});
+    });
 
-};
+};// ================================
+// Clean Script - Part 2
+// ================================
 
 // ===== Fade Animation =====
 
 const sections = document.querySelectorAll("section");
 
-const observer = new IntersectionObserver(entries => {
+const observer = new IntersectionObserver((entries) => {
 
-entries.forEach(entry => {
+    entries.forEach((entry) => {
 
-if(entry.isIntersecting){
+        if (entry.isIntersecting) {
 
-entry.target.style.opacity = "1";
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+        }
 
-entry.target.style.transform = "translateY(0)";
+    });
 
-}
-
+}, {
+    threshold: 0.15
 });
 
-});
+sections.forEach((section) => {
 
-sections.forEach(sec => {
+    section.style.opacity = "0";
+    section.style.transform = "translateY(40px)";
+    section.style.transition = "all .8s ease";
 
-sec.style.opacity = "0";
-
-sec.style.transform = "translateY(40px)";
-
-sec.style.transition = "0.8s";
-
-observer.observe(sec);
+    observer.observe(section);
 
 });
 
@@ -144,169 +180,101 @@ observer.observe(sec);
 
 console.log("ROHILA E-MITRA Website Loaded Successfully");
 
-
-function updateDateTime() {
-    const now = new Date();
-
-    const options = {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-    };
-
-    const date = now.toLocaleDateString("en-IN", options);
-    const time = now.toLocaleTimeString("en-IN");
-
-    document.getElementById("datetime").innerHTML =
-        "📅 " + date + " | 🕒 " + time;
-}
-
-updateDateTime();
-setInterval(updateDateTime, 1000);
-const today = new Date();
-
-const month = today.getMonth()+1;
-
-const day = today.getDate();
+// ===== Festival Banner =====
 
 const banner = document.getElementById("festivalBanner");
 
-function showFestival(msg,color){
+if (banner) {
 
-banner.style.display="block";
+    const today = new Date();
 
-banner.style.background=color;
+    const month = today.getMonth() + 1;
 
-banner.innerHTML=msg;
+    const day = today.getDate();
 
-}
+    function showFestival(message, color) {
 
-// Republic Day
-if(month==1 && day==26){
+        banner.style.display = "block";
+        banner.style.background = color;
+        banner.innerHTML = message;
 
-showFestival("🇮🇳 Happy Republic Day 🇮🇳","#ff6f00");
+    }
 
-}
+    if (month === 1 && day === 1) {
 
-// Holi
-else if(month==3 && day==14){
+        showFestival("🎉 Happy New Year 🎉", "#6a1b9a");
 
-showFestival("🌈 Happy Holi 🌈","#e91e63");
+    } else if (month === 1 && day === 26) {
 
-}
+        showFestival("🇮🇳 Happy Republic Day 🇮🇳", "#ff6f00");
 
-// Independence Day
-else if(month==8 && day==15){
+    } else if (month === 3 && day === 14) {
 
-showFestival("🇮🇳 Happy Independence Day 🇮🇳","#2e7d32");
+        showFestival("🌈 Happy Holi 🌈", "#e91e63");
 
-}
+    } else if (month === 8 && day === 15) {
 
-// Gandhi Jayanti
-else if(month==10 && day==2){
+        showFestival("🇮🇳 Happy Independence Day 🇮🇳", "#2e7d32");
 
-showFestival("🙏 Gandhi Jayanti 🙏","#1976d2");
+    } else if (month === 10 && day === 2) {
 
-}
+        showFestival("🙏 Gandhi Jayanti 🙏", "#1976d2");
 
-// Diwali (Date change every year)
-else if(month==10 && day==20){
+    } else if (month === 10 && day === 20) {
 
-showFestival("🪔 Happy Diwali 🪔","#ff9800");
+        showFestival("🪔 Happy Diwali 🪔", "#ff9800");
 
-}
+    } else if (month === 12 && day === 25) {
 
-// Christmas
-else if(month==12 && day==25){
+        showFestival("🎄 Merry Christmas 🎄", "#c62828");
 
-showFestival("🎄 Merry Christmas 🎄","#c62828");
+    } else {
 
-}
+        banner.style.display = "none";
 
-// New Year
-else if(month==1 && day==1){
+    }
 
-showFestival("🎉 Happy New Year 🎉","#6a1b9a");
+}// ================================
+// Clean Script - Part 3
+// ================================
 
-}
-const banner = document.getElementById("festivalBanner");
+// ===== Live Date & Time =====
 
-const today = new Date();
-const day = today.getDate();
-const month = today.getMonth() + 1;
-
-function festival(msg, cssClass){
-
-banner.classList.add("show");
-banner.classList.add(cssClass);
-
-banner.innerHTML = msg;
-
-document.body.classList.add("theme-"+cssClass);
-
-}
-
-// New Year
-if(month==1 && day==1){
-festival("🎉 Happy New Year 🎉","newyear");
-}
-
-// Republic Day
-if(month==1 && day==26){
-festival("🇮🇳 Happy Republic Day 🇮🇳","republic");
-}
-
-// Holi (Date Change Every Year)
-if(month==3 && day==14){
-festival("🌈 Happy Holi 🌈","holi");
-}
-
-// Independence Day
-if(month==8 && day==15){
-festival("🇮🇳 Happy Independence Day 🇮🇳","independence");
-}
-
-// Gandhi Jayanti
-if(month==10 && day==2){
-festival("🙏 Gandhi Jayanti 🙏","independence");
-}
-
-// Diwali (Change Every Year)
-if(month==10 && day==20){
-festival("🪔 Happy Diwali 🪔","diwali");
-}
-
-// Christmas
-if(month==12 && day==25){
-festival("🎄 Merry Christmas 🎄","christmas");
-}
 function updateDateTime() {
+
+    const dt = document.getElementById("datetime");
+
+    if (!dt) return;
+
     const now = new Date();
 
-    const options = {
+    const date = now.toLocaleDateString("en-IN", {
         weekday: "long",
-        year: "numeric",
+        day: "2-digit",
         month: "long",
-        day: "numeric"
-    };
+        year: "numeric"
+    });
 
-    const date = now.toLocaleDateString("en-IN", options);
-    const time = now.toLocaleTimeString("en-IN");
+    const time = now.toLocaleTimeString("en-IN", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true
+    });
 
-    document.getElementById("datetime").innerHTML =
-        "📅 " + date + " | 🕒 " + time;
+    dt.innerHTML = `📅 ${date} | 🕒 ${time}`;
 }
 
+// पहली बार चलाएँ
 updateDateTime();
-setInterval(updateDateTime, 1000);
-function updateDateTime() {
-    const now = new Date();
 
-    document.getElementById("datetime").innerHTML =
-        "📅 " + now.toLocaleDateString("en-IN") +
-        " | 🕒 " + now.toLocaleTimeString("en-IN");
-}
-
-updateDateTime();
+// हर सेकंड अपडेट करें
 setInterval(updateDateTime, 1000);
+
+// ===== Website Loaded =====
+
+window.addEventListener("load", () => {
+
+    console.log("ROHILA E-MITRA CENTER Loaded Successfully ✅");
+
+});
