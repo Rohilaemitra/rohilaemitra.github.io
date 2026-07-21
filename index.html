@@ -136,22 +136,53 @@ Available Services
 <body>
 
   
-  <h2></h2>
-  <p id="time"></p>
+  <!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <title>रंगीन घड़ी</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #ff9a9e, #fad0c4, #fad0c4);
+      text-align: center;
+      font-family: 'Arial', sans-serif;
+      color: white;
+    }
+    #clock {
+      font-size: 60px;
+      font-weight: bold;
+      margin-top: 20%;
+      text-shadow: 2px 2px 8px #000;
+      animation: colorchange 5s infinite;
+    }
+    @keyframes colorchange {
+      0% { color: #ff0000; }
+      25% { color: #00ff00; }
+      50% { color: #0000ff; }
+      75% { color: #ffff00; }
+      100% { color: #ff00ff; }
+    }
+  </style>
+</head>
+<body>
+  <div id="clock"></div>
 
   <script>
-    function showTime() {
+    function updateClock() {
       let now = new Date();
-      let timeString = now.toLocaleTimeString(); 
-      document.getElementById("time").innerText = timeString;
+      let hours = now.getHours().toString().padStart(2, '0');
+      let minutes = now.getMinutes().toString().padStart(2, '0');
+      let seconds = now.getSeconds().toString().padStart(2, '0');
+      let timeString = hours + ":" + minutes + ":" + seconds;
+      document.getElementById("clock").innerText = timeString;
     }
 
-    // हर सेकंड समय अपडेट होगा
-    setInterval(showTime, 1000);
-    showTime(); // पेज लोड होते ही समय दिखे
+    setInterval(updateClock, 1000);
+    updateClock();
   </script>
 </body>
 </html>
+
 
 
 
