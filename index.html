@@ -128,25 +128,21 @@ Available Services
 <h2>Available Services
 </h2>
 
-<div id="datetime">Loading Date & Time...</div>
-
-<script>
-  function updateDateTime() {
-    let now = new Date();
-    let options = { 
-      timeZone: "Asia/Kolkata", 
-      hour: "2-digit", 
-      minute: "2-digit", 
-      second: "2-digit", 
-      day: "2-digit", 
-      month: "short", 
-      year: "numeric" 
-    };
-    document.getElementById("datetime").innerHTML = now.toLocaleString("en-IN", options);
-  }
-  setInterval(updateDateTime, 1000);
-  updateDateTime();
-</script>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Digital Clock</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Orbitron'>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Aldrich'>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="MyClockDisplay" class="clock" onload="showTime()"></div>
+    <script src="script.js"></script>
+  </body>
+</html>
 
 
 
