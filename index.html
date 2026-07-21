@@ -128,7 +128,28 @@ Available Services
 <h2>Available Services
 </h2>
 
-time now
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Time Example</title>
+</head>
+<body>
+  <h2>वर्तमान समय:</h2>
+  <p id="time"></p>
+
+  <script>
+    function showTime() {
+      let now = new Date();
+      let timeString = now.toLocaleTimeString(); 
+      document.getElementById("time").innerText = timeString;
+    }
+
+    // हर सेकंड समय अपडेट होगा
+    setInterval(showTime, 1000);
+    showTime(); // पेज लोड होते ही समय दिखे
+  </script>
+</body>
+</html>
 
 
 
