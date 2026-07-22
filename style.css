@@ -51,7 +51,9 @@ flex-direction:column;
 justify-content:center;
 align-items:center;
 text-align:center;
-background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+background: #ffffff !important;
+    background-image: none !important;
+}
 url("images/banner1.jpg");
 background-size:cover;
 background-position:center;
