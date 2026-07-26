@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Diary</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+.container{
+padding:20px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:#fff;
+margin-top:20px;
+}
+
+th,td{
+border:1px solid #ddd;
+padding:10px;
+text-align:center;
+}
+
+th{
+background:#1565c0;
+color:#fff;
+}
+
+input{
+width:100%;
+padding:8px;
+}
+
+button{
+padding:8px 15px;
+cursor:pointer;
+border:none;
+border-radius:5px;
+}
+
+.save{
+background:#4CAF50;
+color:#fff;
+}
+
+.delete{
+background:red;
+color:#fff;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h2>👥 Customer Diary</h2>
+
+<a href="admin.html" class="logout">⬅ Back</a>
+
+</header>
+
+<div class="container">
+
+<button class="save" onclick="addRow()">+ Add Customer</button>
+
+<table id="customerTable">
+
+<tr>
+
+<th>Date</th>
+
+<th>Name</th>
+
+<th>Mobile</th>
+
+<th>Details</th>
+
+<th>Total</th>
+
+<th>Paid</th>
+
+<th>Due</th>
+
+<th>Delete</th>
+
+</tr>
+
+</table>
+
+</div>
+
+<script src="customer-diary.js"></script>
+
+</body>
+</html>
