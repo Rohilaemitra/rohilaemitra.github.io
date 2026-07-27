@@ -825,7 +825,90 @@ ${item.due}\n`;
 
 });
 
+// =========================
+// CUSTOMER LEDGER
+// =========================
 
+function renderLedger(records) {
+
+  if (!ledgerTbody) return;
+
+  ledgerTbody.innerHTML = "";
+
+  const ledger = {};
+
+  records.forEach((record) => {
+
+    const customerName =
+      String(record.customerName || "").trim();
+
+    const mobile =
+      String(record.mobile || "").trim();
+
+    const key =
+      `${customerName.toLowerCase()}-${mobile}`;
+
+    if (!ledger[key]) {
+
+      ledger[key] = {
+        customer: customerName,
+        mobile: mobile,
+        records: 0,
+        milk: 0,
+        total: 0,
+        paid: 0,
+        due: 0
+      };
+
+    }
+
+    ledger[key].records += 1;
+    ledger[key].milk += Number(record.quantity || 0);
+    ledger[key].total += Number(record.total || 0);
+    ledger[key].paid += Number(record.paid || 0);
+    ledger[key].due += Number(record.due || 0);
+
+  });
+
+  const ledgerRecords =
+    Object.values(ledger);
+
+  if (ledgerRecords.length === 0) {
+
+    ledgerTbody.innerHTML = `
+      <tr>
+        <td colspan="7">
+          कोई Customer Ledger नहीं मिला।
+        </td>
+      </tr>
+    `;
+
+    return;
+
+  }
+
+  ledgerRecords.forEach((item) => {
+
+    const row =
+      document.createElement("tr");
+
+    row.innerHTML = `
+      <td>${escapeHtml(item.customer)}</td>
+      <td>${escapeHtml(item.mobile)}</td>
+      <td>${item.records}</td>
+      <td>${formatQuantity(item.milk)}</td>
+      <td>${formatMoney(item.total)}</td>
+      <td>${formatMoney(item.paid)}</td>
+      <td class="due-amount">
+        ${formatMoney(item.due)}
+      </td>
+    `;
+
+    ledgerTbody.appendChild(row);
+
+  });
+
+}
 // =========================
 // START
 // =========================
