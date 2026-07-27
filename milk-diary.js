@@ -821,3 +821,25 @@ ${item.due}\n`;
 // =========================
 
 loadMilkRecords();
+const ledgerSearchInput =
+  document.getElementById("ledgerSearch");
+
+const ledgerTbody =
+  document.querySelector("#ledgerTable tbody");
+ledgerSearchInput.addEventListener("input", () => {
+
+    const keyword =
+        ledgerSearchInput.value.toLowerCase();
+
+    const filtered =
+        milkRecordsCache.filter(item =>
+
+            item.customerName.toLowerCase().includes(keyword) ||
+
+            item.mobile.includes(keyword)
+
+        );
+
+    renderLedger(filtered);
+
+});
