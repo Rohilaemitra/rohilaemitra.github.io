@@ -71,6 +71,14 @@ const totalAmountEl =
 
 const totalDueEl =
   document.getElementById("totalDue");
+const monthFilterInput =
+  document.getElementById("monthFilter");
+
+const showMonthBtn =
+  document.getElementById("showMonthBtn");
+
+const showAllBtn =
+  document.getElementById("showAllBtn");
 
 
 // =========================
@@ -841,5 +849,50 @@ ledgerSearchInput.addEventListener("input", () => {
         );
 
     renderLedger(filtered);
+
+});
+// =========================
+// MONTHLY REPORT FILTER
+// =========================
+
+showMonthBtn.addEventListener("click", () => {
+
+  const selectedMonth =
+    monthFilterInput.value;
+
+  if (!selectedMonth) {
+
+    alert("पहले Month चुनें।");
+
+    return;
+
+  }
+
+  const monthlyRecords =
+    milkRecordsCache.filter((item) => {
+
+      return String(item.date || "")
+        .startsWith(selectedMonth);
+
+    });
+
+  renderMilkTable(monthlyRecords);
+
+  renderLedger(monthlyRecords);
+
+  updateSummary(monthlyRecords);
+
+});
+
+
+showAllBtn.addEventListener("click", () => {
+
+  monthFilterInput.value = "";
+
+  renderMilkTable(milkRecordsCache);
+
+  renderLedger(milkRecordsCache);
+
+  updateSummary(milkRecordsCache);
 
 });
