@@ -292,3 +292,26 @@ window.onload = ()=>{
     updateSummary();
 
 };
+// =========================
+// PRINT
+// =========================
+
+window.printDiary = function () {
+    window.print();
+};
+
+// =========================
+// PDF (Coming Soon)
+// =========================
+
+document.getElementById("exportBtn").addEventListener("click", () => {
+    alert("PDF Export अगले भाग में जोड़ा जाएगा");
+});
+
+// =========================
+// EXCEL (Coming Soon)
+// =========================
+
+document.getElementById("excelBtn").addEventListener("click", () => {
+    alert("Excel Export अगले भाग में जोड़ा जाएगा");
+});
