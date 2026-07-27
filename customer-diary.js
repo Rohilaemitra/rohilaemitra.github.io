@@ -190,37 +190,6 @@ window.editCustomer = async function(id){
     });
 
 }
-
-// =========================
-// UPDATE CUSTOMER
-// =========================
-
-saveBtn.addEventListener("click",async()=>{
-
-    if(editId==null) return;
-
-    await updateDoc(doc(db,"customerDiary",editId),{
-
-        date:date.value,
-        name:name.value,
-        mobile:mobile.value,
-        details:details.value,
-        total:Number(total.value),
-        paid:Number(paid.value),
-        due:Number(due.value)
-
-    });
-
-    editId=null;
-
-    saveBtn.innerHTML="💾 Save Customer";
-
-    clearForm();
-
-    loadCustomers();
-
-});
-
 // =========================
 // SEARCH
 // =========================
