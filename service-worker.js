@@ -1,0 +1,1 @@
+const CACHE='rohila-v1';const ASSETS=['./','./index.html','./style.css','./script.js','./services.html','./services.js','./forms.html','./forms.js'];self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS))));self.addEventListener('fetch',e=>{if(e.request.method==='GET')e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request)))});

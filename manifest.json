@@ -1,0 +1,9 @@
+{
+  "name": "ROHILA E-MITRA CENTER",
+  "short_name": "ROHILA",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f4f7fb",
+  "theme_color": "#0d47a1",
+  "icons": []
+}
