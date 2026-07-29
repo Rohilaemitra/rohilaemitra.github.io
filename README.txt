@@ -1,17 +1,21 @@
-ROHILA DATA RESTORE FIX
+ROHILA FINAL COMBINED FIX
 
-आपका पुराना data delete नहीं हुआ है।
-पुरानी website Firebase collections:
-- customerDiary
-- milkDiary
+GitHub repository की root में इन 7 files को upload/replace करें:
 
-नई V1 files गलती से इन collections को देख रही थीं:
-- customers
-- milkRecords
+1. admin.html
+2. admin.js
+3. customer-diary.js
+4. milk-diary.js
+5. secret.html
+6. secret.js
+7. storage.rules
 
-इस ZIP की 3 files GitHub root में upload करके replace करें:
-1. customer-diary.js
-2. milk-diary.js
-3. admin.js
+यह combined fix:
+- Admin Dashboard में Secret Gallery जोड़ती है
+- पुराने Customer Diary collection (customerDiary) से data दिखाती है
+- पुराने Milk Diary collection (milkDiary) से data दिखाती है
+- Secret photos के लिए Firebase Storage rules देती है
 
-फिर Admin Login करें और Customer Diary / Milk Diary खोलें।
+महत्वपूर्ण:
+storage.rules को GitHub में upload करने के साथ Firebase Console > Storage > Rules में भी paste करके Publish करना होगा।
+Firebase Firestore का पुराना data delete नहीं करना है।
