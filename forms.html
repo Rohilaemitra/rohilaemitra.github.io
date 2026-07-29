@@ -3,47 +3,133 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>All Government Forms | ROHILA E-MITRA CENTER</title>
-  <meta name="description" content="ROHILA E-MITRA CENTER के सभी सरकारी PDF फॉर्म डाउनलोड करें।">
-  <link rel="stylesheet" href="style.css">
+  <title>सभी सरकारी फॉर्म | ROHILA E-MITRA CENTER</title>
   <style>
     *{box-sizing:border-box}
-    body{margin:0;background:#f4f7fb;font-family:Arial,sans-serif;color:#172033}
-    .topbar{background:#0d47a1;color:#fff;padding:18px 4%;display:flex;gap:15px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-    .topbar h1{font-size:22px;margin:0}.topbar p{margin:5px 0 0}
-    .topbar a{color:#fff;text-decoration:none;background:#1565c0;padding:10px 16px;border-radius:8px;font-weight:700}
-    main{width:min(1180px,94%);margin:25px auto 45px}
-    .head-card{background:#fff;padding:20px;border-radius:14px;box-shadow:0 4px 16px rgba(0,0,0,.08)}
-    .search{width:100%;padding:14px;border:1px solid #b7c1d1;border-radius:9px;font-size:16px;margin-top:14px}
-    .status{margin:14px 0;padding:12px;border-radius:8px;background:#e3f2fd;color:#0d47a1;font-weight:700}
-    .status.error{background:#ffebee;color:#b71c1c}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:16px;margin-top:18px}
-    .form-card{background:#fff;padding:18px;border-radius:13px;box-shadow:0 4px 15px rgba(0,0,0,.09);display:flex;flex-direction:column;justify-content:space-between;min-height:150px}
-    .form-card h3{font-size:17px;line-height:1.45;margin:0 0 14px;word-break:break-word}
-    .buttons{display:flex;gap:8px;flex-wrap:wrap}
-    .btn{display:inline-block;text-decoration:none;padding:10px 14px;border-radius:8px;font-weight:700;border:0;cursor:pointer}
-    .view{background:#1565c0;color:#fff}.download{background:#2e7d32;color:#fff}
-    .empty{background:#fff;padding:30px;text-align:center;border-radius:12px;grid-column:1/-1}
-    footer{text-align:center;background:#102a43;color:#fff;padding:22px}
+    body{margin:0;font-family:Arial,sans-serif;background:#f3f6fb;color:#172033}
+    header{background:#0d47a1;color:#fff;padding:18px 4%;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+    header h1{margin:0;font-size:23px} header p{margin:5px 0 0}
+    header a{background:#fff;color:#0d47a1;text-decoration:none;padding:10px 16px;border-radius:8px;font-weight:700}
+    main{width:min(1180px,94%);margin:24px auto}
+    .panel{background:#fff;border-radius:14px;padding:20px;box-shadow:0 5px 18px rgba(0,0,0,.09)}
+    #search{width:100%;padding:14px;border:1px solid #aeb8c8;border-radius:9px;font-size:16px;margin-top:12px}
+    #status{margin-top:12px;padding:11px;border-radius:8px;background:#e3f2fd;color:#0d47a1;font-weight:700}
+    .grid{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:16px;margin-top:18px}
+    .form-card{display:flex!important;visibility:visible!important;opacity:1!important;flex-direction:column;justify-content:space-between;min-height:145px;background:#fff;padding:18px;border-radius:13px;box-shadow:0 4px 15px rgba(0,0,0,.10)}
+    .form-card h3{font-size:17px;line-height:1.45;margin:0 0 16px}
+    .form-card a{display:inline-block;text-align:center;background:#1565c0;color:#fff;text-decoration:none;padding:11px 14px;border-radius:8px;font-weight:700}
+    .extra{border:2px solid #2e7d32}
+    footer{margin-top:35px;text-align:center;background:#102a43;color:#fff;padding:20px}
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <div><h1>ROHILA E-MITRA CENTER</h1><p>सभी सरकारी फॉर्म डाउनलोड</p></div>
-    <nav><a href="index.html">🏠 Home</a></nav>
-  </header>
+<header>
+  <div><h1>ROHILA E-MITRA CENTER</h1><p>सरकारी फॉर्म डाउनलोड</p></div>
+  <a href="index.html">🏠 Home</a>
+</header>
+<main>
+  <section class="panel">
+    <h2>📂 उपलब्ध फॉर्म</h2>
+    <p>नीचे फॉर्म हमेशा दिखाई देंगे। GitHub folder की अतिरिक्त files भी अपने-आप जुड़ेंगी।</p>
+    <input id="search" type="search" placeholder="फॉर्म खोजें...">
+    <div id="status">15 फॉर्म तैयार हैं…</div>
+  </section>
+  <section id="formsList" class="grid">
+    <article class="form-card" data-name="asha soft claim form">
+      <h3>📄 ASHA Soft Claim Form</h3>
+      <a href="forms/ASHASoft-ClaimForm.pdf" target="_blank" rel="noopener">Open / Download</a>
+    </article><article class="form-card" data-name="add ration card rajasthan">
+      <h3>📄 Add Ration Card Rajasthan</h3>
+      <a href="forms/Add%20Ration-Card-Rajasthan.pdf" target="_blank" rel="noopener">Open / Download</a>
+    </article><article class="form-card" data-name="birth certificate form">
+      <h3>📄 Birth Certificate Form</h3>
+      <a href="forms/birth%20certificate%20empty.pdf" target="_blank" rel="noopener">Open / Download</a>
+    </article><article class="form-card" data-name="form no. 6">
+      <h3>📄 Form No. 6</h3>
+      <a href="forms/Form%20No%206%20New%20Formet.pdf" target="_blank" rel="noopener">Open / Download</a>
+    </article><article class="form-card" data-name="gram sewak report">
+      <h3>📄 Gram Sewak Report</h3>
+      <a href="forms/gramsewak%20report.pdf" target="_blank" rel="noopener">Open / Download</a>
+    </article><article class="form-card" data-name="kund form">
+      <h3>📄 Kund Form</h3>
+      <a href="forms/kund.pdf" target="_blank" rel="noopener">Open / Download</a>
+    </article><article class="form-card" data-name="new ration card form">
+      <h3>📄 New Ration Card Form</h3>
+      <a href="forms/new%20ratoin%20card%20form.pdf" target="_blank" rel="noopener">Open / Download</a>
+    </article><article class="form-card" data-name="patwari ews form">
+      <h3>📄 Patwari EWS Form</h3>
+      <a href="forms/patwari%20ews.pdf" target="_blank" rel="noopener">Open / Download</a>
+    </article><article class="form-card" data-name="pcc & passport verification">
+      <h3>📄 PCC & Passport Verification</h3>
+      <a href="forms/pcc%20%26%20passport%20verification%20offline%20form%20pdf%20vi.pdf" target="_blank" rel="noopener">Open / Download</a>
+    </article><article class="form-card" data-name="pm kisan patwari report">
+      <h3>📄 PM Kisan Patwari Report</h3>
+      <a href="forms/pm%20kisan%20patwari%20riport.pdf" target="_blank" rel="noopener">Open / Download</a>
+    </article><article class="form-card" data-name="police verification form">
+      <h3>📄 Police Verification Form</h3>
+      <a href="forms/police%20verification%20offline%20form%20pdf.pdf" target="_blank" rel="noopener">Open / Download</a>
+    </article><article class="form-card" data-name="sc/st certificate form">
+      <h3>📄 SC/ST Certificate Form</h3>
+      <a href="forms/sc-st.pdf" target="_blank" rel="noopener">Open / Download</a>
+    </article><article class="form-card" data-name="obc certificate form">
+      <h3>📄 OBC Certificate Form</h3>
+      <a href="forms/OBC-STATE-AND-CENTRAL-FORM.pdf" target="_blank" rel="noopener">Open / Download</a>
+    </article><article class="form-card" data-name="shramik scholarship form">
+      <h3>📄 Shramik Scholarship Form</h3>
+      <a href="forms/shramik-new-schoolership-form.pdf" target="_blank" rel="noopener">Open / Download</a>
+    </article><article class="form-card" data-name="virasat 5 gawah form">
+      <h3>📄 Virasat 5 Gawah Form</h3>
+      <a href="forms/virasat%205%20gawah.pdf" target="_blank" rel="noopener">Open / Download</a>
+    </article>
+  </section>
+</main>
+<footer>© 2026 ROHILA E-MITRA CENTER | Sikar, Rajasthan</footer>
+<script>
+(() => {
+  const list = document.getElementById('formsList');
+  const search = document.getElementById('search');
+  const status = document.getElementById('status');
+  const known = new Set(['ASHASoft-ClaimForm.pdf', 'Add Ration-Card-Rajasthan.pdf', 'birth certificate empty.pdf', 'Form No 6 New Formet.pdf', 'gramsewak report.pdf', 'kund.pdf', 'new ratoin card form.pdf', 'patwari ews.pdf', 'pcc & passport verification offline form pdf vi.pdf', 'pm kisan patwari riport.pdf', 'police verification offline form pdf.pdf', 'sc-st.pdf', 'OBC-STATE-AND-CENTRAL-FORM.pdf', 'shramik-new-schoolership-form.pdf', 'virasat 5 gawah.pdf']);
 
-  <main>
-    <section class="head-card">
-      <h2>📄 Forms Folder के सभी फॉर्म</h2>
-      <p>यह पेज GitHub के <b>forms</b> folder की सभी PDF/Word files अपने-आप दिखाता है।</p>
-      <input id="searchForm" class="search" type="search" placeholder="फॉर्म का नाम खोजें...">
-      <div id="status" class="status">Forms loading...</div>
-    </section>
-    <section id="formsList" class="grid"></section>
-  </main>
+  function clean(name) {
+    return name.replace(/\.(pdf|doc|docx|jpg|jpeg|png)$/i,'').replace(/[_-]+/g,' ').replace(/\s+/g,' ').trim();
+  }
 
-  <footer>© 2026 ROHILA E-MITRA CENTER | Sikar, Rajasthan</footer>
-  <script src="forms.js"></script>
+  function filter() {
+    const q = search.value.toLowerCase().trim();
+    [...list.children].forEach(card => {
+      card.style.display = card.innerText.toLowerCase().includes(q) ? 'flex' : 'none';
+    });
+  }
+  search.addEventListener('input', filter);
+
+  fetch('https://api.github.com/repos/Rohilaemitra/rohilaemitra.github.io/contents/forms?ref=main', {cache:'no-store'})
+    .then(r => { if(!r.ok) throw new Error('API '+r.status); return r.json(); })
+    .then(items => {
+      let added = 0;
+      items.filter(x => x.type === 'file' && /\.(pdf|doc|docx|jpg|jpeg|png)$/i.test(x.name))
+        .sort((a,b) => a.name.localeCompare(b.name))
+        .forEach(file => {
+          if (known.has(file.name)) return;
+          const card = document.createElement('article');
+          card.className = 'form-card extra';
+          const h3 = document.createElement('h3');
+          h3.textContent = '📄 ' + clean(file.name);
+          const a = document.createElement('a');
+          a.href = file.download_url;
+          a.target = '_blank';
+          a.rel = 'noopener';
+          a.textContent = 'Open / Download';
+          card.append(h3,a);
+          list.appendChild(card);
+          added++;
+        });
+      status.textContent = `${15 + added} फॉर्म दिखाई दे रहे हैं`;
+    })
+    .catch(() => {
+      status.textContent = '15 मुख्य फॉर्म दिखाई दे रहे हैं';
+    });
+})();
+</script>
 </body>
 </html>
