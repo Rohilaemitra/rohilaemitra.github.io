@@ -10,14 +10,17 @@ import {
   serverTimestamp
 } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js';
 
-const COLLECTION = 'milkDiary';
+const READ_COLLECTIONS = ['milkDiary', 'milkRecords'];
+const WRITE_COLLECTION = 'milkDiary';
+
 const $ = (id) => document.getElementById(id);
 const form = $('entryForm');
 const tbody = $('tbody');
 const statusBox = $('status');
 
 let rows = [];
-let editId = null;
+let editRef = null;
+let sourceCounts = {};
 
 const num = (value) => Number(value || 0);
 const money = (value) =>
@@ -27,29 +30,61 @@ const money = (value) =>
   });
 
 const esc = (value) =>
-  String(value ?? '').replace(/[&<>"]/g, (char) => ({
+  String(value ?? '').replace(/[&<>"']/g, (char) => ({
     '&': '&amp;',
     '<': '&lt;',
     '>': '&gt;',
-    '"': '&quot;'
+    '"': '&quot;',
+    "'": '&#039;'
   })[char]);
 
 function show(message, type = 'info') {
+  if (!statusBox) return;
   statusBox.textContent = message;
   statusBox.className = `status show ${type}`;
+}
+
+function normalizeRecord(collectionName, item) {
+  const raw = item.data();
+  const quantity = num(raw.quantity ?? raw.litre ?? raw.liters);
+  const rate = num(raw.rate);
+  const total = num(raw.total ?? raw.amount ?? (quantity * rate));
+  const paid = num(raw.paid);
+  return {
+    id: item.id,
+    sourceCollection: collectionName,
+    rowKey: `${collectionName}:${item.id}`,
+    ...raw,
+    date: raw.date || '',
+    customerName: raw.customerName || raw.name || '',
+    mobile: raw.mobile || '',
+    shift: raw.shift || '',
+    milkType: raw.milkType || raw.type || '',
+    quantity,
+    rate,
+    total,
+    paid,
+    due: num(raw.due ?? (total - paid))
+  };
+}
+
+function dateValue(value) {
+  const text = String(value || '').trim();
+  const iso = Date.parse(text);
+  if (!Number.isNaN(iso)) return iso;
+  const match = text.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})$/);
+  if (match) return new Date(Number(match[3]), Number(match[2]) - 1, Number(match[1])).getTime();
+  return 0;
 }
 
 function calculate() {
   const total = num($('quantity').value) * num($('rate').value);
   $('total').value = total.toFixed(2);
-  $('due').value = Math.max(
-    0,
-    total - num($('paid').value)
-  ).toFixed(2);
+  $('due').value = Math.max(0, total - num($('paid').value)).toFixed(2);
 }
 
 function resetForm() {
-  editId = null;
+  editRef = null;
   form.reset();
   $('date').value = new Date().toISOString().slice(0, 10);
   $('paid').value = 0;
@@ -57,16 +92,47 @@ function resetForm() {
   $('saveBtn').textContent = 'Save';
 }
 
+async function readCollection(collectionName) {
+  const snapshot = await getDocs(collection(db, collectionName));
+  sourceCounts[collectionName] = snapshot.size;
+  return snapshot.docs.map((item) => normalizeRecord(collectionName, item));
+}
+
 async function loadRecords() {
-  show('पुराना Milk Diary data loading...');
-  const snapshot = await getDocs(collection(db, COLLECTION));
+  show('Firebase से पुराना Milk data खोज रहे हैं...');
+  sourceCounts = {};
 
-  rows = snapshot.docs
-    .map((item) => ({ id: item.id, ...item.data() }))
-    .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
+  const results = await Promise.allSettled(
+    READ_COLLECTIONS.map((name) => readCollection(name))
+  );
 
+  const errors = [];
+  rows = [];
+
+  results.forEach((result, index) => {
+    const name = READ_COLLECTIONS[index];
+    if (result.status === 'fulfilled') {
+      rows.push(...result.value);
+    } else {
+      sourceCounts[name] = 0;
+      errors.push(`${name}: ${result.reason?.message || 'load error'}`);
+    }
+  });
+
+  rows.sort((a, b) => dateValue(b.date) - dateValue(a.date));
   render();
-  show(`Milk Diary के ${rows.length} रिकॉर्ड मिल गए`, 'ok');
+
+  const detail = READ_COLLECTIONS
+    .map((name) => `${name}: ${sourceCounts[name] || 0}`)
+    .join(' | ');
+
+  if (errors.length) {
+    show(`कुछ data load नहीं हुआ — ${detail} — ${errors.join(' ; ')}`, 'error');
+  } else if (rows.length === 0) {
+    show(`0 रिकॉर्ड मिले — ${detail}. Firebase Console में सही collection नाम जाँचें।`, 'error');
+  } else {
+    show(`कुल ${rows.length} रिकॉर्ड मिले — ${detail}`, 'ok');
+  }
 }
 
 function filteredRows() {
@@ -74,14 +140,10 @@ function filteredRows() {
   const month = $('monthFilter').value;
 
   return rows.filter((item) => {
-    const matchesMonth =
-      !month || String(item.date || '').startsWith(month);
-
-    const searchable = [
-      item.customerName,
-      item.mobile
-    ].join(' ').toLowerCase();
-
+    const matchesMonth = !month || String(item.date || '').startsWith(month);
+    const searchable = [item.customerName, item.mobile, item.milkType, item.shift]
+      .join(' ')
+      .toLowerCase();
     return matchesMonth && searchable.includes(keyword);
   });
 }
@@ -103,20 +165,17 @@ function render() {
         <td>${money(item.paid)}</td>
         <td>${money(item.due)}</td>
         <td class="no-print">
-          <button class="btn light edit" data-id="${item.id}">Edit</button>
-          <button class="btn danger del" data-id="${item.id}">Delete</button>
+          <button class="btn light edit" data-key="${esc(item.rowKey)}">Edit</button>
+          <button class="btn danger del" data-key="${esc(item.rowKey)}">Delete</button>
         </td>
       </tr>
     `).join('')
     : '<tr><td class="empty" colspan="11">No records</td></tr>';
 
   $('count').textContent = list.length;
-  $('milkSum').textContent =
-    list.reduce((sum, item) => sum + num(item.quantity), 0).toFixed(2) + ' L';
-  $('amountSum').textContent =
-    money(list.reduce((sum, item) => sum + num(item.total), 0));
-  $('dueSum').textContent =
-    money(list.reduce((sum, item) => sum + num(item.due), 0));
+  $('milkSum').textContent = list.reduce((sum, item) => sum + num(item.quantity), 0).toFixed(2) + ' L';
+  $('amountSum').textContent = money(list.reduce((sum, item) => sum + num(item.total), 0));
+  $('dueSum').textContent = money(list.reduce((sum, item) => sum + num(item.due), 0));
 }
 
 form.addEventListener('submit', async (event) => {
@@ -138,55 +197,54 @@ form.addEventListener('submit', async (event) => {
 
   try {
     show('Saving...');
-
-    if (editId) {
-      await updateDoc(doc(db, COLLECTION, editId), data);
+    if (editRef) {
+      await updateDoc(doc(db, editRef.collectionName, editRef.id), data);
     } else {
-      await addDoc(collection(db, COLLECTION), {
+      await addDoc(collection(db, WRITE_COLLECTION), {
         ...data,
         createdAt: serverTimestamp()
       });
     }
-
     resetForm();
     await loadRecords();
   } catch (error) {
-    show(error.message, 'error');
+    show(`Save error: ${error.message}`, 'error');
   }
 });
 
 tbody.addEventListener('click', async (event) => {
-  const id = event.target.dataset.id;
-  if (!id) return;
+  const key = event.target.dataset.key;
+  if (!key) return;
+
+  const item = rows.find((row) => row.rowKey === key);
+  if (!item) return;
 
   if (event.target.classList.contains('edit')) {
-    const item = rows.find((row) => row.id === id);
-    if (!item) return;
-
-    editId = id;
-    ['date', 'customerName', 'mobile', 'shift', 'milkType', 'quantity', 'rate', 'paid']
-      .forEach((key) => {
-        $(key).value = item[key] ?? '';
-      });
-
+    editRef = { collectionName: item.sourceCollection, id: item.id };
+    $('date').value = item.date || '';
+    $('customerName').value = item.customerName || '';
+    $('mobile').value = item.mobile || '';
+    $('shift').value = item.shift || '';
+    $('milkType').value = item.milkType || '';
+    $('quantity').value = item.quantity ?? '';
+    $('rate').value = item.rate ?? '';
+    $('paid').value = item.paid ?? '';
     calculate();
     $('saveBtn').textContent = 'Update';
-    scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  if (
-    event.target.classList.contains('del') &&
-    confirm('यह दूध रिकॉर्ड हटाएँ?')
-  ) {
-    await deleteDoc(doc(db, COLLECTION, id));
-    await loadRecords();
+  if (event.target.classList.contains('del') && confirm('यह दूध रिकॉर्ड हटाएँ?')) {
+    try {
+      await deleteDoc(doc(db, item.sourceCollection, item.id));
+      await loadRecords();
+    } catch (error) {
+      show(`Delete error: ${error.message}`, 'error');
+    }
   }
 });
 
-['quantity', 'rate', 'paid'].forEach((id) =>
-  $(id).addEventListener('input', calculate)
-);
-
+['quantity', 'rate', 'paid'].forEach((id) => $(id).addEventListener('input', calculate));
 $('search').addEventListener('input', render);
 $('monthFilter').addEventListener('change', render);
 $('allBtn').addEventListener('click', () => {
@@ -194,12 +252,12 @@ $('allBtn').addEventListener('click', () => {
   render();
 });
 $('clearBtn').addEventListener('click', resetForm);
-$('printBtn').addEventListener('click', () => print());
+$('printBtn').addEventListener('click', () => window.print());
 
 $('csvBtn').addEventListener('click', () => {
   const list = filteredRows();
   const lines = [
-    ['Date', 'Customer', 'Mobile', 'Shift', 'Type', 'Quantity', 'Rate', 'Total', 'Paid', 'Due'],
+    ['Date', 'Customer', 'Mobile', 'Shift', 'Type', 'Quantity', 'Rate', 'Total', 'Paid', 'Due', 'Source'],
     ...list.map((item) => [
       item.date,
       item.customerName,
@@ -210,27 +268,23 @@ $('csvBtn').addEventListener('click', () => {
       item.rate,
       item.total,
       item.paid,
-      item.due
+      item.due,
+      item.sourceCollection
     ])
   ];
 
   const csv = lines
-    .map((row) =>
-      row.map((value) =>
-        '"' + String(value ?? '').replaceAll('"', '""') + '"'
-      ).join(',')
-    )
+    .map((row) => row.map((value) => `"${String(value ?? '').replaceAll('"', '""')}"`).join(','))
     .join('\n');
 
   const link = document.createElement('a');
-  link.href = URL.createObjectURL(
-    new Blob(['\ufeff' + csv], { type: 'text/csv' })
-  );
-  link.download = 'milk-diary.csv';
+  link.href = URL.createObjectURL(new Blob(['\ufeff' + csv], { type: 'text/csv' }));
+  link.download = 'milk-diary-all-data.csv';
   link.click();
+  URL.revokeObjectURL(link.href);
 });
 
 requireAdmin(() => {
   resetForm();
-  loadRecords().catch((error) => show(error.message, 'error'));
+  loadRecords().catch((error) => show(`Load error: ${error.message}`, 'error'));
 });
