@@ -1,1 +1,8 @@
-const forms=[['Aadhaar Enrollment / Update Form','#'],['Income Certificate Form','#'],['Caste Certificate Form','#'],['Domicile Certificate Form','#'],['Birth Certificate Form','#'],['Police Verification Form','#'],['Passport Verification Form','#'],['Pension Application Form','#']];const grid=document.getElementById('formsGrid'),search=document.getElementById('search');function render(){const q=search.value.toLowerCase();const list=forms.filter(x=>x[0].toLowerCase().includes(q));grid.innerHTML=list.map(x=>`<div class="card"><h3>📄 ${x[0]}</h3><a class="btn" href="${x[1]}" ${x[1]==='#'?'onclick="alert(\'इस ZIP में PDF शामिल नहीं है। अपनी PDF फाइल जोड़ें।\');return false"':'download'}>Download</a></div>`).join('')||'<p>No form found</p>'}search.addEventListener('input',render);render();
+const search = document.getElementById("searchForm");
+const cards = [...document.querySelectorAll("#formsList .form-card")];
+search?.addEventListener("input", () => {
+  const q = search.value.trim().toLowerCase();
+  cards.forEach(card => {
+    card.style.display = card.innerText.toLowerCase().includes(q) ? "" : "none";
+  });
+});

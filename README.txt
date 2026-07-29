@@ -1,27 +1,18 @@
-ROHILA UNIVERSAL DATA RECOVERY FIX
+ROHILA FORMS + PHOTO FIX
 
-यह fix सभी पुराने सम्भावित Firebase collections को एक साथ पढ़ती है:
+GitHub repository की ROOT में इन 5 files को upload/replace करें:
+1. index.html
+2. forms.html
+3. forms.js
+4. gallery.html
+5. gallery.js
 
-Customer:
-- customers
-- customerDiary
+पुराने folders बिल्कुल नहीं हटाने हैं:
+- forms/
+- images/
 
-Milk:
-- milkDiary
-- milkRecords
-
-GitHub repository की ROOT में इन 3 files को upload करके replace करें:
-1. admin.js
-2. customer-diary.js
-3. milk-diary.js
-
-फिर:
-- Admin से Logout करें
-- दोबारा Login करें
-- Customer Diary और Milk Diary खोलें
-- ऊपर status box में हर collection का record count दिखेगा
-
-महत्वपूर्ण:
-- firebase.js को replace न करें
-- Firebase Console से कोई collection/document delete न करें
-- GitHub Pages cache के लिए upload के बाद 2-5 मिनट और एक hard refresh लग सकता है
+यह fix:
+- Home page पर Download Forms link और form cards दिखाती है
+- forms/ folder की असली PDF files खोलती है
+- images/11.png, images/22.jpg, images/44.jpg और पुरानी ChatGPT image दिखाती है
+- Gallery page पर local photos के साथ Firebase photos भी दिखाती है
