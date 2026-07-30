@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="hi">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Resume Maker - ROHILA</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<header class="topbar no-print"><div class="topbar-inner"><a class="brand" href="tools.html">ROHILA Resume Maker</a><nav class="nav"><a href="index.html">Home</a><a href="tools.html">Tools</a></nav></div></header>
+<main class="container resume-shell">
+  <section class="panel no-print">
+    <h1>📋 Resume / Biodata Maker</h1>
+    <div class="form-grid">
+      <div class="field span-2"><label>पूरा नाम</label><input id="rName" placeholder="नाम"></div>
+      <div class="field"><label>मोबाइल</label><input id="rMobile" placeholder="मोबाइल नंबर"></div>
+      <div class="field"><label>Email</label><input id="rEmail" placeholder="Email"></div>
+      <div class="field span-2"><label>पता</label><input id="rAddress" placeholder="पूरा पता"></div>
+      <div class="field"><label>जन्म तारीख</label><input id="rDob" type="date"></div>
+      <div class="field"><label>वैवाहिक स्थिति</label><select id="rMarital"><option>Unmarried</option><option>Married</option></select></div>
+      <div class="field span-2"><label>Career Objective</label><textarea id="rObjective" rows="3">To work in a challenging environment where I can use my skills and grow professionally.</textarea></div>
+      <div class="field span-2"><label>Education (हर लाइन अलग)</label><textarea id="rEducation" rows="5" placeholder="10th - RBSE\n12th - RBSE\nB.A. - University"></textarea></div>
+      <div class="field span-2"><label>Skills (हर लाइन अलग)</label><textarea id="rSkills" rows="5" placeholder="Computer Knowledge\nHardworking\nPunctual"></textarea></div>
+      <div class="field span-2"><label>Experience</label><textarea id="rExperience" rows="4" placeholder="Fresher या अनुभव"></textarea></div>
+      <div class="field span-2"><label>Languages</label><input id="rLanguages" value="Hindi, English"></div>
+    </div>
+    <div class="toolbar"><button id="updateResume" class="btn" type="button">Resume तैयार करें</button><button class="btn success" type="button" onclick="window.print()">Print / Save PDF</button></div>
+  </section>
+
+  <section id="resumePreview" class="resume-paper">
+    <div class="resume-head"><h1 id="pName">YOUR NAME</h1><p id="pContact">Mobile | Email</p><p id="pAddress">Address</p></div>
+    <div class="resume-section"><h2>CAREER OBJECTIVE</h2><p id="pObjective"></p></div>
+    <div class="resume-section"><h2>EDUCATION</h2><ul id="pEducation"></ul></div>
+    <div class="resume-section"><h2>SKILLS</h2><ul id="pSkills"></ul></div>
+    <div class="resume-section"><h2>EXPERIENCE</h2><p id="pExperience"></p></div>
+    <div class="resume-section"><h2>PERSONAL DETAILS</h2><div class="resume-details"><b>Date of Birth</b><span id="pDob"></span><b>Marital Status</b><span id="pMarital"></span><b>Languages</b><span id="pLanguages"></span><b>Nationality</b><span>Indian</span></div></div>
+    <div class="resume-sign"><span>Place: __________</span><span>Signature</span></div>
+  </section>
+</main>
+<script src="resume-maker.js"></script>
+</body></html>

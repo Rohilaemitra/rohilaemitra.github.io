@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ROHILA Digital Tools</title>
+  <meta name="description" content="Passport photo, photo resize, JPG to PDF, PDF merge, PDF page delete और resume maker tools.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar"><div class="topbar-inner"><a class="brand" href="index.html">ROHILA Digital Tools</a><nav class="nav"><a href="index.html">Home</a><a href="forms.html">Forms</a><a href="login.html">Admin</a></nav></div></header>
+<main class="container">
+  <section class="panel tools-intro">
+    <span class="pill">Free Browser Tools</span>
+    <h1>ई-मित्र के काम के जरूरी टूल</h1>
+    <p class="muted">फाइल आपके मोबाइल/कंप्यूटर में ही process होती है। Upload करने की जरूरत नहीं।</p>
+  </section>
+
+  <section class="grid tool-grid">
+    <a class="card card-link tool-card" href="#passport"><div class="tool-icon">📸</div><h3>Passport Photo</h3><p class="muted">35×45 mm फोटो और 4×6 शीट</p></a>
+    <a class="card card-link tool-card" href="#resize"><div class="tool-icon">🖼️</div><h3>Photo Resize</h3><p class="muted">Pixel size और quality बदलें</p></a>
+    <a class="card card-link tool-card" href="#jpgpdf"><div class="tool-icon">📄</div><h3>JPG to PDF</h3><p class="muted">एक या कई फोटो की PDF</p></a>
+    <a class="card card-link tool-card" href="#merge"><div class="tool-icon">🧩</div><h3>PDF Merge</h3><p class="muted">कई PDF एक में जोड़ें</p></a>
+    <a class="card card-link tool-card" href="#deletepages"><div class="tool-icon">✂️</div><h3>Delete PDF Pages</h3><p class="muted">चुने हुए पेज हटाएँ</p></a>
+    <a class="card card-link tool-card" href="resume-maker.html"><div class="tool-icon">📋</div><h3>Resume Maker</h3><p class="muted">Resume बनाकर Print/PDF करें</p></a>
+  </section>
+
+  <section id="passport" class="panel tool-panel">
+    <h2>📸 Passport Photo Maker</h2>
+    <div class="form-grid">
+      <div class="field span-2"><label>अपनी फोटो चुनें</label><input id="passportFile" type="file" accept="image/*"></div>
+      <div class="field"><label>फोटो साइज</label><select id="passportSize"><option value="35x45">35 × 45 mm</option><option value="2x2">2 × 2 inch</option></select></div>
+      <div class="field"><label>शीट</label><select id="sheetCount"><option value="8">4×6 शीट पर 8 फोटो</option><option value="6">4×6 शीट पर 6 फोटो</option></select></div>
+    </div>
+    <div class="toolbar"><button class="btn" id="makePassport" type="button">शीट बनाएँ</button><button class="btn success hidden" id="downloadPassport" type="button">डाउनलोड JPG</button></div>
+    <div id="passportStatus" class="status"></div>
+    <div class="canvas-wrap"><canvas id="passportCanvas" class="preview-canvas"></canvas></div>
+  </section>
+
+  <section id="resize" class="panel tool-panel">
+    <h2>🖼️ Photo Resize / Compress</h2>
+    <div class="form-grid">
+      <div class="field span-2"><label>फोटो चुनें</label><input id="resizeFile" type="file" accept="image/*"></div>
+      <div class="field"><label>Width (px)</label><input id="resizeWidth" type="number" min="1" value="800"></div>
+      <div class="field"><label>Height (px)</label><input id="resizeHeight" type="number" min="1" value="600"></div>
+      <div class="field"><label>Quality</label><input id="resizeQuality" type="range" min="10" max="100" value="85"><small id="qualityText">85%</small></div>
+      <div class="field"><label>Format</label><select id="resizeFormat"><option value="image/jpeg">JPG</option><option value="image/png">PNG</option><option value="image/webp">WEBP</option></select></div>
+    </div>
+    <div class="toolbar"><button class="btn" id="resizeBtn" type="button">Resize करें</button><button class="btn success hidden" id="downloadResize" type="button">डाउनलोड</button></div>
+    <div id="resizeStatus" class="status"></div>
+    <div class="canvas-wrap"><canvas id="resizeCanvas" class="preview-canvas"></canvas></div>
+  </section>
+
+  <section id="jpgpdf" class="panel tool-panel">
+    <h2>📄 JPG / Image to PDF</h2>
+    <div class="field"><label>एक या कई फोटो चुनें</label><input id="jpgFiles" type="file" accept="image/*" multiple></div>
+    <div class="toolbar"><button class="btn" id="jpgToPdfBtn" type="button">PDF बनाएँ</button></div>
+    <div id="jpgPdfStatus" class="status"></div>
+  </section>
+
+  <section id="merge" class="panel tool-panel">
+    <h2>🧩 PDF Merge</h2>
+    <div class="field"><label>दो या अधिक PDF चुनें</label><input id="mergeFiles" type="file" accept="application/pdf" multiple></div>
+    <div class="toolbar"><button class="btn" id="mergePdfBtn" type="button">PDF जोड़ें</button></div>
+    <div id="mergeStatus" class="status"></div>
+  </section>
+
+  <section id="deletepages" class="panel tool-panel">
+    <h2>✂️ PDF Page Delete</h2>
+    <div class="form-grid">
+      <div class="field span-2"><label>PDF चुनें</label><input id="deletePdfFile" type="file" accept="application/pdf"></div>
+      <div class="field span-2"><label>हटाने वाले पेज (उदाहरण: 2,4-6)</label><input id="pagesToDelete" type="text" placeholder="2,4-6"></div>
+    </div>
+    <div class="toolbar"><button class="btn danger" id="deletePagesBtn" type="button">पेज हटाकर PDF बनाएँ</button></div>
+    <div id="deleteStatus" class="status"></div>
+  </section>
+</main>
+<footer class="footer">© <span id="year"></span> ROHILA E-MITRA CENTER</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script src="script.js"></script>
+<script src="tools.js"></script>
+</body>
+</html>

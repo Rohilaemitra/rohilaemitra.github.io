@@ -13,3 +13,12 @@ index.html में 919999999999 को अपने WhatsApp नंबर स�
 forms.js में # की जगह अपनी PDF file path दें, जैसे assets/forms/aadhaar.pdf.
 
 इस package में appointment, customers और notice की अलग files नहीं रखी गई हैं. Customer Diary मुख्य customer module है.
+
+
+## Digital Tools Added
+- Passport photo sheet
+- Photo resize/compress
+- JPG/Image to PDF
+- PDF merge
+- PDF page delete
+- Resume/Biodata maker
