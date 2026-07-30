@@ -1,1 +1,37 @@
-<!doctype html><html lang="hi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Forms Download</title><link rel="stylesheet" href="style.css"></head><body><header class="topbar"><div class="topbar-inner"><a class="brand" href="index.html">Forms Download</a><nav class="nav"><a href="index.html">Home</a><a href="services.html">Services</a></nav></div></header><main class="container"><h1>खाली आवेदन फॉर्म</h1><div class="toolbar"><input id="search" placeholder="फॉर्म खोजें"></div><section id="formsGrid" class="grid"></section><div class="panel"><p class="muted">PDF files जोड़ने के लिए <b>assets/forms/</b> folder में फाइल रखें और forms.js की सूची में नाम जोड़ें।</p></div></main><script src="forms.js"></script></body></html>
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Forms Download | ROHILA E-MITRA CENTER</title>
+  <meta name="description" content="ROHILA E-MITRA CENTER पर सरकारी खाली आवेदन फॉर्म डाउनलोड करें।">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">ROHILA E-MITRA CENTER</a>
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="tools.html">Tools</a>
+      <a href="login.html">Admin</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <section class="panel">
+    <h1>📂 सरकारी खाली फॉर्म</h1>
+    <p class="muted">फॉर्म खोजें और PDF डाउनलोड करें।</p>
+    <div class="toolbar">
+      <input id="search" type="search" placeholder="फॉर्म का नाम खोजें..." autocomplete="off">
+    </div>
+  </section>
+
+  <section id="formsGrid" class="grid" aria-live="polite"></section>
+</main>
+
+<script src="forms.js"></script>
+</body>
+</html>
