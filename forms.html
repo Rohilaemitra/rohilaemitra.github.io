@@ -1,37 +1,86 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Forms Download | ROHILA E-MITRA CENTER</title>
-  <meta name="description" content="ROHILA E-MITRA CENTER पर सरकारी खाली आवेदन फॉर्म डाउनलोड करें।">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>सरकारी फॉर्म | ROHILA E-MITRA CENTER</title>
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#18212f}
+    header{background:#0b57d0;color:#fff;padding:18px 14px;text-align:center}
+    header h1{margin:0;font-size:24px}
+    header p{margin:7px 0 0}
+    nav{margin-top:14px}
+    nav a{color:#fff;text-decoration:none;margin:0 8px;font-weight:700}
+    main{max-width:1100px;margin:auto;padding:20px 14px}
+    .search-box{background:#fff;padding:16px;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);margin-bottom:18px}
+    #searchForm{width:100%;padding:13px;border:1px solid #ccd5e0;border-radius:9px;font-size:16px}
+    .forms-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+    .form-card{background:#fff;border-radius:12px;padding:17px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+    .form-card h3{font-size:17px;margin:0 0 14px;min-height:42px}
+    .btn{display:inline-block;background:#0b57d0;color:#fff;text-decoration:none;padding:10px 14px;border-radius:8px;font-weight:700}
+    .btn:hover{background:#0848ad}
+    footer{text-align:center;padding:22px 12px;background:#122033;color:#fff;margin-top:25px}
+    .empty{display:none;background:#fff;padding:20px;border-radius:12px;text-align:center}
+  </style>
 </head>
 <body>
-<header class="topbar">
-  <div class="topbar-inner">
-    <a class="brand" href="index.html">ROHILA E-MITRA CENTER</a>
-    <nav class="nav">
-      <a href="index.html">Home</a>
-      <a href="services.html">Services</a>
-      <a href="tools.html">Tools</a>
-      <a href="login.html">Admin</a>
-    </nav>
-  </div>
+<header>
+  <h1>ROHILA E-MITRA CENTER</h1>
+  <p>सरकारी खाली फॉर्म डाउनलोड</p>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="tools.html">Tools</a>
+    <a href="login.html">Admin</a>
+  </nav>
 </header>
 
-<main class="container">
-  <section class="panel">
-    <h1>📂 सरकारी खाली फॉर्म</h1>
-    <p class="muted">फॉर्म खोजें और PDF डाउनलोड करें।</p>
-    <div class="toolbar">
-      <input id="search" type="search" placeholder="फॉर्म का नाम खोजें..." autocomplete="off">
-    </div>
-  </section>
+<main>
+  <div class="search-box">
+    <input type="search" id="searchForm" placeholder="फॉर्म का नाम खोजें...">
+  </div>
 
-  <section id="formsGrid" class="grid" aria-live="polite"></section>
+  <div id="emptyMessage" class="empty">कोई फॉर्म नहीं मिला।</div>
+
+  <section class="forms-grid" id="formsList">
+    <div class="form-card"><h3>ASHA Soft Claim Form</h3><a class="btn" href="forms/ASHASoft-ClaimForm.pdf" target="_blank">देखें / डाउनलोड</a></div>
+    <div class="form-card"><h3>Add Ration Card Rajasthan</h3><a class="btn" href="forms/Add%20Ration-Card-Rajasthan.pdf" target="_blank">देखें / डाउनलोड</a></div>
+    <div class="form-card"><h3>Birth Certificate Form</h3><a class="btn" href="forms/birth%20certificate%20empty.pdf" target="_blank">देखें / डाउनलोड</a></div>
+    <div class="form-card"><h3>Form No. 6</h3><a class="btn" href="forms/Form%20No%206%20New%20Formet.pdf" target="_blank">देखें / डाउनलोड</a></div>
+    <div class="form-card"><h3>Gram Sewak Report</h3><a class="btn" href="forms/gramsewak%20report.pdf" target="_blank">देखें / डाउनलोड</a></div>
+    <div class="form-card"><h3>Kund Form</h3><a class="btn" href="forms/kund.pdf" target="_blank">देखें / डाउनलोड</a></div>
+    <div class="form-card"><h3>New Ration Card Form</h3><a class="btn" href="forms/new%20ratoin%20card%20form.pdf" target="_blank">देखें / डाउनलोड</a></div>
+    <div class="form-card"><h3>Patwari EWS Form</h3><a class="btn" href="forms/patwari%20ews.pdf" target="_blank">देखें / डाउनलोड</a></div>
+    <div class="form-card"><h3>PCC &amp; Passport Verification</h3><a class="btn" href="forms/pcc%20%26%20passport%20verification%20offline%20form%20pdf%20vi.pdf" target="_blank">देखें / डाउनलोड</a></div>
+    <div class="form-card"><h3>PM Kisan Patwari Report</h3><a class="btn" href="forms/pm%20kisan%20patwari%20riport.pdf" target="_blank">देखें / डाउनलोड</a></div>
+    <div class="form-card"><h3>Police Verification Form</h3><a class="btn" href="forms/police%20verification%20offline%20form%20pdf.pdf" target="_blank">देखें / डाउनलोड</a></div>
+    <div class="form-card"><h3>SC/ST Certificate Form</h3><a class="btn" href="forms/sc-st.pdf" target="_blank">देखें / डाउनलोड</a></div>
+    <div class="form-card"><h3>OBC Certificate Form</h3><a class="btn" href="forms/OBC-STATE-AND-CENTRAL-FORM.pdf" target="_blank">देखें / डाउनलोड</a></div>
+    <div class="form-card"><h3>Shramik Scholarship Form</h3><a class="btn" href="forms/shramik-new-schoolership-form.pdf" target="_blank">देखें / डाउनलोड</a></div>
+    <div class="form-card"><h3>Virasat 5 Gawah Form</h3><a class="btn" href="forms/virasat%205%20gawah.pdf" target="_blank">देखें / डाउनलोड</a></div>
+  </section>
 </main>
 
-<script src="forms.js"></script>
+<footer>© 2026 ROHILA E-MITRA CENTER</footer>
+
+<script>
+  const searchInput = document.getElementById('searchForm');
+  const cards = Array.from(document.querySelectorAll('.form-card'));
+  const emptyMessage = document.getElementById('emptyMessage');
+
+  searchInput.addEventListener('input', function () {
+    const value = this.value.trim().toLowerCase();
+    let visible = 0;
+
+    cards.forEach(card => {
+      const show = card.innerText.toLowerCase().includes(value);
+      card.style.display = show ? 'block' : 'none';
+      if (show) visible++;
+    });
+
+    emptyMessage.style.display = visible ? 'none' : 'block';
+  });
+</script>
 </body>
 </html>
