@@ -3,84 +3,198 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>सरकारी फॉर्म | ROHILA E-MITRA CENTER</title>
+  <meta name="description" content="ROHILA E-MITRA CENTER - Rajasthan eMitra offline forms download">
+  <title>eMitra Offline Forms | ROHILA E-MITRA CENTER</title>
   <style>
     *{box-sizing:border-box}
-    body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#18212f}
-    header{background:#0b57d0;color:#fff;padding:18px 14px;text-align:center}
-    header h1{margin:0;font-size:24px}
-    header p{margin:7px 0 0}
-    nav{margin-top:14px}
-    nav a{color:#fff;text-decoration:none;margin:0 8px;font-weight:700}
-    main{max-width:1100px;margin:auto;padding:20px 14px}
-    .search-box{background:#fff;padding:16px;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);margin-bottom:18px}
-    #searchForm{width:100%;padding:13px;border:1px solid #ccd5e0;border-radius:9px;font-size:16px}
-    .forms-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
-    .form-card{background:#fff;border-radius:12px;padding:17px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
-    .form-card h3{font-size:17px;margin:0 0 14px;min-height:42px}
-    .btn{display:inline-block;background:#0b57d0;color:#fff;text-decoration:none;padding:10px 14px;border-radius:8px;font-weight:700}
-    .btn:hover{background:#0848ad}
-    footer{text-align:center;padding:22px 12px;background:#122033;color:#fff;margin-top:25px}
-    .empty{display:none;background:#fff;padding:20px;border-radius:12px;text-align:center}
+    body{margin:0;font-family:Arial,'Noto Sans Devanagari',sans-serif;background:#f5f6f8;color:#1c2430}
+    .topbar{background:#0b4ea2;color:#fff}
+    .wrap{width:min(1120px,calc(100% - 24px));margin:auto}
+    .brand{padding:18px 0;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .brand h1{margin:0;font-size:clamp(21px,4vw,31px)}
+    .brand p{margin:4px 0 0;opacity:.9}
+    .home-btn{background:#fff;color:#0b4ea2;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:8px}
+    nav{background:#07366f}
+    nav .wrap{display:flex;gap:4px;overflow:auto}
+    nav a{color:#fff;text-decoration:none;font-weight:700;padding:12px 14px;white-space:nowrap}
+    nav a:hover{background:rgba(255,255,255,.12)}
+    main{padding:24px 0 34px}
+    .page-card{background:#fff;border:1px solid #e1e6ed;border-radius:12px;box-shadow:0 5px 20px rgba(20,38,60,.08);overflow:hidden}
+    .page-head{padding:22px;border-bottom:1px solid #e6eaf0}
+    .page-head h2{margin:0 0 7px;font-size:27px;color:#07366f}
+    .page-head p{margin:0;color:#667085}
+    .search-area{padding:15px 22px;background:#fafbfc;border-bottom:1px solid #e6eaf0}
+    #formSearch{width:100%;padding:13px 14px;border:1px solid #cfd6df;border-radius:8px;font-size:16px;outline:none}
+    #formSearch:focus{border-color:#0b4ea2;box-shadow:0 0 0 3px rgba(11,78,162,.1)}
+    .table-wrap{overflow-x:auto}
+    table{width:100%;border-collapse:collapse;min-width:700px}
+    th,td{padding:14px 13px;border-bottom:1px solid #e8ecf1;text-align:left;vertical-align:middle}
+    th{background:#0b4ea2;color:#fff;font-size:14px}
+    th:first-child,td:first-child{width:76px;text-align:center}
+    th:last-child,td:last-child{width:150px;text-align:center}
+    tbody tr:nth-child(even){background:#fafcff}
+    tbody tr:hover{background:#eef5ff}
+    .download-btn{display:inline-block;background:#159947;color:#fff;text-decoration:none;font-weight:800;padding:9px 14px;border-radius:7px}
+    .download-btn:hover{background:#0e7937}
+    .empty{display:none;padding:24px;text-align:center;color:#b42318;font-weight:700}
+    .note{padding:16px 22px;background:#fff8e7;color:#6b4c00;border-top:1px solid #f3dfaa;font-size:14px}
+    footer{background:#071f41;color:#fff;text-align:center;padding:18px 12px}
+    @media(max-width:600px){
+      .brand{align-items:flex-start}
+      .page-head{padding:18px}
+      .search-area{padding:13px 18px}
+    }
   </style>
 </head>
 <body>
-<header>
-  <h1>ROHILA E-MITRA CENTER</h1>
-  <p>सरकारी खाली फॉर्म डाउनलोड</p>
+  <header class="topbar">
+    <div class="wrap brand">
+      <div>
+        <h1>ROHILA E-MITRA CENTER</h1>
+        <p>eMitra Offline Forms - Rajasthan</p>
+      </div>
+      <a class="home-btn" href="index.html">होम</a>
+    </div>
+  </header>
+
   <nav>
-    <a href="index.html">Home</a>
-    <a href="services.html">Services</a>
-    <a href="tools.html">Tools</a>
-    <a href="login.html">Admin</a>
+    <div class="wrap">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="forms.html">eMitra Form Download</a>
+      <a href="tools.html">Digital Tools</a>
+      <a href="status.html">Status</a>
+      <a href="login.html">Admin</a>
+    </div>
   </nav>
-</header>
 
-<main>
-  <div class="search-box">
-    <input type="search" id="searchForm" placeholder="फॉर्म का नाम खोजें...">
-  </div>
+  <main class="wrap">
+    <section class="page-card">
+      <div class="page-head">
+        <h2>eMitra Offline Forms - Rajasthan</h2>
+        <p>फॉर्म का नाम खोजें और Download बटन से PDF खोलें।</p>
+      </div>
 
-  <div id="emptyMessage" class="empty">कोई फॉर्म नहीं मिला।</div>
+      <div class="search-area">
+        <input id="formSearch" type="search" placeholder="Type Here to Get Search Results...">
+      </div>
 
-  <section class="forms-grid" id="formsList">
-    <div class="form-card"><h3>ASHA Soft Claim Form</h3><a class="btn" href="forms/ASHASoft-ClaimForm.pdf" target="_blank">देखें / डाउनलोड</a></div>
-    <div class="form-card"><h3>Add Ration Card Rajasthan</h3><a class="btn" href="forms/Add%20Ration-Card-Rajasthan.pdf" target="_blank">देखें / डाउनलोड</a></div>
-    <div class="form-card"><h3>Birth Certificate Form</h3><a class="btn" href="forms/birth%20certificate%20empty.pdf" target="_blank">देखें / डाउनलोड</a></div>
-    <div class="form-card"><h3>Form No. 6</h3><a class="btn" href="forms/Form%20No%206%20New%20Formet.pdf" target="_blank">देखें / डाउनलोड</a></div>
-    <div class="form-card"><h3>Gram Sewak Report</h3><a class="btn" href="forms/gramsewak%20report.pdf" target="_blank">देखें / डाउनलोड</a></div>
-    <div class="form-card"><h3>Kund Form</h3><a class="btn" href="forms/kund.pdf" target="_blank">देखें / डाउनलोड</a></div>
-    <div class="form-card"><h3>New Ration Card Form</h3><a class="btn" href="forms/new%20ratoin%20card%20form.pdf" target="_blank">देखें / डाउनलोड</a></div>
-    <div class="form-card"><h3>Patwari EWS Form</h3><a class="btn" href="forms/patwari%20ews.pdf" target="_blank">देखें / डाउनलोड</a></div>
-    <div class="form-card"><h3>PCC &amp; Passport Verification</h3><a class="btn" href="forms/pcc%20%26%20passport%20verification%20offline%20form%20pdf%20vi.pdf" target="_blank">देखें / डाउनलोड</a></div>
-    <div class="form-card"><h3>PM Kisan Patwari Report</h3><a class="btn" href="forms/pm%20kisan%20patwari%20riport.pdf" target="_blank">देखें / डाउनलोड</a></div>
-    <div class="form-card"><h3>Police Verification Form</h3><a class="btn" href="forms/police%20verification%20offline%20form%20pdf.pdf" target="_blank">देखें / डाउनलोड</a></div>
-    <div class="form-card"><h3>SC/ST Certificate Form</h3><a class="btn" href="forms/sc-st.pdf" target="_blank">देखें / डाउनलोड</a></div>
-    <div class="form-card"><h3>OBC Certificate Form</h3><a class="btn" href="forms/OBC-STATE-AND-CENTRAL-FORM.pdf" target="_blank">देखें / डाउनलोड</a></div>
-    <div class="form-card"><h3>Shramik Scholarship Form</h3><a class="btn" href="forms/shramik-new-schoolership-form.pdf" target="_blank">देखें / डाउनलोड</a></div>
-    <div class="form-card"><h3>Virasat 5 Gawah Form</h3><a class="btn" href="forms/virasat%205%20gawah.pdf" target="_blank">देखें / डाउनलोड</a></div>
-  </section>
-</main>
+      <div class="table-wrap">
+        <table id="formsTable">
+          <thead>
+            <tr>
+              <th>S.No</th>
+              <th>Service Name</th>
+              <th>Application Form</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+        <td>1</td>
+        <td>बेरोजगारी भत्ता / ASHA Soft Claim Form</td>
+        <td><a class="download-btn" href="forms/ASHASoft-ClaimForm.pdf" target="_blank" rel="noopener">Download</a></td>
+      </tr>
+<tr>
+        <td>2</td>
+        <td>नया राशन कार्ड आवेदन फॉर्म</td>
+        <td><a class="download-btn" href="forms/Add%20Ration-Card-Rajasthan.pdf" target="_blank" rel="noopener">Download</a></td>
+      </tr>
+<tr>
+        <td>3</td>
+        <td>जन्म प्रमाण पत्र आवेदन फॉर्म</td>
+        <td><a class="download-btn" href="forms/birth%20certificate%20empty.pdf" target="_blank" rel="noopener">Download</a></td>
+      </tr>
+<tr>
+        <td>4</td>
+        <td>Form No. 6</td>
+        <td><a class="download-btn" href="forms/Form%20No%206%20New%20Formet.pdf" target="_blank" rel="noopener">Download</a></td>
+      </tr>
+<tr>
+        <td>5</td>
+        <td>ग्राम सेवक रिपोर्ट फॉर्म</td>
+        <td><a class="download-btn" href="forms/gramsewak%20report.pdf" target="_blank" rel="noopener">Download</a></td>
+      </tr>
+<tr>
+        <td>6</td>
+        <td>कुंड फॉर्म</td>
+        <td><a class="download-btn" href="forms/kund.pdf" target="_blank" rel="noopener">Download</a></td>
+      </tr>
+<tr>
+        <td>7</td>
+        <td>नया राशन कार्ड फॉर्म</td>
+        <td><a class="download-btn" href="forms/new%20ratoin%20card%20form.pdf" target="_blank" rel="noopener">Download</a></td>
+      </tr>
+<tr>
+        <td>8</td>
+        <td>पटवारी EWS रिपोर्ट फॉर्म</td>
+        <td><a class="download-btn" href="forms/patwari%20ews.pdf" target="_blank" rel="noopener">Download</a></td>
+      </tr>
+<tr>
+        <td>9</td>
+        <td>PCC एवं Passport Verification Offline Form</td>
+        <td><a class="download-btn" href="forms/pcc%20%26%20passport%20verification%20offline%20form%20pdf%20vi.pdf" target="_blank" rel="noopener">Download</a></td>
+      </tr>
+<tr>
+        <td>10</td>
+        <td>PM Kisan पटवारी रिपोर्ट</td>
+        <td><a class="download-btn" href="forms/pm%20kisan%20patwari%20riport.pdf" target="_blank" rel="noopener">Download</a></td>
+      </tr>
+<tr>
+        <td>11</td>
+        <td>Police Verification Offline Form</td>
+        <td><a class="download-btn" href="forms/police%20verification%20offline%20form%20pdf.pdf" target="_blank" rel="noopener">Download</a></td>
+      </tr>
+<tr>
+        <td>12</td>
+        <td>SC/ST Certificate Form</td>
+        <td><a class="download-btn" href="forms/sc-st.pdf" target="_blank" rel="noopener">Download</a></td>
+      </tr>
+<tr>
+        <td>13</td>
+        <td>OBC State & Central Form</td>
+        <td><a class="download-btn" href="forms/OBC-STATE-AND-CENTRAL-FORM.pdf" target="_blank" rel="noopener">Download</a></td>
+      </tr>
+<tr>
+        <td>14</td>
+        <td>Shramik Scholarship Form</td>
+        <td><a class="download-btn" href="forms/shramik-new-schoolership-form.pdf" target="_blank" rel="noopener">Download</a></td>
+      </tr>
+<tr>
+        <td>15</td>
+        <td>विरासत 5 गवाह फॉर्म</td>
+        <td><a class="download-btn" href="forms/virasat%205%20gawah.pdf" target="_blank" rel="noopener">Download</a></td>
+      </tr>
+          </tbody>
+        </table>
+      </div>
 
-<footer>© 2026 ROHILA E-MITRA CENTER</footer>
+      <div class="empty" id="emptyMessage">कोई फॉर्म नहीं मिला।</div>
 
-<script>
-  const searchInput = document.getElementById('searchForm');
-  const cards = Array.from(document.querySelectorAll('.form-card'));
-  const emptyMessage = document.getElementById('emptyMessage');
+      <div class="note">
+        केवल वही फॉर्म दिखाए गए हैं जिनकी PDF आपकी वेबसाइट के <strong>forms</strong> folder में उपलब्ध है।
+      </div>
+    </section>
+  </main>
 
-  searchInput.addEventListener('input', function () {
-    const value = this.value.trim().toLowerCase();
-    let visible = 0;
+  <footer>© 2026 ROHILA E-MITRA CENTER | All Rights Reserved</footer>
 
-    cards.forEach(card => {
-      const show = card.innerText.toLowerCase().includes(value);
-      card.style.display = show ? 'block' : 'none';
-      if (show) visible++;
+  <script>
+    const searchInput = document.getElementById("formSearch");
+    const rows = Array.from(document.querySelectorAll("#formsTable tbody tr"));
+    const emptyMessage = document.getElementById("emptyMessage");
+
+    searchInput.addEventListener("input", function(){
+      const query = this.value.trim().toLowerCase();
+      let visible = 0;
+
+      rows.forEach(row => {
+        const show = row.textContent.toLowerCase().includes(query);
+        row.style.display = show ? "" : "none";
+        if(show) visible++;
+      });
+
+      emptyMessage.style.display = visible ? "none" : "block";
     });
-
-    emptyMessage.style.display = visible ? 'none' : 'block';
-  });
-</script>
+  </script>
 </body>
 </html>
