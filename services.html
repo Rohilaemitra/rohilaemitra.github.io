@@ -1,1 +1,182 @@
-<!doctype html><html lang="hi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Services</title><link rel="stylesheet" href="style.css"></head><body><header class="topbar"><div class="topbar-inner"><a class="brand" href="index.html">ROHILA Services</a><nav class="nav"><a href="index.html">Home</a><a href="forms.html">Forms</a></nav></div></header><main class="container"><h1>हमारी सेवाएँ</h1><section class="grid" id="serviceGrid"></section></main><footer class="footer">ROHILA E-MITRA CENTER</footer><script src="services.js"></script></body></html>
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>मुख्य सेवाएँ | ROHILA E-MITRA CENTER</title>
+  <meta name="description" content="ROHILA E-MITRA CENTER की मुख्य सरकारी और डिजिटल सेवाएँ।">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f4f7fb;color:#172033}
+    .service-header{background:linear-gradient(135deg,#0b57d0,#073b8c);color:#fff;padding:18px 14px}
+    .service-header-inner{max-width:1100px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+    .brand{color:#fff;text-decoration:none;font-size:20px;font-weight:800}
+    .service-nav{display:flex;gap:12px;flex-wrap:wrap}
+    .service-nav a{color:#fff;text-decoration:none;font-weight:700}
+    .service-main{max-width:1100px;margin:auto;padding:24px 14px 36px}
+    .hero-box{background:#fff;border-radius:16px;padding:22px;box-shadow:0 4px 18px rgba(0,0,0,.08);margin-bottom:20px}
+    .hero-box h1{margin:0 0 8px;font-size:28px}
+    .hero-box p{margin:0;color:#5a6576;line-height:1.6}
+    .search-wrap{margin-top:16px}
+    #serviceSearch{width:100%;padding:13px 14px;border:1px solid #cfd7e3;border-radius:10px;font-size:16px}
+    .section-title{margin:28px 0 14px;font-size:22px}
+    .service-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px}
+    .service-card{background:#fff;border-radius:14px;padding:18px;box-shadow:0 3px 14px rgba(0,0,0,.07);border:1px solid #e8edf5}
+    .service-card h3{margin:0 0 8px;font-size:18px}
+    .service-card p{margin:0;color:#5d6878;line-height:1.55}
+    .service-card .tag{display:inline-block;margin-top:12px;background:#eaf2ff;color:#0b57d0;border-radius:999px;padding:6px 10px;font-size:13px;font-weight:700}
+    .quick-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-top:18px}
+    .quick-link{display:block;background:#0b57d0;color:#fff;text-decoration:none;text-align:center;padding:14px;border-radius:11px;font-weight:800}
+    .quick-link.secondary{background:#137333}
+    .quick-link.dark{background:#29364a}
+    .empty{display:none;background:#fff;padding:20px;border-radius:12px;text-align:center;color:#5d6878}
+    footer{text-align:center;background:#122033;color:#fff;padding:20px 12px}
+    @media(max-width:600px){
+      .hero-box h1{font-size:23px}
+      .service-nav{font-size:14px}
+    }
+  </style>
+</head>
+<body>
+
+<header class="service-header">
+  <div class="service-header-inner">
+    <a class="brand" href="index.html">ROHILA E-MITRA CENTER</a>
+    <nav class="service-nav">
+      <a href="index.html">Home</a>
+      <a href="forms.html">Forms</a>
+      <a href="tools.html">Tools</a>
+      <a href="login.html">Admin</a>
+    </nav>
+  </div>
+</header>
+
+<main class="service-main">
+  <section class="hero-box">
+    <h1>मुख्य सेवाएँ</h1>
+    <p>ई-मित्र, सरकारी दस्तावेज, प्रमाण पत्र, पहचान पत्र, बिल भुगतान और डिजिटल सहायता की प्रमुख सेवाएँ।</p>
+    <div class="search-wrap">
+      <input id="serviceSearch" type="search" placeholder="सेवा खोजें—जैसे आधार, पैन, राशन कार्ड...">
+    </div>
+  </section>
+
+  <div id="emptyMessage" class="empty">यह सेवा सूची में नहीं मिली।</div>
+
+  <section class="service-grid" id="serviceGrid">
+    <article class="service-card">
+      <h3>🪪 आधार एवं जन आधार</h3>
+      <p>आधार अपडेट सहायता, जन आधार नामांकन, सदस्य जोड़ना और सुधार संबंधी सेवा।</p>
+      <span class="tag">पहचान सेवा</span>
+    </article>
+
+    <article class="service-card">
+      <h3>💳 पैन कार्ड</h3>
+      <p>नया PAN Card आवेदन, Correction और PAN से जुड़ी सामान्य सहायता।</p>
+      <span class="tag">पहचान सेवा</span>
+    </article>
+
+    <article class="service-card">
+      <h3>🗳️ वोटर आईडी</h3>
+      <p>नया मतदाता पंजीकरण, विवरण सुधार, स्थान परिवर्तन और स्थिति सहायता।</p>
+      <span class="tag">मतदाता सेवा</span>
+    </article>
+
+    <article class="service-card">
+      <h3>🍚 राशन कार्ड</h3>
+      <p>नया राशन कार्ड, सदस्य जोड़ना/हटाना और विवरण संशोधन सहायता।</p>
+      <span class="tag">खाद्य सुरक्षा</span>
+    </article>
+
+    <article class="service-card">
+      <h3>📜 आय प्रमाण पत्र</h3>
+      <p>आय प्रमाण पत्र के ऑनलाइन आवेदन और जरूरी दस्तावेजों की जानकारी।</p>
+      <span class="tag">प्रमाण पत्र</span>
+    </article>
+
+    <article class="service-card">
+      <h3>📜 जाति प्रमाण पत्र</h3>
+      <p>SC, ST, OBC और संबंधित जाति प्रमाण पत्र आवेदन सहायता।</p>
+      <span class="tag">प्रमाण पत्र</span>
+    </article>
+
+    <article class="service-card">
+      <h3>🏠 मूल निवास प्रमाण पत्र</h3>
+      <p>राजस्थान मूल निवास प्रमाण पत्र आवेदन और दस्तावेज सहायता।</p>
+      <span class="tag">प्रमाण पत्र</span>
+    </article>
+
+    <article class="service-card">
+      <h3>👶 जन्म प्रमाण पत्र</h3>
+      <p>जन्म प्रमाण पत्र आवेदन, संशोधन और खाली फॉर्म की सुविधा।</p>
+      <span class="tag">नगर निकाय सेवा</span>
+    </article>
+
+    <article class="service-card">
+      <h3>👷 ई-श्रम कार्ड</h3>
+      <p>ई-श्रम पंजीकरण, कार्ड डाउनलोड और विवरण अपडेट सहायता।</p>
+      <span class="tag">श्रमिक सेवा</span>
+    </article>
+
+    <article class="service-card">
+      <h3>👴 पेंशन सेवाएँ</h3>
+      <p>वृद्धावस्था, विधवा और दिव्यांग पेंशन आवेदन संबंधी सहायता।</p>
+      <span class="tag">सामाजिक सुरक्षा</span>
+    </article>
+
+    <article class="service-card">
+      <h3>💡 बिल भुगतान</h3>
+      <p>बिजली, पानी और अन्य उपलब्ध ऑनलाइन बिल भुगतान सेवाएँ।</p>
+      <span class="tag">भुगतान सेवा</span>
+    </article>
+
+    <article class="service-card">
+      <h3>🛂 पासपोर्ट एवं PCC</h3>
+      <p>पासपोर्ट आवेदन, पुलिस क्लीयरेंस और सत्यापन फॉर्म सहायता।</p>
+      <span class="tag">दस्तावेज सेवा</span>
+    </article>
+
+    <article class="service-card">
+      <h3>📂 सरकारी खाली फॉर्म</h3>
+      <p>जरूरी सरकारी आवेदन फॉर्म देखें और PDF में डाउनलोड करें।</p>
+      <span class="tag">Forms</span>
+    </article>
+
+    <article class="service-card">
+      <h3>🧰 डिजिटल टूल्स</h3>
+      <p>Passport Photo, Photo Resize और JPG to PDF जैसी सुविधाएँ।</p>
+      <span class="tag">Digital Tools</span>
+    </article>
+  </section>
+
+  <h2 class="section-title">सीधे खोलें</h2>
+  <section class="quick-links">
+    <a class="quick-link" href="forms.html">📂 खाली फॉर्म खोलें</a>
+    <a class="quick-link secondary" href="tools.html">🧰 डिजिटल टूल्स खोलें</a>
+    <a class="quick-link dark" href="status.html">📋 आवेदन स्थिति देखें</a>
+  </section>
+</main>
+
+<footer>© 2026 ROHILA E-MITRA CENTER</footer>
+
+<script>
+  const searchInput = document.getElementById('serviceSearch');
+  const cards = Array.from(document.querySelectorAll('.service-card'));
+  const emptyMessage = document.getElementById('emptyMessage');
+
+  searchInput.addEventListener('input', function () {
+    const term = this.value.trim().toLowerCase();
+    let count = 0;
+
+    cards.forEach(card => {
+      const matched = card.innerText.toLowerCase().includes(term);
+      card.style.display = matched ? 'block' : 'none';
+      if (matched) count++;
+    });
+
+    emptyMessage.style.display = count ? 'none' : 'block';
+  });
+</script>
+
+</body>
+</html>
