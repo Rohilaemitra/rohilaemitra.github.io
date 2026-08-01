@@ -6,54 +6,235 @@
   <meta name="description" content="ROHILA E-MITRA CENTER - Rajasthan eMitra offline forms download">
   <title>eMitra Offline Forms | ROHILA E-MITRA CENTER</title>
   <style>
+    :root{
+      --primary:#0b4ea2;
+      --primary-dark:#07366f;
+      --green:#159947;
+      --green-dark:#0e7937;
+      --text:#1c2430;
+      --muted:#667085;
+      --line:#e4e9f0;
+      --bg:#f4f6f9;
+      --white:#ffffff;
+      --warning:#fff8e7;
+    }
     *{box-sizing:border-box}
-    body{margin:0;font-family:Arial,'Noto Sans Devanagari',sans-serif;background:#f5f6f8;color:#1c2430}
-    .topbar{background:#0b4ea2;color:#fff}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Arial,"Noto Sans Devanagari",sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
     .wrap{width:min(1120px,calc(100% - 24px));margin:auto}
-    .brand{padding:18px 0;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-    .brand h1{margin:0;font-size:clamp(21px,4vw,31px)}
-    .brand p{margin:4px 0 0;opacity:.9}
-    .home-btn{background:#fff;color:#0b4ea2;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:8px}
-    nav{background:#07366f}
-    nav .wrap{display:flex;gap:4px;overflow:auto}
-    nav a{color:#fff;text-decoration:none;font-weight:700;padding:12px 14px;white-space:nowrap}
-    nav a:hover{background:rgba(255,255,255,.12)}
-    main{padding:24px 0 34px}
-    .page-card{background:#fff;border:1px solid #e1e6ed;border-radius:12px;box-shadow:0 5px 20px rgba(20,38,60,.08);overflow:hidden}
-    .page-head{padding:22px;border-bottom:1px solid #e6eaf0}
-    .page-head h2{margin:0 0 7px;font-size:27px;color:#07366f}
-    .page-head p{margin:0;color:#667085}
-    .search-area{padding:15px 22px;background:#fafbfc;border-bottom:1px solid #e6eaf0}
-    #formSearch{width:100%;padding:13px 14px;border:1px solid #cfd6df;border-radius:8px;font-size:16px;outline:none}
-    #formSearch:focus{border-color:#0b4ea2;box-shadow:0 0 0 3px rgba(11,78,162,.1)}
+    .top-strip{
+      background:#061f41;
+      color:#fff;
+      font-size:14px;
+    }
+    .top-strip .wrap{
+      min-height:36px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .top-strip a{color:#fff;text-decoration:none}
+    .header{background:linear-gradient(135deg,var(--primary-dark),var(--primary));color:#fff}
+    .brand{
+      min-height:116px;
+      padding:18px 0;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+    .brand-title{display:flex;align-items:center;gap:14px}
+    .logo{
+      width:58px;height:58px;border-radius:14px;
+      display:grid;place-items:center;
+      background:#fff;color:var(--primary);
+      font-size:30px;box-shadow:0 8px 24px rgba(0,0,0,.16);
+    }
+    .brand h1{margin:0;font-size:clamp(22px,4vw,34px)}
+    .brand p{margin:5px 0 0;opacity:.9}
+    .home-btn{
+      background:#fff;color:var(--primary-dark);
+      text-decoration:none;font-weight:800;
+      padding:11px 16px;border-radius:9px;
+    }
+    nav{
+      background:var(--primary-dark);
+      position:sticky;top:0;z-index:20;
+      box-shadow:0 2px 12px rgba(0,0,0,.12);
+    }
+    nav .wrap{display:flex;overflow-x:auto}
+    nav a{
+      color:#fff;text-decoration:none;font-weight:700;
+      padding:13px 15px;white-space:nowrap;
+      border-bottom:3px solid transparent;
+    }
+    nav a:hover,nav a.active{
+      background:rgba(255,255,255,.10);
+      border-bottom-color:#ffd54f;
+    }
+    main{padding:24px 0 38px}
+    .page-card{
+      background:var(--white);
+      border:1px solid var(--line);
+      border-radius:16px;
+      box-shadow:0 8px 28px rgba(20,38,60,.09);
+      overflow:hidden;
+    }
+    .page-head{
+      padding:24px;
+      background:linear-gradient(135deg,#eef5ff,#ffffff);
+      border-bottom:1px solid var(--line);
+    }
+    .page-head h2{
+      margin:0 0 8px;
+      color:var(--primary-dark);
+      font-size:clamp(24px,4vw,32px);
+    }
+    .page-head p{margin:0;color:var(--muted);line-height:1.6}
+    .controls{
+      padding:16px 22px;
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 240px;
+      gap:12px;
+      background:#fafbfc;
+      border-bottom:1px solid var(--line);
+    }
+    .controls input,.controls select{
+      width:100%;
+      padding:13px 14px;
+      border:1px solid #cfd6df;
+      border-radius:9px;
+      font-size:16px;
+      outline:none;
+      background:#fff;
+    }
+    .controls input:focus,.controls select:focus{
+      border-color:var(--primary);
+      box-shadow:0 0 0 3px rgba(11,78,162,.12);
+    }
+    .counter{
+      padding:11px 22px;
+      color:var(--primary-dark);
+      background:#f5f9ff;
+      border-bottom:1px solid var(--line);
+      font-weight:700;
+    }
     .table-wrap{overflow-x:auto}
-    table{width:100%;border-collapse:collapse;min-width:700px}
-    th,td{padding:14px 13px;border-bottom:1px solid #e8ecf1;text-align:left;vertical-align:middle}
-    th{background:#0b4ea2;color:#fff;font-size:14px}
+    table{width:100%;border-collapse:collapse;min-width:760px}
+    th,td{
+      padding:14px 13px;
+      border-bottom:1px solid #e8ecf1;
+      text-align:left;
+      vertical-align:middle;
+    }
+    th{background:var(--primary);color:#fff;font-size:14px}
     th:first-child,td:first-child{width:76px;text-align:center}
+    th:nth-child(3),td:nth-child(3){width:150px}
     th:last-child,td:last-child{width:150px;text-align:center}
     tbody tr:nth-child(even){background:#fafcff}
     tbody tr:hover{background:#eef5ff}
-    .download-btn{display:inline-block;background:#159947;color:#fff;text-decoration:none;font-weight:800;padding:9px 14px;border-radius:7px}
-    .download-btn:hover{background:#0e7937}
-    .empty{display:none;padding:24px;text-align:center;color:#b42318;font-weight:700}
-    .note{padding:16px 22px;background:#fff8e7;color:#6b4c00;border-top:1px solid #f3dfaa;font-size:14px}
-    footer{background:#071f41;color:#fff;text-align:center;padding:18px 12px}
-    @media(max-width:600px){
-      .brand{align-items:flex-start}
-      .page-head{padding:18px}
-      .search-area{padding:13px 18px}
+    .category-badge{
+      display:inline-block;
+      background:#e8f1ff;
+      color:var(--primary-dark);
+      border:1px solid #cfe0fb;
+      padding:5px 9px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+    .download-btn{
+      display:inline-block;
+      background:var(--green);
+      color:#fff;
+      text-decoration:none;
+      font-weight:800;
+      padding:9px 14px;
+      border-radius:8px;
+      box-shadow:0 4px 12px rgba(21,153,71,.18);
+    }
+    .download-btn:hover{background:var(--green-dark)}
+    .empty{
+      display:none;
+      padding:30px;
+      text-align:center;
+      color:#b42318;
+      font-weight:700;
+    }
+    .note{
+      padding:16px 22px;
+      background:var(--warning);
+      color:#6b4c00;
+      border-top:1px solid #f3dfaa;
+      font-size:14px;
+      line-height:1.6;
+    }
+    footer{
+      background:#061f41;
+      color:#fff;
+      text-align:center;
+      padding:20px 12px;
+    }
+    @media(max-width:720px){
+      .top-strip .wrap{justify-content:center;padding:7px 0}
+      .brand{min-height:auto}
+      .controls{grid-template-columns:1fr}
+      .page-head{padding:20px}
+      .controls{padding:14px 18px}
+      .counter{padding:11px 18px}
+      table,thead,tbody,tr,th,td{display:block}
+      table{min-width:0}
+      thead{display:none}
+      tbody{padding:12px}
+      tbody tr{
+        margin:0 0 14px;
+        padding:14px;
+        border:1px solid var(--line);
+        border-radius:12px;
+        background:#fff!important;
+        box-shadow:0 4px 14px rgba(20,38,60,.06);
+      }
+      tbody td{
+        width:auto!important;
+        padding:7px 0;
+        border:0;
+        text-align:left!important;
+      }
+      tbody td:first-child:before{content:"S.No: ";font-weight:700}
+      tbody td:nth-child(2){font-weight:800;font-size:17px}
+      tbody td:nth-child(3):before{content:"Category: ";font-weight:700}
+      tbody td:last-child{padding-top:11px}
+      .download-btn{display:block;text-align:center}
     }
   </style>
 </head>
 <body>
-  <header class="topbar">
+  <div class="top-strip">
+    <div class="wrap">
+      <span>📍 Sikar, Rajasthan</span>
+      <a href="https://wa.me/919772240449" target="_blank" rel="noopener">📱 WhatsApp: 9772240449</a>
+    </div>
+  </div>
+
+  <header class="header">
     <div class="wrap brand">
-      <div>
-        <h1>ROHILA E-MITRA CENTER</h1>
-        <p>eMitra Offline Forms - Rajasthan</p>
+      <div class="brand-title">
+        <div class="logo">🏛️</div>
+        <div>
+          <h1>ROHILA E-MITRA CENTER</h1>
+          <p>eMitra Offline Forms - Rajasthan</p>
+        </div>
       </div>
-      <a class="home-btn" href="index.html">होम</a>
+      <a class="home-btn" href="index.html">🏠 होम</a>
     </div>
   </header>
 
@@ -61,7 +242,7 @@
     <div class="wrap">
       <a href="index.html">Home</a>
       <a href="services.html">Services</a>
-      <a href="forms.html">eMitra Form Download</a>
+      <a class="active" href="forms.html">eMitra Form Download</a>
       <a href="tools.html">Digital Tools</a>
       <a href="status.html">Status</a>
       <a href="login.html">Admin</a>
@@ -72,12 +253,23 @@
     <section class="page-card">
       <div class="page-head">
         <h2>eMitra Offline Forms - Rajasthan</h2>
-        <p>फॉर्म का नाम खोजें और Download बटन से PDF खोलें।</p>
+        <p>फॉर्म का नाम खोजें, Category चुनें और Download बटन से PDF खोलें।</p>
       </div>
 
-      <div class="search-area">
-        <input id="formSearch" type="search" placeholder="Type Here to Get Search Results...">
+      <div class="controls">
+        <input id="formSearch" type="search" placeholder="Type Here to Get Search Results..." aria-label="फॉर्म खोजें">
+        <select id="categoryFilter" aria-label="Category चुनें">
+          <option value="">All Categories</option>
+          <option value="राशन कार्ड">राशन कार्ड</option>
+          <option value="प्रमाण पत्र">प्रमाण पत्र</option>
+          <option value="पुलिस / पासपोर्ट">पुलिस / पासपोर्ट</option>
+          <option value="किसान">किसान</option>
+          <option value="श्रमिक / छात्रवृत्ति">श्रमिक / छात्रवृत्ति</option>
+          <option value="अन्य">अन्य</option>
+        </select>
       </div>
+
+      <div class="counter" id="formCounter">15 फॉर्म उपलब्ध हैं</div>
 
       <div class="table-wrap">
         <table id="formsTable">
@@ -85,85 +277,26 @@
             <tr>
               <th>S.No</th>
               <th>Service Name</th>
+              <th>Category</th>
               <th>Application Form</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-        <td>1</td>
-        <td>बेरोजगारी भत्ता / ASHA Soft Claim Form</td>
-        <td><a class="download-btn" href="forms/ASHASoft-ClaimForm.pdf" target="_blank" rel="noopener">Download</a></td>
-      </tr>
-<tr>
-        <td>2</td>
-        <td>नया राशन कार्ड आवेदन फॉर्म</td>
-        <td><a class="download-btn" href="forms/Add%20Ration-Card-Rajasthan.pdf" target="_blank" rel="noopener">Download</a></td>
-      </tr>
-<tr>
-        <td>3</td>
-        <td>जन्म प्रमाण पत्र आवेदन फॉर्म</td>
-        <td><a class="download-btn" href="forms/birth%20certificate%20empty.pdf" target="_blank" rel="noopener">Download</a></td>
-      </tr>
-<tr>
-        <td>4</td>
-        <td>Form No. 6</td>
-        <td><a class="download-btn" href="forms/Form%20No%206%20New%20Formet.pdf" target="_blank" rel="noopener">Download</a></td>
-      </tr>
-<tr>
-        <td>5</td>
-        <td>ग्राम सेवक रिपोर्ट फॉर्म</td>
-        <td><a class="download-btn" href="forms/gramsewak%20report.pdf" target="_blank" rel="noopener">Download</a></td>
-      </tr>
-<tr>
-        <td>6</td>
-        <td>कुंड फॉर्म</td>
-        <td><a class="download-btn" href="forms/kund.pdf" target="_blank" rel="noopener">Download</a></td>
-      </tr>
-<tr>
-        <td>7</td>
-        <td>नया राशन कार्ड फॉर्म</td>
-        <td><a class="download-btn" href="forms/new%20ratoin%20card%20form.pdf" target="_blank" rel="noopener">Download</a></td>
-      </tr>
-<tr>
-        <td>8</td>
-        <td>पटवारी EWS रिपोर्ट फॉर्म</td>
-        <td><a class="download-btn" href="forms/patwari%20ews.pdf" target="_blank" rel="noopener">Download</a></td>
-      </tr>
-<tr>
-        <td>9</td>
-        <td>PCC एवं Passport Verification Offline Form</td>
-        <td><a class="download-btn" href="forms/pcc%20%26%20passport%20verification%20offline%20form%20pdf%20vi.pdf" target="_blank" rel="noopener">Download</a></td>
-      </tr>
-<tr>
-        <td>10</td>
-        <td>PM Kisan पटवारी रिपोर्ट</td>
-        <td><a class="download-btn" href="forms/pm%20kisan%20patwari%20riport.pdf" target="_blank" rel="noopener">Download</a></td>
-      </tr>
-<tr>
-        <td>11</td>
-        <td>Police Verification Offline Form</td>
-        <td><a class="download-btn" href="forms/police%20verification%20offline%20form%20pdf.pdf" target="_blank" rel="noopener">Download</a></td>
-      </tr>
-<tr>
-        <td>12</td>
-        <td>SC/ST Certificate Form</td>
-        <td><a class="download-btn" href="forms/sc-st.pdf" target="_blank" rel="noopener">Download</a></td>
-      </tr>
-<tr>
-        <td>13</td>
-        <td>OBC State & Central Form</td>
-        <td><a class="download-btn" href="forms/OBC-STATE-AND-CENTRAL-FORM.pdf" target="_blank" rel="noopener">Download</a></td>
-      </tr>
-<tr>
-        <td>14</td>
-        <td>Shramik Scholarship Form</td>
-        <td><a class="download-btn" href="forms/shramik-new-schoolership-form.pdf" target="_blank" rel="noopener">Download</a></td>
-      </tr>
-<tr>
-        <td>15</td>
-        <td>विरासत 5 गवाह फॉर्म</td>
-        <td><a class="download-btn" href="forms/virasat%205%20gawah.pdf" target="_blank" rel="noopener">Download</a></td>
-      </tr>
+            <tr data-category="अन्य"><td>1</td><td>बेरोजगारी भत्ता / ASHA Soft Claim Form</td><td><span class="category-badge">अन्य</span></td><td><a class="download-btn" href="forms/ASHASoft-ClaimForm.pdf" target="_blank" rel="noopener">Download</a></td></tr>
+            <tr data-category="राशन कार्ड"><td>2</td><td>Add Ration Card Rajasthan</td><td><span class="category-badge">राशन कार्ड</span></td><td><a class="download-btn" href="forms/Add%20Ration-Card-Rajasthan.pdf" target="_blank" rel="noopener">Download</a></td></tr>
+            <tr data-category="प्रमाण पत्र"><td>3</td><td>जन्म प्रमाण पत्र आवेदन फॉर्म</td><td><span class="category-badge">प्रमाण पत्र</span></td><td><a class="download-btn" href="forms/birth%20certificate%20empty.pdf" target="_blank" rel="noopener">Download</a></td></tr>
+            <tr data-category="अन्य"><td>4</td><td>Form No. 6</td><td><span class="category-badge">अन्य</span></td><td><a class="download-btn" href="forms/Form%20No%206%20New%20Formet.pdf" target="_blank" rel="noopener">Download</a></td></tr>
+            <tr data-category="अन्य"><td>5</td><td>ग्राम सेवक रिपोर्ट फॉर्म</td><td><span class="category-badge">अन्य</span></td><td><a class="download-btn" href="forms/gramsewak%20report.pdf" target="_blank" rel="noopener">Download</a></td></tr>
+            <tr data-category="किसान"><td>6</td><td>कुंड फॉर्म</td><td><span class="category-badge">किसान</span></td><td><a class="download-btn" href="forms/kund.pdf" target="_blank" rel="noopener">Download</a></td></tr>
+            <tr data-category="राशन कार्ड"><td>7</td><td>नया राशन कार्ड फॉर्म</td><td><span class="category-badge">राशन कार्ड</span></td><td><a class="download-btn" href="forms/new%20ratoin%20card%20form.pdf" target="_blank" rel="noopener">Download</a></td></tr>
+            <tr data-category="प्रमाण पत्र"><td>8</td><td>पटवारी EWS रिपोर्ट फॉर्म</td><td><span class="category-badge">प्रमाण पत्र</span></td><td><a class="download-btn" href="forms/patwari%20ews.pdf" target="_blank" rel="noopener">Download</a></td></tr>
+            <tr data-category="पुलिस / पासपोर्ट"><td>9</td><td>PCC एवं Passport Verification Offline Form</td><td><span class="category-badge">पुलिस / पासपोर्ट</span></td><td><a class="download-btn" href="forms/pcc%20%26%20passport%20verification%20offline%20form%20pdf%20vi.pdf" target="_blank" rel="noopener">Download</a></td></tr>
+            <tr data-category="किसान"><td>10</td><td>PM Kisan पटवारी रिपोर्ट</td><td><span class="category-badge">किसान</span></td><td><a class="download-btn" href="forms/pm%20kisan%20patwari%20riport.pdf" target="_blank" rel="noopener">Download</a></td></tr>
+            <tr data-category="पुलिस / पासपोर्ट"><td>11</td><td>Police Verification Offline Form</td><td><span class="category-badge">पुलिस / पासपोर्ट</span></td><td><a class="download-btn" href="forms/police%20verification%20offline%20form%20pdf.pdf" target="_blank" rel="noopener">Download</a></td></tr>
+            <tr data-category="प्रमाण पत्र"><td>12</td><td>SC/ST Certificate Form</td><td><span class="category-badge">प्रमाण पत्र</span></td><td><a class="download-btn" href="forms/sc-st.pdf" target="_blank" rel="noopener">Download</a></td></tr>
+            <tr data-category="प्रमाण पत्र"><td>13</td><td>OBC State & Central Form</td><td><span class="category-badge">प्रमाण पत्र</span></td><td><a class="download-btn" href="forms/OBC-STATE-AND-CENTRAL-FORM.pdf" target="_blank" rel="noopener">Download</a></td></tr>
+            <tr data-category="श्रमिक / छात्रवृत्ति"><td>14</td><td>Shramik Scholarship Form</td><td><span class="category-badge">श्रमिक / छात्रवृत्ति</span></td><td><a class="download-btn" href="forms/shramik-new-schoolership-form.pdf" target="_blank" rel="noopener">Download</a></td></tr>
+            <tr data-category="अन्य"><td>15</td><td>विरासत 5 गवाह फॉर्म</td><td><span class="category-badge">अन्य</span></td><td><a class="download-btn" href="forms/virasat%205%20gawah.pdf" target="_blank" rel="noopener">Download</a></td></tr>
           </tbody>
         </table>
       </div>
@@ -171,30 +304,41 @@
       <div class="empty" id="emptyMessage">कोई फॉर्म नहीं मिला।</div>
 
       <div class="note">
-        केवल वही फॉर्म दिखाए गए हैं जिनकी PDF आपकी वेबसाइट के <strong>forms</strong> folder में उपलब्ध है।
+        सभी Download links आपकी वेबसाइट के <strong>forms</strong> folder की PDF files से जुड़े हैं।
       </div>
     </section>
   </main>
 
-  <footer>© 2026 ROHILA E-MITRA CENTER | All Rights Reserved</footer>
+  <footer>
+    © 2026 ROHILA E-MITRA CENTER | All Rights Reserved
+  </footer>
 
   <script>
     const searchInput = document.getElementById("formSearch");
+    const categoryFilter = document.getElementById("categoryFilter");
     const rows = Array.from(document.querySelectorAll("#formsTable tbody tr"));
     const emptyMessage = document.getElementById("emptyMessage");
+    const formCounter = document.getElementById("formCounter");
 
-    searchInput.addEventListener("input", function(){
-      const query = this.value.trim().toLowerCase();
+    function filterForms(){
+      const query = searchInput.value.trim().toLowerCase();
+      const category = categoryFilter.value;
       let visible = 0;
 
       rows.forEach(row => {
-        const show = row.textContent.toLowerCase().includes(query);
+        const matchesSearch = row.textContent.toLowerCase().includes(query);
+        const matchesCategory = !category || row.dataset.category === category;
+        const show = matchesSearch && matchesCategory;
         row.style.display = show ? "" : "none";
         if(show) visible++;
       });
 
       emptyMessage.style.display = visible ? "none" : "block";
-    });
+      formCounter.textContent = visible + " फॉर्म दिखाई दे रहे हैं";
+    }
+
+    searchInput.addEventListener("input", filterForms);
+    categoryFilter.addEventListener("change", filterForms);
   </script>
 </body>
 </html>
