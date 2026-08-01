@@ -3,911 +3,195 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ROHILA E-MITRA CENTER | Government & Digital Services</title>
-  <meta name="description" content="ROHILA E-MITRA CENTER, Sikar Rajasthan - सरकारी एवं डिजिटल सेवाएँ, eMitra forms, certificates, bill payment, PAN, Jan Aadhaar and more.">
-  <meta name="keywords" content="Rohila E-Mitra, E-Mitra Sikar, Rajasthan eMitra, government services, digital services">
-  <meta name="author" content="ROHILA E-MITRA CENTER">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://rohilaemitra.github.io/">
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
+  <title>Secret Gallery | ROHILA E-MITRA CENTER</title>
+  <meta name="robots" content="noindex,nofollow">
   <style>
     :root{
       --navy:#062b5c;
       --blue:#0b63ce;
-      --sky:#eaf4ff;
-      --orange:#ff8a00;
-      --green:#118a4e;
-      --ink:#172033;
-      --muted:#637083;
-      --line:#dde5ee;
+      --bg:#f4f7fb;
       --white:#fff;
-      --surface:#f5f8fc;
-      --shadow:0 12px 34px rgba(11,52,96,.12);
-      --radius:18px;
+      --text:#172033;
+      --muted:#667085;
+      --line:#dfe7f0;
     }
-
     *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
     body{
       margin:0;
       font-family:Arial,"Noto Sans Devanagari",sans-serif;
-      color:var(--ink);
-      background:var(--surface);
-      line-height:1.55;
+      background:var(--bg);
+      color:var(--text);
     }
-    img{max-width:100%;display:block}
-    a{text-decoration:none}
-    button,input,textarea{font:inherit}
-    .container{width:min(1180px,calc(100% - 28px));margin:auto}
-
-    .topbar{
-      background:#031c3d;
+    header{
+      background:linear-gradient(135deg,var(--navy),var(--blue));
       color:#fff;
-      font-size:14px;
+      padding:22px 16px;
+      box-shadow:0 6px 20px rgba(0,0,0,.12);
     }
-    .topbar-inner{
-      min-height:38px;
+    .wrap{width:min(1100px,calc(100% - 24px));margin:auto}
+    .head{
       display:flex;
-      align-items:center;
       justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-    }
-    .topbar a{color:#fff}
-    #datetime{font-weight:700}
-
-    #festivalBanner{
-      display:none;
-      color:#fff;
-      text-align:center;
-      padding:9px 14px;
-      font-weight:800;
-    }
-
-    .site-header{
-      background:linear-gradient(135deg,#063b7c,#0b63ce);
-      color:#fff;
-    }
-    .header-inner{
-      min-height:116px;
-      display:flex;
       align-items:center;
-      justify-content:space-between;
-      gap:20px;
-      padding:18px 0;
-    }
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:15px;
-    }
-    .brand-mark{
-      width:66px;
-      height:66px;
-      border-radius:18px;
-      background:#fff;
-      color:var(--blue);
-      display:grid;
-      place-items:center;
-      font-size:32px;
-      box-shadow:0 10px 26px rgba(0,0,0,.18);
-      flex:0 0 auto;
-    }
-    .brand h1{
-      margin:0;
-      font-size:clamp(22px,3.7vw,36px);
-      line-height:1.15;
-      letter-spacing:.2px;
-    }
-    .brand p{margin:6px 0 0;opacity:.92}
-    .header-contact{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-    .header-contact a{
-      color:#fff;
-      border:1px solid rgba(255,255,255,.35);
-      padding:10px 13px;
-      border-radius:10px;
-      font-weight:800;
-      background:rgba(255,255,255,.10);
-    }
-
-    .nav-wrap{
-      background:#fff;
-      position:sticky;
-      top:0;
-      z-index:50;
-      box-shadow:0 4px 18px rgba(0,31,69,.10);
-    }
-    .nav-inner{
-      min-height:58px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
       gap:14px;
-    }
-    nav{
-      display:flex;
-      align-items:center;
-      gap:4px;
       flex-wrap:wrap;
     }
-    nav a{
+    h1{margin:0;font-size:clamp(24px,4vw,34px)}
+    .sub{margin:5px 0 0;opacity:.9}
+    .back{
       color:var(--navy);
-      font-weight:800;
-      padding:16px 13px;
-      border-bottom:3px solid transparent;
-    }
-    nav a:hover,nav a.active{
-      color:var(--blue);
-      border-bottom-color:var(--orange);
-    }
-    .admin-link{
-      color:#fff!important;
-      background:var(--navy);
+      background:#fff;
+      padding:10px 14px;
       border-radius:9px;
-      padding:10px 14px!important;
-      border:0!important;
-      margin-left:4px;
-    }
-    .menu-btn{
-      display:none;
-      border:0;
-      background:var(--navy);
-      color:#fff;
-      width:43px;
-      height:40px;
-      border-radius:9px;
-      cursor:pointer;
-      font-size:20px;
-    }
-
-    .notice-strip{
-      background:#fff5dc;
-      border-bottom:1px solid #f0d58d;
-    }
-    .notice-inner{
-      min-height:42px;
-      display:grid;
-      grid-template-columns:auto 1fr;
-      align-items:center;
-      gap:14px;
-      overflow:hidden;
-    }
-    .notice-label{
-      background:var(--orange);
-      color:#fff;
-      font-weight:900;
-      padding:7px 12px;
-      border-radius:7px;
-      white-space:nowrap;
-    }
-    .notice-text{
-      white-space:nowrap;
-      overflow:hidden;
-      color:#5d4300;
-      font-weight:700;
-    }
-    .notice-text span{
-      display:inline-block;
-      padding-left:100%;
-      animation:ticker 18s linear infinite;
-    }
-    @keyframes ticker{to{transform:translateX(-100%)}}
-
-    .hero{
-      min-height:520px;
-      display:grid;
-      place-items:center;
-      text-align:center;
-      color:#fff;
-      padding:70px 18px;
-      background:
-        linear-gradient(rgba(0,28,65,.68),rgba(0,28,65,.72)),
-        url("images/banner1.jpg") center/cover no-repeat;
-      position:relative;
-      isolation:isolate;
-    }
-    .hero::after{
-      content:"";
-      position:absolute;
-      inset:auto 0 0;
-      height:100px;
-      background:linear-gradient(transparent,var(--surface));
-      z-index:-1;
-    }
-    .hero-content{max-width:880px}
-    .hero-badge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      background:rgba(255,255,255,.16);
-      border:1px solid rgba(255,255,255,.28);
-      border-radius:999px;
-      padding:8px 14px;
       font-weight:800;
-      backdrop-filter:blur(5px);
+      text-decoration:none;
     }
-    .hero h2{
-      margin:18px 0 12px;
-      font-size:clamp(34px,6vw,62px);
-      line-height:1.08;
-      text-shadow:0 4px 20px rgba(0,0,0,.28);
-    }
-    .hero p{
-      margin:0 auto;
-      max-width:760px;
-      font-size:clamp(17px,2.4vw,22px);
-      opacity:.96;
-    }
-    .hero-actions{
-      margin-top:26px;
-      display:flex;
-      justify-content:center;
-      gap:12px;
-      flex-wrap:wrap;
-    }
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:9px;
-      min-height:48px;
-      padding:12px 18px;
-      border-radius:10px;
-      font-weight:900;
-      border:1px solid transparent;
-      transition:.2s ease;
-    }
-    .btn:hover{transform:translateY(-2px)}
-    .btn-primary{background:var(--orange);color:#fff}
-    .btn-light{background:#fff;color:var(--navy)}
-    .btn-whatsapp{background:#16a663;color:#fff}
-
-    .quick-links{
-      margin-top:-62px;
-      position:relative;
-      z-index:10;
-    }
-    .quick-grid{
-      display:grid;
-      grid-template-columns:repeat(5,1fr);
-      gap:14px;
-    }
-    .quick-card{
+    main{padding:28px 0 50px}
+    .panel{
       background:#fff;
       border:1px solid var(--line);
       border-radius:16px;
-      padding:22px 15px;
+      padding:18px;
+      box-shadow:0 10px 28px rgba(15,44,82,.08);
+    }
+    .status{
       text-align:center;
-      color:var(--ink);
-      box-shadow:var(--shadow);
-      transition:.2s ease;
+      color:var(--muted);
+      padding:24px 10px;
+      font-weight:700;
     }
-    .quick-card:hover{transform:translateY(-5px);border-color:#b8d3f1}
-    .quick-card i{
-      width:54px;
-      height:54px;
-      display:grid;
-      place-items:center;
-      margin:0 auto 11px;
-      border-radius:15px;
-      color:#fff;
-      font-size:24px;
-      background:linear-gradient(135deg,var(--blue),#2b8af4);
-    }
-    .quick-card:nth-child(2) i{background:linear-gradient(135deg,#ec7b00,#ff9d2e)}
-    .quick-card:nth-child(3) i{background:linear-gradient(135deg,#12884d,#1ead67)}
-    .quick-card:nth-child(4) i{background:linear-gradient(135deg,#6d3fc0,#925fe3)}
-    .quick-card:nth-child(5) i{background:linear-gradient(135deg,#26364f,#111827)}
-    .quick-card strong{display:block;font-size:17px}
-    .quick-card small{color:var(--muted)}
-
-    section.content-section{padding:76px 0}
-    .section-head{
-      text-align:center;
-      max-width:760px;
-      margin:0 auto 34px;
-    }
-    .section-kicker{
-      color:var(--orange);
-      font-weight:900;
-      text-transform:uppercase;
-      letter-spacing:1px;
-      font-size:13px;
-    }
-    .section-head h2{
-      margin:7px 0 9px;
-      color:var(--navy);
-      font-size:clamp(27px,4vw,39px);
-    }
-    .section-head p{margin:0;color:var(--muted)}
-
-    .service-grid{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:16px;
-    }
-    .service-card{
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      padding:23px;
-      box-shadow:0 8px 24px rgba(18,55,93,.07);
-      transition:.2s ease;
-    }
-    .service-card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
-    .service-card i{
-      font-size:27px;
-      color:var(--blue);
-      margin-bottom:15px;
-    }
-    .service-card h3{margin:0 0 6px;font-size:18px;color:var(--navy)}
-    .service-card p{margin:0;color:var(--muted);font-size:14px}
-
-    .forms-banner{
-      background:linear-gradient(135deg,var(--navy),var(--blue));
-      color:#fff;
-      border-radius:24px;
-      padding:34px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:22px;
-      box-shadow:var(--shadow);
-    }
-    .forms-banner h2{margin:0 0 7px;font-size:clamp(26px,4vw,38px)}
-    .forms-banner p{margin:0;opacity:.9}
-    .forms-banner .btn{flex:0 0 auto}
-
-    .about-layout{
-      display:grid;
-      grid-template-columns:1.05fr .95fr;
-      gap:28px;
-      align-items:center;
-    }
-    .about-box,.contact-box{
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:22px;
-      box-shadow:var(--shadow);
-      padding:30px;
-    }
-    .about-box h2,.contact-box h2{margin:0 0 12px;color:var(--navy)}
-    .about-box p{color:var(--muted)}
-    .feature-list{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-      margin-top:22px;
-    }
-    .feature{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      color:var(--navy);
-      font-weight:800;
-    }
-    .feature i{color:var(--green)}
-
-    .stats-panel{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:14px;
-    }
-    .stat{
-      min-height:145px;
-      border-radius:18px;
-      padding:22px;
-      color:#fff;
-      display:flex;
-      flex-direction:column;
-      justify-content:flex-end;
-      background:linear-gradient(135deg,#0b63ce,#39a0ff);
-    }
-    .stat:nth-child(2){background:linear-gradient(135deg,#ef7b00,#ffad3b)}
-    .stat:nth-child(3){background:linear-gradient(135deg,#0c8147,#22b871)}
-    .stat:nth-child(4){background:linear-gradient(135deg,#6534b5,#9a64e6)}
-    .stat strong{font-size:34px;line-height:1}
-    .stat span{margin-top:7px;font-weight:800}
-
-    .gallery-grid{
+    .grid{
       display:grid;
       grid-template-columns:repeat(4,1fr);
       gap:14px;
     }
-    .gallery-grid img{
+    .card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:14px;
+      overflow:hidden;
+      box-shadow:0 6px 18px rgba(15,44,82,.07);
+    }
+    .card a{display:block;text-decoration:none;color:inherit}
+    .card img,.card video{
       width:100%;
       height:220px;
       object-fit:cover;
-      border-radius:16px;
-      box-shadow:0 8px 22px rgba(0,36,77,.12);
-      background:#dce7f3;
+      display:block;
+      background:#e9eef5;
     }
-
-    .reviews{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:18px;
+    .name{
+      padding:10px 12px;
+      font-size:13px;
+      color:var(--muted);
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
     }
-    .review{
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:25px;
-      box-shadow:0 8px 22px rgba(18,55,93,.07);
-    }
-    .stars{color:#f7a600;font-size:20px;letter-spacing:2px}
-    .review p{color:var(--muted);margin:12px 0 0}
-
-    .contact-layout{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:22px;
-    }
-    .contact-form{
-      display:grid;
-      gap:12px;
-    }
-    .contact-form input,.contact-form textarea{
-      width:100%;
-      border:1px solid #cfd9e4;
-      border-radius:10px;
-      padding:13px 14px;
-      outline:none;
-      background:#fbfdff;
-    }
-    .contact-form input:focus,.contact-form textarea:focus{
-      border-color:var(--blue);
-      box-shadow:0 0 0 3px rgba(11,99,206,.12);
-    }
-    .contact-form button{cursor:pointer}
-    .contact-info{
-      display:grid;
-      gap:12px;
-      margin-bottom:18px;
-    }
-    .contact-item{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      color:var(--navy);
+    .empty{
+      text-align:center;
+      padding:30px;
+      color:#b42318;
       font-weight:800;
     }
-    .contact-item i{
-      width:42px;
-      height:42px;
-      border-radius:12px;
-      display:grid;
-      place-items:center;
-      color:#fff;
-      background:var(--blue);
-    }
-    .map iframe{
-      width:100%;
-      height:300px;
-      border:0;
-      border-radius:16px;
-    }
-
-    footer{
-      background:#031c3d;
-      color:#fff;
-      padding:42px 0 18px;
-    }
-    .footer-grid{
-      display:grid;
-      grid-template-columns:1.4fr 1fr 1fr;
-      gap:28px;
-    }
-    footer h3{margin:0 0 12px}
-    footer p{opacity:.84}
-    footer a{color:#fff;display:block;margin:8px 0;opacity:.88}
-    .copyright{
-      margin-top:28px;
-      padding-top:18px;
-      border-top:1px solid rgba(255,255,255,.15);
+    .note{
+      margin-top:14px;
+      font-size:13px;
+      color:var(--muted);
       text-align:center;
-      opacity:.78;
     }
-
-    .float-whatsapp{
-      position:fixed;
-      right:20px;
-      bottom:20px;
-      width:56px;
-      height:56px;
-      border-radius:50%;
-      background:#18a963;
-      color:#fff;
-      display:grid;
-      place-items:center;
-      font-size:29px;
-      box-shadow:0 10px 28px rgba(0,0,0,.23);
-      z-index:80;
-    }
-
-    #topBtn{
-      border:0!important;
-      border-radius:10px!important;
-      color:#fff!important;
-      background:var(--navy)!important;
-      box-shadow:0 8px 20px rgba(0,0,0,.18)!important;
-    }
-
-    @media(max-width:960px){
-      .quick-grid,.service-grid{grid-template-columns:repeat(2,1fr)}
-      .about-layout,.contact-layout{grid-template-columns:1fr}
-      .gallery-grid{grid-template-columns:repeat(2,1fr)}
-      .footer-grid{grid-template-columns:1fr 1fr}
-    }
-
-    @media(max-width:760px){
-      .topbar-inner{justify-content:center;padding:7px 0;text-align:center}
-      .header-inner{min-height:auto;align-items:flex-start;flex-direction:column}
-      .header-contact{justify-content:flex-start}
-      .menu-btn{display:block}
-      .nav-inner{min-height:56px}
-      nav{
-        display:none;
-        position:absolute;
-        left:14px;
-        right:14px;
-        top:58px;
-        padding:10px;
-        background:#fff;
-        border-radius:12px;
-        box-shadow:var(--shadow);
-        flex-direction:column;
-        align-items:stretch;
-      }
-      nav.open{display:flex}
-      nav a{padding:11px 12px;border:0;border-radius:8px}
-      nav a:hover{background:var(--sky)}
-      .admin-link{margin-left:0}
-      .notice-inner{grid-template-columns:1fr;padding:8px 0;gap:5px}
-      .notice-label{width:max-content}
-      .hero{min-height:560px;padding-top:65px}
-      .quick-links{margin-top:-40px}
-      .forms-banner{align-items:flex-start;flex-direction:column}
-      .feature-list{grid-template-columns:1fr}
-      .footer-grid{grid-template-columns:1fr}
-    }
-
-    @media(max-width:540px){
-      .brand-mark{width:54px;height:54px;border-radius:14px;font-size:26px}
-      .header-contact a{font-size:13px}
-      .quick-grid,.service-grid,.gallery-grid,.reviews{grid-template-columns:1fr}
-      .quick-card{display:flex;align-items:center;text-align:left;gap:14px;padding:15px}
-      .quick-card i{margin:0;flex:0 0 auto}
-      .gallery-grid img{height:240px}
-      .stats-panel{grid-template-columns:1fr 1fr}
-      .stat{min-height:125px}
-      .about-box,.contact-box{padding:22px}
-      section.content-section{padding:58px 0}
-    }
+    @media(max-width:900px){.grid{grid-template-columns:repeat(3,1fr)}}
+    @media(max-width:650px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:430px){.grid{grid-template-columns:1fr}.card img,.card video{height:260px}}
   </style>
-
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"LocalBusiness",
-    "name":"ROHILA E-MITRA CENTER",
-    "url":"https://rohilaemitra.github.io/",
-    "description":"Government and digital services center in Sikar, Rajasthan",
-    "address":{
-      "@type":"PostalAddress",
-      "addressLocality":"Sikar",
-      "addressRegion":"Rajasthan",
-      "addressCountry":"IN"
-    }
-  }
-  </script>
 </head>
-
 <body>
-  <div id="festivalBanner"></div>
-
-  <div class="topbar">
-    <div class="container topbar-inner">
-      <span><i class="fa-solid fa-location-dot"></i> Sikar, Rajasthan</span>
-      <span id="datetime">Loading Date & Time...</span>
-      <a href="mailto:info@rohilaemitra.in"><i class="fa-solid fa-envelope"></i> info@rohilaemitra.in</a>
+<header>
+  <div class="wrap head">
+    <div>
+      <h1>🔒 Secret Gallery</h1>
+      <p class="sub">ROHILA E-MITRA CENTER</p>
     </div>
+    <a class="back" href="../index.html">← Home</a>
   </div>
+</header>
 
-  <header class="site-header">
-    <div class="container header-inner">
-      <div class="brand">
-        <div class="brand-mark"><i class="fa-solid fa-landmark"></i></div>
-        <div>
-          <h1>ROHILA E-MITRA CENTER</h1>
-          <p>Government & Digital Services • सरकारी एवं ऑनलाइन सेवाएँ</p>
-        </div>
-      </div>
-
-      <div class="header-contact">
-        <a href="tel:97772240449"><i class="fa-solid fa-phone"></i> Call Now</a>
-        <a href="https://wa.me/9197772240449" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
-      </div>
-    </div>
-  </header>
-
-  <div class="nav-wrap">
-    <div class="container nav-inner">
-      <button class="menu-btn" id="menuBtn" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
-      <nav id="mainNav">
-        <a class="active" href="#home">Home</a>
-        <a href="#services">Services</a>
-        <a href="forms.html">Forms Download</a>
-        <a href="#about">About</a>
-        <a href="#gallery">Gallery</a>
-        <a href="#contact">Contact</a>
-        <a href="secret/"><i class="fa-solid fa-user-secret"></i> Secret Gallery</a>
-        <a class="admin-link" href="login.html"><i class="fa-solid fa-lock"></i> Admin Login</a>
-      </nav>
-    </div>
+<main>
+  <div class="wrap">
+    <section class="panel">
+      <div id="status" class="status">Gallery loading...</div>
+      <div id="gallery" class="grid"></div>
+      <div class="note">यह page secret folder में मौजूद image/video files को अपने-आप दिखाता है।</div>
+    </section>
   </div>
+</main>
 
-  <div class="notice-strip">
-    <div class="container notice-inner">
-      <div class="notice-label"><i class="fa-solid fa-bullhorn"></i> Latest Notice</div>
-      <div class="notice-text" id="noticeArea">
-        <span>ROHILA E-MITRA CENTER में सभी सरकारी एवं ऑनलाइन सेवाएँ उपलब्ध हैं • eMitra Offline Forms अब Forms Download पेज पर उपलब्ध हैं।</span>
-      </div>
-    </div>
-  </div>
+<script>
+const owner = "Rohilaemitra";
+const repo = "rohilaemitra.github.io";
+const folder = "secret";
+const api = `https://api.github.com/repos/${owner}/${repo}/contents/${folder}?ref=main`;
 
-  <main>
-    <section id="home" class="hero">
-      <div class="hero-content">
-        <div class="hero-badge"><i class="fa-solid fa-shield-halved"></i> Trusted Digital Service Center</div>
-        <h2>एक ही जगह पर सभी सरकारी एवं डिजिटल सेवाएँ</h2>
-        <p>तेज़, भरोसेमंद और सरल सेवा — Aadhaar, PAN, Jan Aadhaar, Certificates, Bill Payment, Online Forms और बहुत कुछ।</p>
+const imageExt = /\.(jpg|jpeg|png|gif|webp|bmp|svg)$/i;
+const videoExt = /\.(mp4|webm|mov|m4v)$/i;
 
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#services"><i class="fa-solid fa-grid-2"></i> हमारी सेवाएँ</a>
-          <a class="btn btn-light" href="forms.html"><i class="fa-solid fa-file-arrow-down"></i> Forms Download</a>
-          <a class="btn btn-whatsapp" href="https://wa.me/9197772240449" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
-        </div>
-      </div>
-    </section>
+async function loadGallery(){
+  const status = document.getElementById("status");
+  const gallery = document.getElementById("gallery");
 
-    <div class="quick-links">
-      <div class="container quick-grid">
-        <a class="quick-card" href="forms.html">
-          <i class="fa-solid fa-file-pdf"></i>
-          <div><strong>Offline Forms</strong><small>PDF forms डाउनलोड करें</small></div>
-        </a>
-        <a class="quick-card" href="#services">
-          <i class="fa-solid fa-laptop-file"></i>
-          <div><strong>Available Services</strong><small>सभी सेवाएँ देखें</small></div>
-        </a>
-        <a class="quick-card" href="gallery.html">
-          <i class="fa-solid fa-images"></i>
-          <div><strong>Photo Gallery</strong><small>Center की तस्वीरें</small></div>
-        </a>
-        <a class="quick-card" href="secret/">
-          <i class="fa-solid fa-user-secret"></i>
-          <div><strong>Secret Gallery</strong><small>Private gallery खोलें</small></div>
-        </a>
-        <a class="quick-card" href="login.html">
-          <i class="fa-solid fa-user-shield"></i>
-          <div><strong>Admin Panel</strong><small>Authorized login</small></div>
-        </a>
-      </div>
-    </div>
+  try{
+    const res = await fetch(api, {headers: {"Accept":"application/vnd.github+json"}});
+    if(!res.ok) throw new Error("GitHub API error " + res.status);
 
-    <section id="services" class="content-section">
-      <div class="container">
-        <div class="section-head">
-          <div class="section-kicker">Our Services</div>
-          <h2>मुख्य सेवाएँ</h2>
-          <p>नागरिकों के लिए आवश्यक सरकारी, बैंकिंग और ऑनलाइन सेवाएँ एक ही केंद्र पर।</p>
-        </div>
+    const files = await res.json();
+    const media = files.filter(f => f.type === "file" && (imageExt.test(f.name) || videoExt.test(f.name)));
 
-        <div class="service-grid">
-          <article class="service-card"><i class="fa-solid fa-id-card"></i><h3>Aadhaar Services</h3><p>आधार संबंधित सहायता एवं ऑनलाइन सेवाएँ।</p></article>
-          <article class="service-card"><i class="fa-solid fa-address-card"></i><h3>PAN Card</h3><p>नया PAN और correction आवेदन सहायता।</p></article>
-          <article class="service-card"><i class="fa-solid fa-people-roof"></i><h3>Jan Aadhaar</h3><p>जन आधार enrollment और update सेवाएँ।</p></article>
-          <article class="service-card"><i class="fa-solid fa-heart-pulse"></i><h3>Ayushman Card</h3><p>आयुष्मान कार्ड संबंधित सहायता।</p></article>
-          <article class="service-card"><i class="fa-solid fa-wheat-awn"></i><h3>PM Kisan</h3><p>किसान योजना आवेदन और status सहायता।</p></article>
-          <article class="service-card"><i class="fa-solid fa-bolt"></i><h3>Electricity Bill</h3><p>बिजली बिल payment और receipt।</p></article>
-          <article class="service-card"><i class="fa-solid fa-faucet-drip"></i><h3>Water Bill</h3><p>पानी बिल भुगतान सुविधा।</p></article>
-          <article class="service-card"><i class="fa-solid fa-train"></i><h3>Railway Ticket</h3><p>रेलवे reservation सहायता।</p></article>
-          <article class="service-card"><i class="fa-solid fa-building-columns"></i><h3>AEPS Banking</h3><p>बैंकिंग एवं cash withdrawal सुविधा।</p></article>
-          <article class="service-card"><i class="fa-solid fa-certificate"></i><h3>Income Certificate</h3><p>आय प्रमाण पत्र आवेदन सहायता।</p></article>
-          <article class="service-card"><i class="fa-solid fa-certificate"></i><h3>Caste Certificate</h3><p>जाति प्रमाण पत्र आवेदन सहायता।</p></article>
-          <article class="service-card"><i class="fa-solid fa-house-chimney-user"></i><h3>Domicile Certificate</h3><p>मूल निवास प्रमाण पत्र आवेदन।</p></article>
-        </div>
-      </div>
-    </section>
+    status.style.display = "none";
 
-    <section class="content-section" style="padding-top:0">
-      <div class="container">
-        <div class="forms-banner">
-          <div>
-            <h2>eMitra Offline Forms</h2>
-            <p>Search और category filter के साथ सभी उपलब्ध PDF forms डाउनलोड करें।</p>
-          </div>
-          <a class="btn btn-light" href="forms.html"><i class="fa-solid fa-download"></i> Forms Page खोलें</a>
-        </div>
-      </div>
-    </section>
+    if(!media.length){
+      gallery.innerHTML = '<div class="empty">secret folder में कोई image/video file नहीं मिली।</div>';
+      return;
+    }
 
-    <section id="about" class="content-section">
-      <div class="container about-layout">
-        <div class="about-box">
-          <div class="section-kicker">About Us</div>
-          <h2>ROHILA E-MITRA CENTER</h2>
-          <p>ROHILA E-MITRA CENTER में सभी सरकारी एवं ऑनलाइन सेवाएँ उपलब्ध हैं। यहाँ आधार, पैन कार्ड, जन आधार, आयुष्मान कार्ड, बिजली बिल, पानी बिल, रेलवे टिकट, बैंकिंग, CSC सेवाएँ तथा अन्य डिजिटल सेवाएँ उपलब्ध हैं।</p>
+    media.forEach(file => {
+      const card = document.createElement("div");
+      card.className = "card";
 
-          <div class="feature-list">
-            <div class="feature"><i class="fa-solid fa-circle-check"></i> Fast Service</div>
-            <div class="feature"><i class="fa-solid fa-circle-check"></i> Trusted Support</div>
-            <div class="feature"><i class="fa-solid fa-circle-check"></i> Online Forms</div>
-            <div class="feature"><i class="fa-solid fa-circle-check"></i> Customer Assistance</div>
-          </div>
-        </div>
+      const link = document.createElement("a");
+      link.href = file.download_url;
+      link.target = "_blank";
+      link.rel = "noopener";
 
-        <div class="stats-panel">
-          <div class="stat"><strong>5000+</strong><span>Happy Customers</span></div>
-          <div class="stat"><strong>50+</strong><span>Available Services</span></div>
-          <div class="stat"><strong>100%</strong><span>Trusted Service</span></div>
-          <div class="stat"><strong>24×7</strong><span>Online Support</span></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="gallery" class="content-section" style="background:#eef5fc">
-      <div class="container">
-        <div class="section-head">
-          <div class="section-kicker">Gallery</div>
-          <h2>हमारा केंद्र</h2>
-          <p>ROHILA E-MITRA CENTER की कुछ तस्वीरें।</p>
-        </div>
-
-        <div class="gallery-grid">
-          <img src="images/shop1.jpg" alt="ROHILA E-MITRA CENTER photo 1" loading="lazy">
-          <img src="images/shop2.jpg" alt="ROHILA E-MITRA CENTER photo 2" loading="lazy">
-          <img src="images/shop3.jpg" alt="ROHILA E-MITRA CENTER photo 3" loading="lazy">
-          <img src="images/shop4.jpg" alt="ROHILA E-MITRA CENTER photo 4" loading="lazy">
-        </div>
-      </div>
-    </section>
-
-    <section class="content-section">
-      <div class="container">
-        <div class="section-head">
-          <div class="section-kicker">Customer Reviews</div>
-          <h2>ग्राहकों का विश्वास</h2>
-        </div>
-
-        <div class="reviews">
-          <div class="review">
-            <div class="stars">★★★★★</div>
-            <p>बहुत अच्छी सर्विस मिली। सभी सरकारी कार्य समय पर हुए।</p>
-          </div>
-          <div class="review">
-            <div class="stars">★★★★★</div>
-            <p>Very fast service and helpful support. Highly recommended.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact" class="content-section" style="background:#eef5fc">
-      <div class="container contact-layout">
-        <div class="contact-box">
-          <div class="section-kicker">Contact</div>
-          <h2>संपर्क करें</h2>
-
-          <div class="contact-info">
-            <div class="contact-item"><i class="fa-solid fa-location-dot"></i><span>Sikar, Rajasthan</span></div>
-            <div class="contact-item"><i class="fa-solid fa-phone"></i><span>+91 97772240449</span></div>
-            <div class="contact-item"><i class="fa-solid fa-envelope"></i><span>info@rohilaemitra.in</span></div>
-          </div>
-
-          <form id="contactForm" class="contact-form">
-            <input type="text" id="name" placeholder="आपका नाम" required>
-            <input type="tel" id="mobile" placeholder="10 अंकों का मोबाइल नंबर" inputmode="numeric" required>
-            <input type="email" id="email" placeholder="Email (optional)">
-            <textarea id="message" rows="5" placeholder="अपना संदेश लिखें" required></textarea>
-            <button class="btn btn-primary" type="submit"><i class="fa-brands fa-whatsapp"></i> WhatsApp पर भेजें</button>
-          </form>
-        </div>
-
-        <div class="contact-box map">
-          <h2>Location</h2>
-          <iframe
-            src="https://www.google.com/maps?q=Sikar,Rajasthan&output=embed"
-            loading="lazy"
-            title="ROHILA E-MITRA CENTER location">
-          </iframe>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container">
-      <div class="footer-grid">
-        <div>
-          <h3>ROHILA E-MITRA CENTER</h3>
-          <p>All Government & Online Services Available Here.</p>
-          <p>Visitors: <strong id="visitor">0</strong></p>
-        </div>
-        <div>
-          <h3>Quick Links</h3>
-          <a href="#home">Home</a>
-          <a href="#services">Services</a>
-          <a href="forms.html">Forms Download</a>
-          <a href="gallery.html">Gallery</a>
-          <a href="secret/">Secret Gallery</a>
-        </div>
-        <div>
-          <h3>Contact</h3>
-          <a href="tel:97772240449">+91 97772240449</a>
-          <a href="mailto:info@rohilaemitra.in">info@rohilaemitra.in</a>
-          <a href="login.html">Admin Login</a>
-        </div>
-      </div>
-
-      <div class="copyright">© 2026 ROHILA E-MITRA CENTER | All Rights Reserved</div>
-    </div>
-  </footer>
-
-  <a href="https://wa.me/9197772240449" class="float-whatsapp" target="_blank" rel="noopener" aria-label="WhatsApp">
-    <i class="fa-brands fa-whatsapp"></i>
-  </a>
-
-  <script type="module" src="firebase.js"></script>
-  <script src="script.js"></script>
-
-  <script>
-    const menuBtn = document.getElementById("menuBtn");
-    const mainNav = document.getElementById("mainNav");
-
-    menuBtn.addEventListener("click", () => {
-      mainNav.classList.toggle("open");
-    });
-
-    mainNav.querySelectorAll("a").forEach(link => {
-      link.addEventListener("click", () => mainNav.classList.remove("open"));
-    });
-
-    const visitorEl = document.getElementById("visitor");
-    const savedVisits = Number(localStorage.getItem("rohilaPageVisits") || 0) + 1;
-    localStorage.setItem("rohilaPageVisits", savedVisits);
-    visitorEl.textContent = savedVisits;
-
-    const contactForm = document.getElementById("contactForm");
-    contactForm.addEventListener("submit", function(e){
-      e.preventDefault();
-
-      const name = document.getElementById("name").value.trim();
-      const mobile = document.getElementById("mobile").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const message = document.getElementById("message").value.trim();
-
-      if(name.length < 3 || !/^[0-9]{10}$/.test(mobile) || message.length < 5){
-        return;
+      let mediaEl;
+      if(imageExt.test(file.name)){
+        mediaEl = document.createElement("img");
+        mediaEl.src = file.download_url;
+        mediaEl.alt = file.name;
+        mediaEl.loading = "lazy";
+      }else{
+        mediaEl = document.createElement("video");
+        mediaEl.src = file.download_url;
+        mediaEl.controls = true;
+        mediaEl.preload = "metadata";
+        link.removeAttribute("href");
       }
 
-      const text =
-        "नमस्ते, ROHILA E-MITRA CENTER%0A" +
-        "नाम: " + encodeURIComponent(name) + "%0A" +
-        "मोबाइल: " + encodeURIComponent(mobile) + "%0A" +
-        (email ? "Email: " + encodeURIComponent(email) + "%0A" : "") +
-        "संदेश: " + encodeURIComponent(message);
+      const name = document.createElement("div");
+      name.className = "name";
+      name.textContent = file.name;
 
-      window.open("https://wa.me/9197772240449?text=" + text, "_blank");
+      link.appendChild(mediaEl);
+      link.appendChild(name);
+      card.appendChild(link);
+      gallery.appendChild(card);
     });
-  </script>
+  }catch(err){
+    status.innerHTML = "Gallery load नहीं हुई। GitHub Pages deploy होने के बाद page refresh करें।";
+    console.error(err);
+  }
+}
+
+loadGallery();
+</script>
 </body>
 </html>
