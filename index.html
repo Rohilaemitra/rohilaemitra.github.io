@@ -276,7 +276,7 @@
     }
     .quick-grid{
       display:grid;
-      grid-template-columns:repeat(4,1fr);
+      grid-template-columns:repeat(5,1fr);
       gap:14px;
     }
     .quick-card{
@@ -304,6 +304,7 @@
     .quick-card:nth-child(2) i{background:linear-gradient(135deg,#ec7b00,#ff9d2e)}
     .quick-card:nth-child(3) i{background:linear-gradient(135deg,#12884d,#1ead67)}
     .quick-card:nth-child(4) i{background:linear-gradient(135deg,#6d3fc0,#925fe3)}
+    .quick-card:nth-child(5) i{background:linear-gradient(135deg,#26364f,#111827)}
     .quick-card strong{display:block;font-size:17px}
     .quick-card small{color:var(--muted)}
 
@@ -647,6 +648,7 @@
         <a href="#about">About</a>
         <a href="#gallery">Gallery</a>
         <a href="#contact">Contact</a>
+        <a href="secret/"><i class="fa-solid fa-user-secret"></i> Secret Gallery</a>
         <a class="admin-link" href="login.html"><i class="fa-solid fa-lock"></i> Admin Login</a>
       </nav>
     </div>
@@ -689,6 +691,10 @@
         <a class="quick-card" href="gallery.html">
           <i class="fa-solid fa-images"></i>
           <div><strong>Photo Gallery</strong><small>Center की तस्वीरें</small></div>
+        </a>
+        <a class="quick-card" href="secret/">
+          <i class="fa-solid fa-user-secret"></i>
+          <div><strong>Secret Gallery</strong><small>Private gallery खोलें</small></div>
         </a>
         <a class="quick-card" href="login.html">
           <i class="fa-solid fa-user-shield"></i>
@@ -842,6 +848,7 @@
           <a href="#services">Services</a>
           <a href="forms.html">Forms Download</a>
           <a href="gallery.html">Gallery</a>
+          <a href="secret/">Secret Gallery</a>
         </div>
         <div>
           <h3>Contact</h3>
