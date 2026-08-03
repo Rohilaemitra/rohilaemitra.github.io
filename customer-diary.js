@@ -33,6 +33,12 @@ const totalDueEl = document.getElementById("totalDue");
 const exportBtn = document.getElementById("exportBtn");
 const excelBtn = document.getElementById("excelBtn");
 const activeCustomerNote = document.getElementById("activeCustomerNote");
+const selectedCustomerSummaryPanel = document.getElementById("selectedCustomerSummaryPanel");
+const selectedCustomerTitle = document.getElementById("selectedCustomerTitle");
+const selectedEntriesEl = document.getElementById("selectedEntries");
+const selectedTotalEl = document.getElementById("selectedTotal");
+const selectedPaidEl = document.getElementById("selectedPaid");
+const selectedDueEl = document.getElementById("selectedDue");
 
 const CUSTOMER_COLLECTIONS = ["customers", "customerDiary"];
 
@@ -178,6 +184,40 @@ function populateCustomerSelect() {
   }
 }
 
+
+function updateSelectedCustomerSummary(key = customerSelect.value) {
+  if (!selectedCustomerSummaryPanel) return;
+
+  if (!key || key === "__new__" || !customerProfiles.has(key)) {
+    selectedCustomerSummaryPanel.style.display = "none";
+    return;
+  }
+
+  const profile = customerProfiles.get(key);
+  const rows = customersCache.filter(
+    item => customerKey(item.name, item.mobile) === key
+  );
+
+  let total = 0;
+  let paid = 0;
+  let due = 0;
+
+  rows.forEach(item => {
+    total += Number(item.total || 0);
+    paid += Number(item.paid || 0);
+    due += Number(item.due || 0);
+  });
+
+  selectedCustomerTitle.textContent =
+    `${profile.name}${profile.mobile ? " (" + profile.mobile + ")" : ""} का कुल हिसाब`;
+
+  selectedEntriesEl.textContent = rows.length;
+  selectedTotalEl.textContent = formatMoney(total);
+  selectedPaidEl.textContent = formatMoney(paid);
+  selectedDueEl.textContent = formatMoney(due);
+  selectedCustomerSummaryPanel.style.display = "block";
+}
+
 function chooseCustomer(key) {
   if (!key || key === "__new__") {
     if (key === "__new__") {
@@ -185,14 +225,19 @@ function chooseCustomer(key) {
       mobileInput.value = "";
       nameInput.focus();
     }
+    updateSelectedCustomerSummary(key);
     return;
   }
 
   const profile = customerProfiles.get(key);
-  if (!profile) return;
+  if (!profile) {
+    updateSelectedCustomerSummary("");
+    return;
+  }
 
   nameInput.value = profile.name;
   mobileInput.value = profile.mobile;
+  updateSelectedCustomerSummary(key);
 }
 
 function clearForm(options = {}) {
@@ -400,6 +445,7 @@ async function loadCustomers(preferredKey = "") {
 
     buildProfiles(customersCache);
     populateCustomerSelect();
+    updateSelectedCustomerSummary();
     renderLedger(customersCache);
     applyFilters();
 

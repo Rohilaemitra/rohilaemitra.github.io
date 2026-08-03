@@ -37,6 +37,13 @@ const showAllBtn = document.getElementById("showAllBtn");
 const ledgerSearchInput = document.getElementById("ledgerSearch");
 const ledgerTbody = document.querySelector("#ledgerTable tbody");
 const activeCustomerNote = document.getElementById("activeCustomerNote");
+const selectedMilkSummaryPanel = document.getElementById("selectedMilkSummaryPanel");
+const selectedMilkTitle = document.getElementById("selectedMilkTitle");
+const selectedMilkRecordsEl = document.getElementById("selectedMilkRecords");
+const selectedMilkQtyEl = document.getElementById("selectedMilkQty");
+const selectedMilkAmountEl = document.getElementById("selectedMilkAmount");
+const selectedMilkPaidEl = document.getElementById("selectedMilkPaid");
+const selectedMilkDueEl = document.getElementById("selectedMilkDue");
 
 const MILK_COLLECTIONS = [
   "milkDiary",
@@ -224,6 +231,43 @@ function populateCustomerSelect() {
   }
 }
 
+
+function updateSelectedMilkSummary(key = customerSelect.value) {
+  if (!selectedMilkSummaryPanel) return;
+
+  if (!key || key === "__new__" || !customerProfiles.has(key)) {
+    selectedMilkSummaryPanel.style.display = "none";
+    return;
+  }
+
+  const profile = customerProfiles.get(key);
+  const rows = milkRecordsCache.filter(
+    item => customerKey(item.customerName, item.mobile) === key
+  );
+
+  let milk = 0;
+  let total = 0;
+  let paid = 0;
+  let due = 0;
+
+  rows.forEach(item => {
+    milk += Number(item.quantity || 0);
+    total += Number(item.total || 0);
+    paid += Number(item.paid || 0);
+    due += Number(item.due || 0);
+  });
+
+  selectedMilkTitle.textContent =
+    `${profile.name}${profile.mobile ? " (" + profile.mobile + ")" : ""} का दूध हिसाब`;
+
+  selectedMilkRecordsEl.textContent = rows.length;
+  selectedMilkQtyEl.textContent = formatQuantity(milk);
+  selectedMilkAmountEl.textContent = formatMoney(total);
+  selectedMilkPaidEl.textContent = formatMoney(paid);
+  selectedMilkDueEl.textContent = formatMoney(due);
+  selectedMilkSummaryPanel.style.display = "block";
+}
+
 function chooseCustomer(key) {
   if (!key || key === "__new__") {
     if (key === "__new__") {
@@ -232,11 +276,15 @@ function chooseCustomer(key) {
       rateInput.value = "";
       customerNameInput.focus();
     }
+    updateSelectedMilkSummary(key);
     return;
   }
 
   const profile = customerProfiles.get(key);
-  if (!profile) return;
+  if (!profile) {
+    updateSelectedMilkSummary("");
+    return;
+  }
 
   customerNameInput.value = profile.name;
   mobileInput.value = profile.mobile;
@@ -244,6 +292,7 @@ function chooseCustomer(key) {
   milkTypeInput.value = profile.milkType || "Cow";
   shiftInput.value = profile.shift || "Morning";
   calculateTotal();
+  updateSelectedMilkSummary(key);
 }
 
 function clearForm(options = {}) {
@@ -486,6 +535,7 @@ async function loadMilkRecords(preferredKey = "") {
 
     buildCustomerProfiles(milkRecordsCache);
     populateCustomerSelect();
+    updateSelectedMilkSummary();
     renderLedger(milkRecordsCache);
     applyFilters();
 
