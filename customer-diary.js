@@ -34,15 +34,19 @@ const exportBtn = document.getElementById("exportBtn");
 const excelBtn = document.getElementById("excelBtn");
 const activeCustomerNote = document.getElementById("activeCustomerNote");
 
+const CUSTOMER_COLLECTIONS = ["customers", "customerDiary"];
+
 let editId = null;
+let editSource = null;
 let customersCache = [];
 let saving = false;
 let activeCustomerKey = "";
 let lastVisibleRecords = [];
 let customerProfiles = new Map();
+let activeWriteCollection = "customers";
 
 function numberValue(input) {
-  const value = Number(input.value);
+  const value = Number(input?.value);
   return Number.isFinite(value) ? value : 0;
 }
 
@@ -71,15 +75,21 @@ function customerKey(name, mobile) {
 }
 
 function setTodayDate() {
-  dateInput.value = new Date().toISOString().slice(0, 10);
+  if (dateInput) dateInput.value = new Date().toISOString().slice(0, 10);
 }
 
 function calculateDue() {
-  dueInput.value = Math.max(0, numberValue(totalInput) - numberValue(paidInput)).toFixed(2);
+  if (dueInput) {
+    dueInput.value = Math.max(
+      0,
+      numberValue(totalInput) - numberValue(paidInput)
+    ).toFixed(2);
+  }
 }
 
 function setSavingState(isSaving) {
   saving = isSaving;
+  if (!saveBtn) return;
   saveBtn.disabled = isSaving;
   saveBtn.textContent = isSaving
     ? "Please wait..."
@@ -88,9 +98,48 @@ function setSavingState(isSaving) {
       : "💾 Save Record";
 }
 
+function mapCustomerData(id, source, data) {
+  return {
+    id,
+    _source: source,
+    date: data.date || data.created || "",
+    name: data.name || data.customerName || data.customer || "",
+    mobile: data.mobile || data.phone || "",
+    details: data.details || data.service || data.work || "",
+    total: Number(data.total ?? data.amount ?? 0),
+    paid: Number(data.paid ?? data.received ?? 0),
+    due: Number(
+      data.due ??
+      data.pending ??
+      Math.max(0, Number(data.total ?? data.amount ?? 0) - Number(data.paid ?? data.received ?? 0))
+    )
+  };
+}
+
+function fingerprint(item) {
+  return [
+    normalize(item.name),
+    String(item.mobile || "").trim(),
+    String(item.date || "").trim(),
+    normalize(item.details),
+    Number(item.total || 0),
+    Number(item.paid || 0),
+    Number(item.due || 0)
+  ].join("|");
+}
+
+async function readCollectionSafe(collectionName) {
+  try {
+    const snap = await getDocs(collection(db, collectionName));
+    return snap.docs.map((d) => mapCustomerData(d.id, collectionName, d.data()));
+  } catch (error) {
+    console.warn(`Cannot read ${collectionName}:`, error);
+    return [];
+  }
+}
+
 function buildProfiles(records) {
   customerProfiles = new Map();
-
   [...records]
     .sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")))
     .forEach((item) => {
@@ -105,7 +154,9 @@ function buildProfiles(records) {
 }
 
 function populateCustomerSelect() {
+  if (!customerSelect) return;
   const previous = customerSelect.value;
+
   customerSelect.innerHTML = `
     <option value="">-- Customer चुनें --</option>
     <option value="__new__">➕ New Customer</option>
@@ -152,6 +203,7 @@ function clearForm(options = {}) {
   paidInput.value = "";
   dueInput.value = "";
   editId = null;
+  editSource = null;
 
   if (keepKey && customerProfiles.has(keepKey)) {
     customerSelect.value = keepKey;
@@ -237,8 +289,14 @@ function renderCustomers(records) {
         <td>${formatMoney(customer.paid)}</td>
         <td class="due">${formatMoney(customer.due)}</td>
         <td class="action-col">
-          <button class="edit" data-action="edit" data-id="${customer.id}">✏ Edit</button>
-          <button class="delete" data-action="delete" data-id="${customer.id}">🗑 Delete</button>
+          <button class="edit"
+            data-action="edit"
+            data-id="${customer.id}"
+            data-source="${customer._source}">✏ Edit</button>
+          <button class="delete"
+            data-action="delete"
+            data-id="${customer.id}"
+            data-source="${customer._source}">🗑 Delete</button>
         </td>
       `;
       tbody.appendChild(row);
@@ -280,7 +338,7 @@ function renderLedger(records) {
 function applyFilters() {
   const query = normalize(searchInput.value);
 
-  let records = customersCache.filter((item) => {
+  const records = customersCache.filter((item) => {
     if (activeCustomerKey && customerKey(item.name, item.mobile) !== activeCustomerKey) {
       return false;
     }
@@ -304,7 +362,8 @@ function applyFilters() {
   if (activeCustomerKey && customerProfiles.has(activeCustomerKey)) {
     const p = customerProfiles.get(activeCustomerKey);
     activeCustomerNote.style.display = "block";
-    activeCustomerNote.textContent = `अभी केवल ${p.name}${p.mobile ? " (" + p.mobile + ")" : ""} का हिसाब दिख रहा है।`;
+    activeCustomerNote.textContent =
+      `अभी केवल ${p.name}${p.mobile ? " (" + p.mobile + ")" : ""} का हिसाब दिख रहा है।`;
   } else {
     activeCustomerNote.style.display = "none";
     activeCustomerNote.textContent = "";
@@ -313,12 +372,31 @@ function applyFilters() {
 
 async function loadCustomers(preferredKey = "") {
   try {
-    const snapshot = await getDocs(collection(db, "customerDiary"));
+    const groups = [];
+    for (const collectionName of CUSTOMER_COLLECTIONS) {
+      groups.push({
+        name: collectionName,
+        records: await readCollectionSafe(collectionName)
+      });
+    }
 
-    customersCache = snapshot.docs.map((item) => ({
-      id: item.id,
-      ...item.data()
-    }));
+    const nonEmpty = groups
+      .filter(g => g.records.length)
+      .sort((a, b) => b.records.length - a.records.length);
+
+    activeWriteCollection = nonEmpty[0]?.name || "customers";
+
+    const seen = new Set();
+    customersCache = [];
+
+    for (const group of groups) {
+      for (const item of group.records) {
+        const key = fingerprint(item);
+        if (seen.has(key)) continue;
+        seen.add(key);
+        customersCache.push(item);
+      }
+    }
 
     buildProfiles(customersCache);
     populateCustomerSelect();
@@ -331,8 +409,10 @@ async function loadCustomers(preferredKey = "") {
     }
   } catch (error) {
     console.error("Customer load failed:", error);
-    tbody.innerHTML = `<tr><td colspan="8">Data load नहीं हुआ। Internet और Firebase connection जांचें।</td></tr>`;
-    ledgerTbody.innerHTML = `<tr><td colspan="7">Ledger load नहीं हुआ।</td></tr>`;
+    tbody.innerHTML =
+      `<tr><td colspan="8">Data load नहीं हुआ। Internet और Firebase connection जांचें।</td></tr>`;
+    ledgerTbody.innerHTML =
+      `<tr><td colspan="7">Ledger load नहीं हुआ।</td></tr>`;
   }
 }
 
@@ -364,14 +444,15 @@ saveBtn.addEventListener("click", async () => {
   }
 
   calculateDue();
-
   const keyToKeep = customerKey(name, mobile);
+  const source = editSource || activeWriteCollection;
 
   const customerData = {
     date: dateInput.value,
     name,
     mobile,
     details: detailsInput.value.trim(),
+    service: detailsInput.value.trim(),
     total: numberValue(totalInput),
     paid: numberValue(paidInput),
     due: numberValue(dueInput),
@@ -382,10 +463,10 @@ saveBtn.addEventListener("click", async () => {
 
   try {
     if (editId) {
-      await updateDoc(doc(db, "customerDiary", editId), customerData);
+      await updateDoc(doc(db, source, editId), customerData);
       alert("Customer record update हो गया।");
     } else {
-      await addDoc(collection(db, "customerDiary"), {
+      await addDoc(collection(db, source), {
         ...customerData,
         createdAt: serverTimestamp()
       });
@@ -393,6 +474,7 @@ saveBtn.addEventListener("click", async () => {
     }
 
     editId = null;
+    editSource = null;
     await loadCustomers(keyToKeep);
     clearForm({ keepCustomerKey: keyToKeep });
   } catch (error) {
@@ -408,18 +490,20 @@ tbody.addEventListener("click", async (event) => {
   if (!button) return;
 
   const id = button.dataset.id;
+  const source = button.dataset.source || activeWriteCollection;
   const action = button.dataset.action;
 
   if (action === "edit") {
     try {
-      const snapshot = await getDoc(doc(db, "customerDiary", id));
+      const snapshot = await getDoc(doc(db, source, id));
       if (!snapshot.exists()) {
         alert("Record नहीं मिला।");
         return;
       }
 
-      const data = snapshot.data();
+      const data = mapCustomerData(snapshot.id, source, snapshot.data());
       editId = id;
+      editSource = source;
       dateInput.value = data.date || "";
       nameInput.value = data.name || "";
       mobileInput.value = data.mobile || "";
@@ -443,7 +527,7 @@ tbody.addEventListener("click", async (event) => {
     if (!confirm("क्या यह रिकॉर्ड Delete करना है?")) return;
 
     try {
-      await deleteDoc(doc(db, "customerDiary", id));
+      await deleteDoc(doc(db, source, id));
       alert("Record Delete हो गया।");
       await loadCustomers();
     } catch (error) {

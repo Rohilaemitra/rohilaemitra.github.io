@@ -38,15 +38,24 @@ const ledgerSearchInput = document.getElementById("ledgerSearch");
 const ledgerTbody = document.querySelector("#ledgerTable tbody");
 const activeCustomerNote = document.getElementById("activeCustomerNote");
 
+const MILK_COLLECTIONS = [
+  "milkDiary",
+  "milkRecords",
+  "milkCustomers",
+  "milk"
+];
+
 let editId = null;
+let editSource = null;
 let milkRecordsCache = [];
 let saving = false;
 let customerProfiles = new Map();
 let activeCustomerKey = "";
 let lastVisibleRecords = [];
+let activeWriteCollection = "milkDiary";
 
 function numberValue(input) {
-  const value = Number(input.value);
+  const value = Number(input?.value);
   return Number.isFinite(value) ? value : 0;
 }
 
@@ -81,17 +90,19 @@ function customerKey(name, mobile) {
   return `${normalize(name)}|${String(mobile || "").trim()}`;
 }
 
+function setTodayDate() {
+  dateInput.value = new Date().toISOString().slice(0, 10);
+}
+
 function calculateTotal() {
-  totalInput.value = (numberValue(quantityInput) * numberValue(rateInput)).toFixed(2);
+  totalInput.value =
+    (numberValue(quantityInput) * numberValue(rateInput)).toFixed(2);
   calculateDue();
 }
 
 function calculateDue() {
-  dueInput.value = Math.max(0, numberValue(totalInput) - numberValue(paidInput)).toFixed(2);
-}
-
-function setTodayDate() {
-  dateInput.value = new Date().toISOString().slice(0, 10);
+  dueInput.value =
+    Math.max(0, numberValue(totalInput) - numberValue(paidInput)).toFixed(2);
 }
 
 function setSavingState(isSaving) {
@@ -102,6 +113,67 @@ function setSavingState(isSaving) {
     : editId
       ? "💾 Update Milk Record"
       : "💾 Save Milk Record";
+}
+
+function mapMilkData(id, source, data) {
+  const quantity = Number(
+    data.quantity ??
+    data.qty ??
+    data.liter ??
+    data.litre ??
+    data.milk ??
+    0
+  );
+
+  const rate = Number(data.rate ?? data.price ?? data.ratePerLiter ?? 0);
+  const total = Number(data.total ?? data.amount ?? (quantity * rate) ?? 0);
+  const paid = Number(data.paid ?? data.received ?? 0);
+  const due = Number(data.due ?? data.pending ?? Math.max(0, total - paid));
+
+  return {
+    id,
+    _source: source,
+    date: data.date || data.created || "",
+    customerName:
+      data.customerName ||
+      data.name ||
+      data.customer ||
+      data.customer_name ||
+      "",
+    mobile: data.mobile || data.phone || "",
+    shift: data.shift || data.time || "Morning",
+    milkType: data.milkType || data.type || data.milk_type || "Cow",
+    quantity,
+    rate,
+    total,
+    paid,
+    due
+  };
+}
+
+function fingerprint(item) {
+  return [
+    normalize(item.customerName),
+    String(item.mobile || "").trim(),
+    String(item.date || "").trim(),
+    normalize(item.shift),
+    normalize(item.milkType),
+    Number(item.quantity || 0),
+    Number(item.rate || 0),
+    Number(item.total || 0),
+    Number(item.paid || 0),
+    Number(item.due || 0)
+  ].join("|");
+}
+
+async function readCollectionSafe(collectionName) {
+  try {
+    const snap = await getDocs(collection(db, collectionName));
+    return snap.docs.map((d) => mapMilkData(d.id, collectionName, d.data()));
+  } catch (error) {
+    console.warn(`Cannot read ${collectionName}:`, error);
+    return [];
+  }
 }
 
 function buildCustomerProfiles(records) {
@@ -130,6 +202,7 @@ function buildCustomerProfiles(records) {
 
 function populateCustomerSelect() {
   const previous = customerSelect.value;
+
   customerSelect.innerHTML = `
     <option value="">-- Customer चुनें --</option>
     <option value="__new__">➕ New Customer</option>
@@ -175,6 +248,7 @@ function chooseCustomer(key) {
 
 function clearForm(options = {}) {
   const keepKey = options.keepCustomerKey || "";
+
   setTodayDate();
   shiftInput.value = "Morning";
   milkTypeInput.value = "Cow";
@@ -184,6 +258,7 @@ function clearForm(options = {}) {
   paidInput.value = "";
   dueInput.value = "";
   editId = null;
+  editSource = null;
 
   if (keepKey && customerProfiles.has(keepKey)) {
     customerSelect.value = keepKey;
@@ -210,6 +285,7 @@ function aggregateLedger(records) {
     if (!name) return;
 
     const key = customerKey(name, mobile);
+
     if (!ledger.has(key)) {
       ledger.set(key, {
         key,
@@ -231,7 +307,9 @@ function aggregateLedger(records) {
     row.due += Number(record.due || 0);
   });
 
-  return [...ledger.values()].sort((a, b) => a.customer.localeCompare(b.customer, "hi"));
+  return [...ledger.values()].sort((a, b) =>
+    a.customer.localeCompare(b.customer, "hi")
+  );
 }
 
 function updateSummary(records) {
@@ -256,7 +334,8 @@ function renderMilkTable(records) {
   tbody.innerHTML = "";
 
   if (!records.length) {
-    tbody.innerHTML = `<tr><td colspan="11">कोई Milk Record नहीं मिला।</td></tr>`;
+    tbody.innerHTML =
+      `<tr><td colspan="11">कोई Milk Record नहीं मिला।</td></tr>`;
     return;
   }
 
@@ -276,8 +355,14 @@ function renderMilkTable(records) {
         <td>${formatMoney(record.paid)}</td>
         <td class="due-amount">${formatMoney(record.due)}</td>
         <td class="action-column">
-          <button class="edit-btn" data-action="edit" data-id="${record.id}">✏ Edit</button>
-          <button class="delete-btn" data-action="delete" data-id="${record.id}">🗑 Delete</button>
+          <button class="edit-btn"
+            data-action="edit"
+            data-id="${record.id}"
+            data-source="${record._source}">✏ Edit</button>
+          <button class="delete-btn"
+            data-action="delete"
+            data-id="${record.id}"
+            data-source="${record._source}">🗑 Delete</button>
         </td>
       `;
       tbody.appendChild(row);
@@ -286,6 +371,7 @@ function renderMilkTable(records) {
 
 function renderLedger(records) {
   const keyword = normalize(ledgerSearchInput.value);
+
   const items = aggregateLedger(records).filter((item) =>
     !keyword ||
     normalize(item.customer).includes(keyword) ||
@@ -295,7 +381,8 @@ function renderLedger(records) {
   ledgerTbody.innerHTML = "";
 
   if (!items.length) {
-    ledgerTbody.innerHTML = `<tr><td colspan="8">कोई Customer Ledger नहीं मिला।</td></tr>`;
+    ledgerTbody.innerHTML =
+      `<tr><td colspan="8">कोई Customer Ledger नहीं मिला।</td></tr>`;
     return;
   }
 
@@ -309,10 +396,19 @@ function renderLedger(records) {
       <td>${formatMoney(item.total)}</td>
       <td>${formatMoney(item.paid)}</td>
       <td class="due-amount">${formatMoney(item.due)}</td>
-      <td class="action-column"><button class="view-btn" data-ledger-key="${escapeHtml(item.key)}">हिसाब देखें</button></td>
+      <td class="action-column">
+        <button class="view-btn" data-ledger-key="${escapeHtml(item.key)}">हिसाब देखें</button>
+      </td>
     `;
     ledgerTbody.appendChild(row);
   });
+}
+
+function sameMonth(dateValue, selectedMonth) {
+  if (!selectedMonth) return true;
+  const value = String(dateValue || "").trim();
+  if (/^\d{4}-\d{2}/.test(value)) return value.startsWith(selectedMonth);
+  return true;
 }
 
 function applyFilters() {
@@ -320,11 +416,12 @@ function applyFilters() {
   const selectedMonth = monthFilterInput.value;
 
   const records = milkRecordsCache.filter((item) => {
-    if (selectedMonth && !String(item.date || "").startsWith(selectedMonth)) {
-      return false;
-    }
+    if (!sameMonth(item.date, selectedMonth)) return false;
 
-    if (activeCustomerKey && customerKey(item.customerName, item.mobile) !== activeCustomerKey) {
+    if (
+      activeCustomerKey &&
+      customerKey(item.customerName, item.mobile) !== activeCustomerKey
+    ) {
       return false;
     }
 
@@ -350,7 +447,8 @@ function applyFilters() {
   if (activeCustomerKey && customerProfiles.has(activeCustomerKey)) {
     const p = customerProfiles.get(activeCustomerKey);
     activeCustomerNote.style.display = "block";
-    activeCustomerNote.textContent = `अभी केवल ${p.name}${p.mobile ? " (" + p.mobile + ")" : ""} का हिसाब दिख रहा है।`;
+    activeCustomerNote.textContent =
+      `अभी केवल ${p.name}${p.mobile ? " (" + p.mobile + ")" : ""} का हिसाब दिख रहा है।`;
   } else {
     activeCustomerNote.style.display = "none";
     activeCustomerNote.textContent = "";
@@ -359,12 +457,32 @@ function applyFilters() {
 
 async function loadMilkRecords(preferredKey = "") {
   try {
-    const snapshot = await getDocs(collection(db, "milkDiary"));
+    const groups = [];
 
-    milkRecordsCache = snapshot.docs.map((docItem) => ({
-      id: docItem.id,
-      ...docItem.data()
-    }));
+    for (const collectionName of MILK_COLLECTIONS) {
+      groups.push({
+        name: collectionName,
+        records: await readCollectionSafe(collectionName)
+      });
+    }
+
+    const nonEmpty = groups
+      .filter(g => g.records.length)
+      .sort((a, b) => b.records.length - a.records.length);
+
+    activeWriteCollection = nonEmpty[0]?.name || "milkDiary";
+
+    const seen = new Set();
+    milkRecordsCache = [];
+
+    for (const group of groups) {
+      for (const item of group.records) {
+        const key = fingerprint(item);
+        if (seen.has(key)) continue;
+        seen.add(key);
+        milkRecordsCache.push(item);
+      }
+    }
 
     buildCustomerProfiles(milkRecordsCache);
     populateCustomerSelect();
@@ -377,8 +495,10 @@ async function loadMilkRecords(preferredKey = "") {
     }
   } catch (error) {
     console.error(error);
-    tbody.innerHTML = `<tr><td colspan="11">Data load नहीं हुआ। Internet और Firebase connection जांचें।</td></tr>`;
-    ledgerTbody.innerHTML = `<tr><td colspan="8">Ledger load नहीं हुआ।</td></tr>`;
+    tbody.innerHTML =
+      `<tr><td colspan="11">Data load नहीं हुआ। Internet और Firebase connection जांचें।</td></tr>`;
+    ledgerTbody.innerHTML =
+      `<tr><td colspan="8">Ledger load नहीं हुआ।</td></tr>`;
   }
 }
 
@@ -412,10 +532,12 @@ saveBtn.addEventListener("click", async () => {
 
   calculateTotal();
   const keyToKeep = customerKey(customerName, mobile);
+  const source = editSource || activeWriteCollection;
 
   const record = {
     date: dateInput.value,
     customerName,
+    name: customerName,
     mobile,
     shift: shiftInput.value,
     milkType: milkTypeInput.value,
@@ -431,10 +553,10 @@ saveBtn.addEventListener("click", async () => {
 
   try {
     if (editId) {
-      await updateDoc(doc(db, "milkDiary", editId), record);
+      await updateDoc(doc(db, source, editId), record);
       alert("Milk Record Update हो गया।");
     } else {
-      await addDoc(collection(db, "milkDiary"), {
+      await addDoc(collection(db, source), {
         ...record,
         createdAt: serverTimestamp()
       });
@@ -442,6 +564,7 @@ saveBtn.addEventListener("click", async () => {
     }
 
     editId = null;
+    editSource = null;
     await loadMilkRecords(keyToKeep);
     clearForm({ keepCustomerKey: keyToKeep });
   } catch (error) {
@@ -457,18 +580,20 @@ tbody.addEventListener("click", async (event) => {
   if (!button) return;
 
   const id = button.dataset.id;
+  const source = button.dataset.source || activeWriteCollection;
   const action = button.dataset.action;
 
   if (action === "edit") {
     try {
-      const snapshot = await getDoc(doc(db, "milkDiary", id));
+      const snapshot = await getDoc(doc(db, source, id));
       if (!snapshot.exists()) {
         alert("Milk Record नहीं मिला।");
         return;
       }
 
-      const data = snapshot.data();
+      const data = mapMilkData(snapshot.id, source, snapshot.data());
       editId = id;
+      editSource = source;
       dateInput.value = data.date || "";
       customerNameInput.value = data.customerName || "";
       mobileInput.value = data.mobile || "";
@@ -495,7 +620,7 @@ tbody.addEventListener("click", async (event) => {
     if (!confirm("क्या यह Milk Record Delete करना है?")) return;
 
     try {
-      await deleteDoc(doc(db, "milkDiary", id));
+      await deleteDoc(doc(db, source, id));
       alert("Milk Record Delete हो गया।");
       await loadMilkRecords();
     } catch (error) {
@@ -557,13 +682,18 @@ excelBtn.addEventListener("click", () => {
     row.map((cell) => `"${String(cell).replaceAll('"', '""')}"`).join(",")
   ).join("\n");
 
-  const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+  const blob = new Blob(["\uFEFF" + csv], {
+    type: "text/csv;charset=utf-8;"
+  });
+
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
   link.download = `milk-diary-${new Date().toISOString().slice(0, 10)}.csv`;
+
   document.body.appendChild(link);
   link.click();
   link.remove();
+
   URL.revokeObjectURL(link.href);
 });
 
