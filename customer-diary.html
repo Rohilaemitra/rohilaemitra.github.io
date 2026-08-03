@@ -1,1 +1,139 @@
-<!doctype html><html lang="hi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Customer Diary</title><link rel="stylesheet" href="style.css"></head><body><header class="topbar"><div class="topbar-inner"><a class="brand" href="admin.html">Customer Diary</a><nav class="nav"><a href="admin.html">Dashboard</a><a href="milk-diary.html">Milk Diary</a></nav></div></header><main class="container"><div id="status" class="status"></div><section class="grid"><div class="card"><div class="muted">Records</div><div id="count" class="metric">0</div></div><div class="card"><div class="muted">Total</div><div id="totalSum" class="metric">₹0</div></div><div class="card"><div class="muted">Paid</div><div id="paidSum" class="metric">₹0</div></div><div class="card"><div class="muted">Due</div><div id="dueSum" class="metric">₹0</div></div></section><section class="panel"><h2>Add / Edit Customer Work</h2><form id="entryForm" class="form-grid"><div class="field"><label>Date</label><input id="date" type="date" required></div><div class="field"><label>Name</label><input id="name" required></div><div class="field"><label>Mobile</label><input id="mobile" inputmode="numeric" maxlength="10"></div><div class="field"><label>Service</label><input id="service" required placeholder="PAN Card / Certificate"></div><div class="field"><label>Total Amount</label><input id="total" type="number" min="0" step="0.01" required></div><div class="field"><label>Paid</label><input id="paid" type="number" min="0" step="0.01" value="0"></div><div class="field"><label>Due</label><input id="due" type="number" readonly></div><div class="field"><label>Status</label><select id="workStatus"><option>Pending</option><option>In Progress</option><option>Completed</option></select></div><div class="field span-4"><label>Note</label><textarea id="note" rows="2"></textarea></div><div class="span-4 actions"><button class="btn" type="submit" id="saveBtn">Save</button><button class="btn light" type="button" id="clearBtn">Clear</button></div></form></section><section class="panel"><div class="toolbar"><input id="search" placeholder="नाम, मोबाइल, सेवा खोजें"><select id="filterStatus"><option value="">All Status</option><option>Pending</option><option>In Progress</option><option>Completed</option></select><button class="btn secondary" id="printBtn">Print</button><button class="btn success" id="csvBtn">CSV Export</button></div><div class="table-wrap"><table class="data-table"><thead><tr><th>Date</th><th>Name</th><th>Mobile</th><th>Service</th><th>Total</th><th>Paid</th><th>Due</th><th>Status</th><th class="no-print">Action</th></tr></thead><tbody id="tbody"><tr><td class="empty" colspan="9">Loading...</td></tr></tbody></table></div></section></main><script type="module" src="customer-diary.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Customer Diary - Rohila E-Mitra</title>
+<link rel="stylesheet" href="style.css">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#222}
+.container{width:min(1400px,95%);margin:24px auto}
+.page-header{background:linear-gradient(135deg,#1565c0,#42a5f5);color:#fff;padding:22px;border-radius:14px;text-align:center;margin-bottom:18px}
+.page-header h1{margin:0 0 8px}.back-link{color:#fff;text-decoration:none;font-weight:700}
+.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+.card{background:#fff;border-radius:12px;padding:16px;box-shadow:0 3px 12px rgba(0,0,0,.09);text-align:center}
+.card h3{margin:0 0 8px;font-size:14px;color:#666}.card h2{margin:0;color:#1565c0}
+.panel{background:#fff;border-radius:12px;padding:18px;margin-bottom:18px;box-shadow:0 3px 12px rgba(0,0,0,.09)}
+.panel h2{margin-top:0}
+.form{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group label{font-weight:700;font-size:14px}
+.form input,.form select,.search{width:100%;padding:11px;border:1px solid #bbb;border-radius:8px;font-size:15px;background:#fff}
+#due{background:#f1f1f1}
+.button-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+button{border:none;padding:11px 16px;border-radius:8px;font-weight:700;cursor:pointer}
+.saveBtn{background:#1565c0;color:#fff}.secondary{background:#757575;color:#fff}.success{background:#2e7d32;color:#fff}.excel{background:#00897b;color:#fff}
+.search{margin:0 0 12px}
+.tableBox{overflow:auto}
+table{width:100%;border-collapse:collapse;min-width:900px;background:#fff}
+th{background:#1565c0;color:#fff;padding:11px}
+td{padding:10px;text-align:center;border:1px solid #ddd}
+tr:nth-child(even){background:#f7f9fc}
+.edit{background:#ffb300}.delete{background:#d32f2f;color:#fff}.view{background:#6a1b9a;color:#fff}
+.due{color:#d32f2f;font-weight:700}
+.active-note{padding:10px 12px;background:#e8f1ff;border-radius:8px;margin-bottom:12px;font-weight:700;display:none}
+@media(max-width:900px){.summary{grid-template-columns:repeat(2,1fr)}.form{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.summary,.form{grid-template-columns:1fr}.button-row button{width:100%}}
+@media print{.page-header .back-link,.entry-panel,.filters,.button-row,.action-col{display:none!important}.container{width:100%;margin:0}.panel,.card{box-shadow:none}}
+</style>
+</head>
+<body>
+<main class="container">
+<header class="page-header">
+<h1>👥 Customer Diary</h1>
+<p>ग्राहक, सेवा, भुगतान और बाकी हिसाब</p>
+<a class="back-link" href="admin.html">← Admin Panel पर वापस जाएँ</a>
+</header>
+
+<section class="summary">
+<div class="card"><h3>Customers</h3><h2 id="totalCustomers">0</h2></div>
+<div class="card"><h3>Total Amount</h3><h2 id="totalCollection">₹0</h2></div>
+<div class="card"><h3>Total Paid</h3><h2 id="totalPaid">₹0</h2></div>
+<div class="card"><h3>Total Due</h3><h2 id="totalDue">₹0</h2></div>
+</section>
+
+<section class="panel entry-panel">
+<h2>नया Customer Record</h2>
+<div class="form">
+<div class="form-group">
+<label for="date">Date</label>
+<input type="date" id="date">
+</div>
+<div class="form-group">
+<label for="customerSelect">Saved Customer</label>
+<select id="customerSelect">
+<option value="">-- Customer चुनें --</option>
+<option value="__new__">➕ New Customer</option>
+</select>
+</div>
+<div class="form-group">
+<label for="name">Customer Name</label>
+<input type="text" id="name" placeholder="Customer Name">
+</div>
+<div class="form-group">
+<label for="mobile">Mobile</label>
+<input type="tel" id="mobile" maxlength="10" placeholder="Mobile">
+</div>
+<div class="form-group">
+<label for="details">Service / Details</label>
+<input type="text" id="details" placeholder="Service / Details">
+</div>
+<div class="form-group">
+<label for="total">Total Amount</label>
+<input type="number" id="total" min="0" step="0.01" placeholder="Total Amount">
+</div>
+<div class="form-group">
+<label for="paid">Paid Amount</label>
+<input type="number" id="paid" min="0" step="0.01" placeholder="Paid Amount">
+</div>
+<div class="form-group">
+<label for="due">Due Amount</label>
+<input type="number" id="due" readonly>
+</div>
+</div>
+<div class="button-row">
+<button class="saveBtn" id="saveBtn">💾 Save Record</button>
+<button class="secondary" id="clearBtn" type="button">Clear Form</button>
+</div>
+</section>
+
+<section class="panel">
+<h2>Customer-wise Total</h2>
+<input class="search" id="ledgerSearch" placeholder="🔍 नाम या मोबाइल से customer खोजें...">
+<div class="tableBox">
+<table id="ledgerTable">
+<thead><tr>
+<th>Customer</th><th>Mobile</th><th>Entries</th><th>Total</th><th>Paid</th><th>Due</th><th class="action-col">Action</th>
+</tr></thead>
+<tbody><tr><td colspan="7">Loading...</td></tr></tbody>
+</table>
+</div>
+</section>
+
+<section class="panel filters">
+<h2>Customer Records</h2>
+<div id="activeCustomerNote" class="active-note"></div>
+<input class="search" id="search" placeholder="🔍 Search record...">
+<div class="button-row">
+<button class="secondary" id="showAllCustomerBtn" type="button">Show All Customers</button>
+<button class="success" onclick="printDiary()" type="button">🖨 Print</button>
+<button class="success" id="exportBtn" type="button">📄 Export PDF</button>
+<button class="excel" id="excelBtn" type="button">📊 Export Excel</button>
+</div>
+</section>
+
+<section class="panel">
+<div class="tableBox">
+<table id="customerTable">
+<thead><tr>
+<th>Date</th><th>Name</th><th>Mobile</th><th>Details</th><th>Total</th><th>Paid</th><th>Due</th><th class="action-col">Action</th>
+</tr></thead>
+<tbody><tr><td colspan="8">Loading...</td></tr></tbody>
+</table>
+</div>
+</section>
+</main>
+<script type="module" src="customer-diary.js"></script>
+</body>
+</html>

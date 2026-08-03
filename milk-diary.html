@@ -1,1 +1,122 @@
-<!doctype html><html lang="hi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Milk Diary</title><link rel="stylesheet" href="style.css"></head><body><header class="topbar"><div class="topbar-inner"><a class="brand" href="admin.html">🥛 Milk Diary</a><nav class="nav"><a href="admin.html">Dashboard</a><a href="customer-diary.html">Customer Diary</a></nav></div></header><main class="container"><div id="status" class="status"></div><section class="grid"><div class="card"><div class="muted">Entries</div><div id="count" class="metric">0</div></div><div class="card"><div class="muted">Milk</div><div id="milkSum" class="metric">0 L</div></div><div class="card"><div class="muted">Amount</div><div id="amountSum" class="metric">₹0</div></div><div class="card"><div class="muted">Due</div><div id="dueSum" class="metric">₹0</div></div></section><section class="panel"><h2>Add / Edit Milk Entry</h2><form id="entryForm" class="form-grid"><div class="field"><label>Date</label><input id="date" type="date" required></div><div class="field"><label>Customer Name</label><input id="customerName" required></div><div class="field"><label>Mobile</label><input id="mobile" maxlength="10" inputmode="numeric"></div><div class="field"><label>Shift</label><select id="shift"><option>Morning</option><option>Evening</option></select></div><div class="field"><label>Milk Type</label><select id="milkType"><option>Cow</option><option>Buffalo</option><option>Mixed</option></select></div><div class="field"><label>Quantity (L)</label><input id="quantity" type="number" min="0" step="0.01" required></div><div class="field"><label>Rate</label><input id="rate" type="number" min="0" step="0.01" required></div><div class="field"><label>Total</label><input id="total" type="number" readonly></div><div class="field"><label>Paid</label><input id="paid" type="number" min="0" step="0.01" value="0"></div><div class="field"><label>Due</label><input id="due" type="number" readonly></div><div class="span-4 actions"><button class="btn" type="submit" id="saveBtn">Save</button><button class="btn light" type="button" id="clearBtn">Clear</button></div></form></section><section class="panel"><div class="toolbar"><input id="search" placeholder="ग्राहक या मोबाइल खोजें"><input id="monthFilter" type="month"><button id="allBtn" class="btn light">Show All</button><button id="printBtn" class="btn secondary">Print</button><button id="csvBtn" class="btn success">CSV Export</button></div><div class="table-wrap"><table class="data-table"><thead><tr><th>Date</th><th>Customer</th><th>Mobile</th><th>Shift</th><th>Type</th><th>Qty</th><th>Rate</th><th>Total</th><th>Paid</th><th>Due</th><th class="no-print">Action</th></tr></thead><tbody id="tbody"><tr><td class="empty" colspan="11">Loading...</td></tr></tbody></table></div></section></main><script type="module" src="milk-diary.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Milk Diary - Rohila E-Mitra</title>
+<link rel="stylesheet" href="style.css">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#222}
+.milk-container{width:min(1300px,95%);margin:24px auto}
+.page-header{background:linear-gradient(135deg,#1565c0,#42a5f5);color:#fff;padding:22px;border-radius:14px;text-align:center;margin-bottom:18px}
+.page-header h1{margin:0 0 8px}.back-link{color:#fff;text-decoration:none;font-weight:700}
+.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+.summary-card{background:#fff;padding:16px;border-radius:12px;box-shadow:0 3px 12px rgba(0,0,0,.09);text-align:center}
+.summary-card h3{margin:0 0 8px;font-size:14px;color:#666}.summary-card p{margin:0;font-size:22px;font-weight:700;color:#1565c0}
+.form-box,.table-box{background:#fff;border-radius:12px;padding:18px;margin-bottom:18px;box-shadow:0 3px 12px rgba(0,0,0,.09)}
+.form-box h2,.table-box h2{margin-top:0}
+.form-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.form-group{display:flex;flex-direction:column;gap:6px}.form-group label{font-weight:700;font-size:14px}
+.form-group input,.form-group select,.search-box input{width:100%;padding:11px;border:1px solid #bbb;border-radius:8px;font-size:15px;background:#fff}
+#total,#due{background:#f1f1f1}
+.button-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+button{border:none;padding:11px 16px;border-radius:8px;font-weight:700;cursor:pointer}
+#saveBtn{background:#1565c0;color:#fff}#clearBtn{background:#757575;color:#fff}.print-btn{background:#2e7d32;color:#fff}.excel-btn{background:#00897b;color:#fff}.view-btn{background:#6a1b9a;color:#fff}
+.search-box{margin-bottom:12px}.table-responsive{overflow:auto}
+table{width:100%;border-collapse:collapse;min-width:1050px}
+th{background:#1565c0;color:#fff;padding:11px}td{padding:10px;text-align:center;border:1px solid #ddd}tr:nth-child(even){background:#f7f9fc}
+.edit-btn{background:#ffb300}.delete-btn{background:#d32f2f;color:#fff}.due-amount{color:#d32f2f;font-weight:700}.action-column{white-space:nowrap}
+.active-note{padding:10px 12px;background:#e8f1ff;border-radius:8px;margin-bottom:12px;font-weight:700;display:none}
+@media(max-width:900px){.summary-grid{grid-template-columns:repeat(2,1fr)}.form-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.summary-grid,.form-grid{grid-template-columns:1fr}.button-row button{width:100%}}
+@media print{.form-box,.search-box,.button-row,.back-link,.action-column{display:none!important}.milk-container{width:100%;margin:0}.table-box,.summary-card{box-shadow:none}}
+</style>
+</head>
+<body>
+<main class="milk-container">
+<header class="page-header">
+<h1>🥛 Milk Diary</h1>
+<p>दूध का दैनिक हिसाब और हर customer का अलग total</p>
+<a class="back-link" href="admin.html">← Admin Panel पर वापस जाएँ</a>
+</header>
+
+<section class="summary-grid">
+<div class="summary-card"><h3>Records</h3><p id="totalRecords">0</p></div>
+<div class="summary-card"><h3>Total Milk</h3><p id="totalMilk">0 L</p></div>
+<div class="summary-card"><h3>Total Amount</h3><p id="totalAmount">₹0</p></div>
+<div class="summary-card"><h3>Total Due</h3><p id="totalDue">₹0</p></div>
+</section>
+
+<section class="form-box">
+<h2>नया दूध रिकॉर्ड</h2>
+<div class="form-grid">
+<div class="form-group"><label for="date">Date</label><input type="date" id="date"></div>
+<div class="form-group">
+<label for="customerSelect">Saved Customer</label>
+<select id="customerSelect">
+<option value="">-- Customer चुनें --</option>
+<option value="__new__">➕ New Customer</option>
+</select>
+</div>
+<div class="form-group"><label for="customerName">Customer Name</label><input type="text" id="customerName" placeholder="ग्राहक का नाम"></div>
+<div class="form-group"><label for="mobile">Mobile</label><input type="tel" id="mobile" maxlength="10" placeholder="10 अंकों का मोबाइल नंबर"></div>
+<div class="form-group"><label for="shift">Shift</label><select id="shift"><option value="Morning">Morning</option><option value="Evening">Evening</option></select></div>
+<div class="form-group"><label for="milkType">Milk Type</label><select id="milkType"><option value="Cow">Cow Milk</option><option value="Buffalo">Buffalo Milk</option><option value="Mixed">Mixed Milk</option></select></div>
+<div class="form-group"><label for="quantity">Milk Quantity (Liter)</label><input type="number" id="quantity" min="0" step="0.01" placeholder="जैसे 5.5"></div>
+<div class="form-group"><label for="rate">Rate Per Liter</label><input type="number" id="rate" min="0" step="0.01" placeholder="₹ प्रति लीटर"></div>
+<div class="form-group"><label for="total">Total Amount</label><input type="number" id="total" readonly></div>
+<div class="form-group"><label for="paid">Paid Amount</label><input type="number" id="paid" min="0" step="0.01" placeholder="प्राप्त राशि"></div>
+<div class="form-group"><label for="due">Due Amount</label><input type="number" id="due" readonly></div>
+</div>
+<div class="button-row">
+<button id="saveBtn" type="button">💾 Save Milk Record</button>
+<button id="clearBtn" type="button">Clear Form</button>
+</div>
+</section>
+
+<section class="table-box">
+<h2>📅 Monthly Report / Filter</h2>
+<div class="form-grid">
+<div class="form-group"><label for="monthFilter">Select Month</label><input type="month" id="monthFilter"></div>
+</div>
+<div class="button-row">
+<button type="button" id="showMonthBtn" class="print-btn">Show Monthly Report</button>
+<button type="button" id="showAllBtn" class="excel-btn">Show All Records</button>
+</div>
+</section>
+
+<section class="table-box">
+<h2>Customer-wise Milk Total</h2>
+<div class="search-box"><input type="search" id="ledgerSearch" placeholder="ग्राहक के नाम या मोबाइल से खोजें..."></div>
+<div class="table-responsive">
+<table id="ledgerTable">
+<thead><tr>
+<th>Customer</th><th>Mobile</th><th>Records</th><th>Total Milk</th><th>Total Amount</th><th>Total Paid</th><th>Total Due</th><th class="action-column">Action</th>
+</tr></thead>
+<tbody><tr><td colspan="8">Ledger loading...</td></tr></tbody>
+</table>
+</div>
+</section>
+
+<section class="table-box">
+<h2>Milk Records</h2>
+<div id="activeCustomerNote" class="active-note"></div>
+<div class="search-box"><input type="search" id="search" placeholder="नाम, मोबाइल, तारीख या शिफ्ट से खोजें..."></div>
+<div class="button-row">
+<button type="button" class="print-btn" onclick="printMilkDiary()">🖨 Print Diary</button>
+<button type="button" class="excel-btn" id="excelBtn">📊 Export Excel</button>
+</div>
+<div class="table-responsive">
+<table id="milkTable">
+<thead><tr>
+<th>Date</th><th>Customer</th><th>Mobile</th><th>Shift</th><th>Milk Type</th><th>Quantity</th><th>Rate</th><th>Total</th><th>Paid</th><th>Due</th><th class="action-column">Action</th>
+</tr></thead>
+<tbody><tr><td colspan="11">Milk records loading...</td></tr></tbody>
+</table>
+</div>
+</section>
+</main>
+<script type="module" src="milk-diary.js"></script>
+</body>
+</html>
