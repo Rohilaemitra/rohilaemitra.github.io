@@ -3,207 +3,438 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ID Print - Rohila E-Mitra</title>
+<title>Smart ID Print | ROHILA E-MITRA CENTER</title>
 <style>
-  *{box-sizing:border-box}
-  body{margin:0;font-family:Arial,sans-serif;background:#f3f6fb;color:#111827}
-  .wrap{max-width:1100px;margin:auto;padding:16px}
-  .head{background:linear-gradient(135deg,#0f766e,#16a34a);color:#fff;padding:20px;border-radius:16px;margin-bottom:14px}
-  .head h1{margin:0 0 6px;font-size:28px}
-  .head p{margin:0}
-  .grid{display:grid;grid-template-columns:350px 1fr;gap:14px}
-  .card{background:#fff;border:1px solid #dbe2ea;border-radius:16px;padding:14px;box-shadow:0 6px 18px rgba(0,0,0,.06)}
-  label{display:block;font-weight:700;margin:10px 0 6px}
-  input,select,button{width:100%;padding:11px;border:1px solid #dbe2ea;border-radius:10px;font-size:15px}
-  button{border:0;font-weight:800;cursor:pointer}
-  .blue{background:#2563eb;color:#fff}.green{background:#16a34a;color:#fff}.red{background:#dc2626;color:#fff}.gray{background:#eef2f7}
-  .row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-  .tools{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
-  .range{display:grid;grid-template-columns:80px 1fr 45px;gap:8px;align-items:center;margin:8px 0}
-  .range input{padding:0}
-  .small{font-size:12px;color:#667085}
-  .previewBox{background:#e9eef5;border-radius:14px;padding:10px;overflow:auto;min-height:620px}
-  .sheet{width:210mm;height:297mm;background:#fff;margin:0 auto;position:relative;box-shadow:0 3px 14px rgba(0,0,0,.18)}
-  .cards{position:absolute;top:25mm;left:15mm;right:15mm;display:flex;gap:10mm;flex-wrap:wrap}
-  .idcard{width:85.6mm;height:53.98mm;border:1px solid #bbb;overflow:hidden;position:relative;background:#fafafa}
-  .idcard img{width:100%;height:100%;object-fit:cover;display:block;transform-origin:center center}
-  .empty{height:100%;display:flex;align-items:center;justify-content:center;text-align:center;color:#94a3b8;font-weight:700;padding:15px}
-  .tag{position:absolute;left:5px;bottom:5px;background:rgba(0,0,0,.55);color:white;padding:3px 6px;border-radius:4px;font-size:11px}
-  .mode{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
-  .mode button.active{outline:3px solid #86efac}
-  @media(max-width:820px){
-    .grid{grid-template-columns:1fr}
-    .previewBox{min-height:420px}
-    .sheet{transform:scale(.55);transform-origin:top center;margin-bottom:-130mm}
-  }
-  @media(max-width:480px){
-    .sheet{transform:scale(.42);margin-bottom:-173mm}
-    .row{grid-template-columns:1fr}
-  }
-  @media print{
-    body{background:#fff}
-    .head,.controls,.small{display:none!important}
-    .wrap,.card,.previewBox{margin:0;padding:0;border:0;box-shadow:none;background:#fff;max-width:none}
-    .grid{display:block}
-    .sheet{width:210mm;height:297mm;margin:0;box-shadow:none;transform:none!important}
-    .tag{display:none}
-    @page{size:A4 portrait;margin:0}
-  }
+:root{
+  --bg:#eef3f8;--panel:#fff;--ink:#152033;--muted:#6b7280;--line:#d9e1ea;
+  --navy:#062b5c;--blue:#0b63ce;--green:#118a4e;--orange:#ff8a00;--red:#dc2626;
+  --shadow:0 10px 28px rgba(10,39,73,.10)
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:Arial,"Noto Sans Devanagari",sans-serif;background:var(--bg);color:var(--ink)}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.app{max-width:1220px;margin:auto;padding:14px}
+.top{
+  background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;border-radius:18px;
+  padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;
+  box-shadow:var(--shadow)
+}
+.top h1{font-size:25px;margin:0}.top p{margin:4px 0 0;opacity:.9;font-size:14px}
+.pill{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.26);padding:9px 12px;border-radius:999px;font-weight:800}
+
+.grid{display:grid;grid-template-columns:390px 1fr;gap:14px;margin-top:14px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+.pad{padding:14px}
+.step{display:flex;align-items:center;gap:8px;font-weight:900;color:var(--navy);margin-bottom:10px}
+.step b{width:27px;height:27px;border-radius:50%;display:grid;place-items:center;background:var(--navy);color:#fff;font-size:13px}
+
+.types{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.typeBtn,.softBtn,.modeBtn{
+  border:1px solid var(--line);background:#f8fafc;color:var(--ink);border-radius:10px;padding:10px 7px;font-weight:800
+}
+.typeBtn.active,.modeBtn.active{background:#e9f2ff;border-color:#7fb2f4;color:#0b4e9f}
+
+.toggleRow{display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding:10px;background:#f8fafc;border:1px solid var(--line);border-radius:10px}
+.switch{position:relative;width:48px;height:26px;background:#cbd5e1;border-radius:999px;transition:.2s}
+.switch:after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.switch.on{background:var(--green)}.switch.on:after{left:25px}
+
+.dropgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.drop{
+  min-height:135px;border:2px dashed #b8c5d5;border-radius:12px;background:#f8fbff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px;position:relative;overflow:hidden
+}
+.drop.drag{border-color:var(--blue);background:#edf5ff}
+.drop input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.drop .ico{font-size:29px}.drop strong{margin-top:6px}.drop small{color:var(--muted);margin-top:3px}
+.thumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
+.drop.has .thumb{display:block}.drop.has .hint{display:none}
+.sideTools{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.sideTools button{border:0;border-radius:9px;padding:9px;font-weight:800}
+.adjustBtn{background:#eaf4ff;color:#0b4e9f}.clearSide{background:#fff1f2;color:#b91c1c}
+
+.queueBar{display:flex;gap:7px;flex-wrap:wrap}
+.queueBar button{border:1px solid var(--line);background:#fff;border-radius:9px;padding:8px 10px;font-weight:800}
+.queueBar .danger{color:#b91c1c}
+.counter{margin-left:auto;background:#eff6ff;color:#0b4e9f;padding:8px 10px;border-radius:9px;font-weight:900}
+
+.export{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.export button{border:0;border-radius:10px;padding:11px 8px;font-weight:900}
+.jpg{background:#e0f2fe;color:#075985}.pdf{background:#fff1f2;color:#be123c}.print{background:var(--green);color:white}
+.printall{margin-top:8px;width:100%;border:0;border-radius:10px;padding:11px;background:var(--navy);color:#fff;font-weight:900}
+
+.note{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.45}
+
+.previewPanel{padding:12px}
+.previewHead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:9px;flex-wrap:wrap}
+.previewHead strong{color:var(--navy)}
+.zoomCtl{display:flex;gap:6px;align-items:center}.zoomCtl button{width:34px;height:32px;border:1px solid var(--line);background:#fff;border-radius:8px;font-weight:900}.zoomCtl span{min-width:48px;text-align:center;font-weight:800}
+.previewOuter{background:#dfe6ef;border-radius:14px;padding:14px;overflow:auto;min-height:735px}
+.sheet{
+  width:210mm;height:297mm;background:#fff;margin:0 auto;box-shadow:0 5px 20px rgba(0,0,0,.18);
+  position:relative;transform-origin:top center
+}
+.sheetLabel{position:absolute;top:7mm;left:0;right:0;text-align:center;color:#9aa5b1;font-size:10px}
+.cards{position:absolute;top:23mm;left:14mm;right:14mm;display:flex;gap:8mm;flex-wrap:wrap;align-items:flex-start}
+.cardbox{
+  width:85.6mm;height:53.98mm;position:relative;overflow:hidden;background:#fafafa;border:.25mm solid #aeb8c4
+}
+.cardbox.a4{width:182mm;height:257mm}
+.cardbox img{width:100%;height:100%;object-fit:cover;display:block;transform-origin:center center}
+.cardEmpty{width:100%;height:100%;display:grid;place-items:center;text-align:center;color:#9aa5b1;padding:10mm;font-weight:800}
+.tag{position:absolute;left:2mm;bottom:2mm;background:rgba(0,0,0,.56);color:#fff;border-radius:4px;padding:1mm 2mm;font-size:8pt}
+
+.pageNav{display:flex;gap:6px;align-items:center;justify-content:center;margin-top:10px;flex-wrap:wrap}
+.pageNav button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 10px;font-weight:800}
+.pageNav button.active{background:var(--navy);color:#fff}
+
+.modal{position:fixed;inset:0;background:rgba(4,18,38,.72);z-index:200;display:none;align-items:center;justify-content:center;padding:14px}
+.modal.open{display:flex}
+.modalBox{width:min(930px,100%);max-height:94vh;overflow:auto;background:#fff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.modalTop{padding:13px 15px;background:var(--navy);color:#fff;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:3}
+.modalTop button{border:0;background:rgba(255,255,255,.15);color:#fff;border-radius:8px;padding:7px 10px;font-weight:900}
+.modalBody{display:grid;grid-template-columns:1fr 310px;gap:12px;padding:12px}
+.cropStage{background:#111827;border-radius:12px;min-height:500px;display:grid;place-items:center;padding:18px;overflow:hidden}
+.cropFrame{width:85.6mm;height:53.98mm;overflow:hidden;position:relative;background:#fff;border:2px solid #fff;box-shadow:0 0 0 2px rgba(255,255,255,.25)}
+.cropFrame.a4{width:min(100%,182mm);height:70vh}
+.cropFrame img{width:100%;height:100%;object-fit:cover;display:block;transform-origin:center center}
+.controlBox{border:1px solid var(--line);border-radius:12px;padding:12px}
+.controlBox h3{margin:0 0 8px;color:var(--navy)}
+.mode3{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.slider{display:grid;grid-template-columns:82px 1fr 42px;gap:7px;align-items:center;margin:10px 0}
+.slider span{font-size:12px;font-weight:800}.slider b{text-align:right;font-size:12px}
+.slider input{width:100%}
+.modalBtns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.modalBtns button{border:0;border-radius:9px;padding:10px;font-weight:900}
+.reset{background:#eef2f7}.done{background:var(--green);color:#fff}
+
+.hiddenPrint{display:none}
+@media(max-width:900px){
+  .grid{grid-template-columns:1fr}
+  .previewOuter{min-height:500px}
+  .sheet{transform:scale(.55);margin-bottom:-132mm}
+  .modalBody{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .types{grid-template-columns:1fr 1fr}
+  .dropgrid{grid-template-columns:1fr}
+  .sheet{transform:scale(.42);margin-bottom:-172mm}
+  .export{grid-template-columns:1fr}
+  .modalBody{padding:8px}
+  .cropStage{min-height:330px}
+  .cropFrame{transform:scale(.78)}
+}
+@media print{
+  body{background:#fff}
+  .top,.grid,.modal{display:none!important}
+  .hiddenPrint{display:block!important}
+  .printSheet{width:210mm;height:297mm;position:relative;background:#fff;page-break-after:always}
+  .printSheet:last-child{page-break-after:auto}
+  .printCards{position:absolute;top:23mm;left:14mm;right:14mm;display:flex;gap:8mm;flex-wrap:wrap}
+  .printCard{width:85.6mm;height:53.98mm;overflow:hidden;position:relative;border:.25mm solid #aaa}
+  .printCard.a4{width:182mm;height:257mm}
+  .printCard img{width:100%;height:100%;object-fit:cover;transform-origin:center center;display:block}
+  @page{size:A4 portrait;margin:0}
+}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="head">
-    <h1>🪪 ID Print</h1>
-    <p>Front + Back फोटो लगाएँ, size/position ठीक करें और A4 पर print करें।</p>
+<div class="app">
+  <div class="top">
+    <div><h1>ROHILA SMART ID PRINT SUITE</h1><p>ID card, A4 scan, front/back crop, page queue और print — एक ही जगह।</p></div>
+    <div class="pill">Free Shop Tool</div>
   </div>
 
   <div class="grid">
-    <div class="card controls">
-      <label>Front Photo</label>
-      <input id="frontFile" type="file" accept="image/*">
-
-      <label>Back Photo</label>
-      <input id="backFile" type="file" accept="image/*">
-
-      <div class="row">
-        <div>
-          <label>Card Width (mm)</label>
-          <input id="cardW" type="number" value="85.6" step="0.1">
+    <div>
+      <div class="panel pad">
+        <div class="step"><b>1</b> Select Type</div>
+        <div class="types">
+          <button class="typeBtn active" data-type="id">ID Card</button>
+          <button class="typeBtn" data-type="a4">A4 Page</button>
+          <button class="typeBtn" data-type="pvc">PVC</button>
+          <button class="typeBtn" data-type="custom">Custom</button>
         </div>
-        <div>
-          <label>Card Height (mm)</label>
-          <input id="cardH" type="number" value="53.98" step="0.1">
+        <div id="customBox" style="display:none;margin-top:9px" class="dropgrid">
+          <input id="customW" type="number" value="85.6" step=".1" placeholder="Width mm" style="padding:10px;border:1px solid var(--line);border-radius:9px">
+          <input id="customH" type="number" value="53.98" step=".1" placeholder="Height mm" style="padding:10px;border:1px solid var(--line);border-radius:9px">
+        </div>
+        <div class="toggleRow">
+          <span><b>Single Side Mode</b><br><small style="color:var(--muted)">Back side hide करें</small></span>
+          <div id="singleSwitch" class="switch"></div>
         </div>
       </div>
 
-      <label>किस side को adjust करना है?</label>
-      <select id="side">
-        <option value="front">Front</option>
-        <option value="back">Back</option>
-      </select>
-
-      <div class="range"><span>Zoom</span><input id="zoom" type="range" min="80" max="220" value="100"><b id="zoomV">100%</b></div>
-      <div class="range"><span>Rotate</span><input id="rot" type="range" min="-180" max="180" value="0"><b id="rotV">0°</b></div>
-      <div class="range"><span>Left/Right</span><input id="x" type="range" min="-40" max="40" value="0"><b id="xV">0</b></div>
-      <div class="range"><span>Up/Down</span><input id="y" type="range" min="-40" max="40" value="0"><b id="yV">0</b></div>
-
-      <label>Layout</label>
-      <select id="layout">
-        <option value="both">Front + Back</option>
-        <option value="front">Front only</option>
-        <option value="back">Back only</option>
-        <option value="twofront">2 × Front</option>
-        <option value="twoback">2 × Back</option>
-      </select>
-
-      <label>Print Mode</label>
-      <div class="mode">
-        <button id="colorBtn" class="green active" type="button">Color</button>
-        <button id="bwBtn" class="gray" type="button">B&W</button>
+      <div class="panel pad" style="margin-top:12px">
+        <div class="step"><b>2</b> Scan Documents</div>
+        <div class="dropgrid">
+          <div>
+            <div class="drop" id="frontDrop">
+              <input id="frontFile" type="file" accept="image/*">
+              <img class="thumb" id="frontThumb">
+              <div class="hint"><div class="ico">🪪</div><strong>Front Side</strong><small>Click या drag photo</small></div>
+            </div>
+            <div class="sideTools">
+              <button class="adjustBtn" data-side="front">ADJUST SCAN</button>
+              <button class="clearSide" data-side="front">CLEAR</button>
+            </div>
+          </div>
+          <div id="backBlock">
+            <div class="drop" id="backDrop">
+              <input id="backFile" type="file" accept="image/*">
+              <img class="thumb" id="backThumb">
+              <div class="hint"><div class="ico">🪪</div><strong>Back Side</strong><small>Click या drag photo</small></div>
+            </div>
+            <div class="sideTools">
+              <button class="adjustBtn" data-side="back">ADJUST SCAN</button>
+              <button class="clearSide" data-side="back">CLEAR</button>
+            </div>
+          </div>
+        </div>
+        <div class="note">Front और Back दोनों image select कर सकते हैं। हर side को अलग adjust करें।</div>
       </div>
 
-      <div class="tools">
-        <button id="fitBtn" class="blue" type="button">Auto Fit</button>
-        <button id="swapBtn" class="gray" type="button">Swap</button>
-        <button id="printBtn" class="green" type="button">Print A4</button>
-        <button id="clearBtn" class="red" type="button">Clear</button>
+      <div class="panel pad" style="margin-top:12px">
+        <div class="step"><b>3</b> Queue Page <span id="pageTitle">1</span></div>
+        <div class="queueBar">
+          <button id="addPage">ADD PAGE</button>
+          <button id="deletePage" class="danger">DELETE PAGE</button>
+          <button id="viewPages">VIEW PAGES</button>
+          <button id="resetAll">RESET</button>
+          <span class="counter" id="queueCount">1 Page</span>
+        </div>
+        <div class="pageNav" id="pageNav"></div>
       </div>
 
-      <p class="small">Tip: Print dialog में Scale = 100% / Actual Size रखें।</p>
+      <div class="panel pad" style="margin-top:12px">
+        <div class="step"><b>4</b> Export & Print</div>
+        <div class="export">
+          <button class="jpg" id="jpgBtn">JPG</button>
+          <button class="pdf" id="pdfBtn">PDF</button>
+          <button class="print" id="printBtn">PRINT</button>
+        </div>
+        <button class="printall" id="printAllBtn">PRINT ALL PAGES</button>
+        <div class="note">PDF button browser print dialog खोलता है — वहाँ “Save as PDF” चुनें। Print में Scale 100% / Actual Size रखें।</div>
+      </div>
     </div>
 
-    <div class="card">
-      <div class="previewBox">
-        <div class="sheet">
-          <div id="cards" class="cards"></div>
+    <div class="panel previewPanel">
+      <div class="previewHead">
+        <strong>Preview</strong>
+        <div class="zoomCtl"><button id="zoomOut">−</button><span id="previewZoom">100%</span><button id="zoomIn">+</button></div>
+      </div>
+      <div class="previewOuter" id="previewOuter">
+        <div class="sheet" id="sheet">
+          <div class="sheetLabel">A4 PREVIEW</div>
+          <div class="cards" id="cards"></div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
+<div class="modal" id="modal">
+  <div class="modalBox">
+    <div class="modalTop"><strong id="modalTitle">ADJUST SCAN</strong><button id="closeModal">✕</button></div>
+    <div class="modalBody">
+      <div class="cropStage"><div class="cropFrame" id="cropFrame"><img id="cropImg"></div></div>
+      <div class="controlBox">
+        <h3>Crop, color और clarity</h3>
+        <div class="mode3">
+          <button class="modeBtn active" data-filter="orig">Orig</button>
+          <button class="modeBtn" data-filter="natural">Natural</button>
+          <button class="modeBtn" data-filter="bw">B&W</button>
+        </div>
+        <div class="slider"><span>Zoom</span><input id="mZoom" type="range" min="70" max="300" value="100"><b id="mZoomV">100</b></div>
+        <div class="slider"><span>Left/Right</span><input id="mX" type="range" min="-60" max="60" value="0"><b id="mXV">0</b></div>
+        <div class="slider"><span>Up/Down</span><input id="mY" type="range" min="-60" max="60" value="0"><b id="mYV">0</b></div>
+        <div class="slider"><span>Rotate</span><input id="mRot" type="range" min="-180" max="180" value="0"><b id="mRotV">0</b></div>
+        <div class="slider"><span>Brightness</span><input id="mBright" type="range" min="-50" max="50" value="0"><b id="mBrightV">0</b></div>
+        <div class="slider"><span>Contrast</span><input id="mContrast" type="range" min="-50" max="50" value="0"><b id="mContrastV">0</b></div>
+        <div class="modalBtns"><button class="reset" id="resetAdjust">RESET</button><button class="done" id="confirmAdjust">CONFIRM SCAN</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="hiddenPrint" id="printArea"></div>
+
 <script>
-const S={
-  front:{url:"",z:100,r:0,x:0,y:0},
-  back:{url:"",z:100,r:0,x:0,y:0},
-  bw:false
+const $=id=>document.getElementById(id);
+const blankSide=()=>({url:"",name:"",z:100,x:0,y:0,r:0,bright:0,contrast:0,filter:"orig"});
+let appState={
+  type:"id", single:false, customW:85.6, customH:53.98,
+  pages:[{front:blankSide(),back:blankSide()}], current:0, previewScale:1
 };
-const q=id=>document.getElementById(id);
-const controls=["zoom","rot","x","y"];
+let adjustSide="front", tempAdjust=null;
 
-function loadFile(side,file){
-  if(S[side].url) URL.revokeObjectURL(S[side].url);
-  S[side]={url:file?URL.createObjectURL(file):"",z:100,r:0,x:0,y:0};
-  sync(); render();
+function cloneSide(s){return {...s}}
+function currentPage(){return appState.pages[appState.current]}
+function dims(){
+  if(appState.type==="a4") return {w:182,h:257,a4:true};
+  if(appState.type==="custom") return {w:Math.max(20,+$("customW").value||85.6),h:Math.max(20,+$("customH").value||53.98),a4:false};
+  return {w:85.6,h:53.98,a4:false};
 }
-q("frontFile").onchange=e=>loadFile("front",e.target.files[0]);
-q("backFile").onchange=e=>loadFile("back",e.target.files[0]);
-
-function current(){return S[q("side").value]}
-function sync(){
-  const s=current();
-  q("zoom").value=s.z; q("rot").value=s.r; q("x").value=s.x; q("y").value=s.y;
-  q("zoomV").textContent=s.z+"%"; q("rotV").textContent=s.r+"°";
-  q("xV").textContent=s.x; q("yV").textContent=s.y;
+function filterCss(s){
+  let arr=[];
+  if(s.filter==="bw") arr.push("grayscale(100%)");
+  if(s.filter==="natural") arr.push("saturate(1.05)");
+  arr.push("brightness("+(100+s.bright)+"%)");
+  arr.push("contrast("+(100+s.contrast)+"%)");
+  return arr.join(" ");
 }
-q("side").onchange=sync;
+function imgStyle(s){
+  return "transform:translate("+s.x+"%,"+s.y+"%) scale("+(s.z/100)+") rotate("+s.r+"deg);filter:"+filterCss(s);
+}
+function cardHTML(side,label,print=false){
+  const s=currentPage()[side], d=dims();
+  const cls=d.a4?"cardbox a4":"cardbox";
+  const style="width:"+d.w+"mm;height:"+d.h+"mm";
+  if(!s.url) return '<div class="'+cls+'" style="'+style+'"><div class="cardEmpty">'+label+'<br>Photo select करें</div></div>';
+  return '<div class="'+cls+'" style="'+style+'"><img src="'+s.url+'" style="'+imgStyle(s)+'"><span class="tag">'+label+'</span></div>';
+}
+function render(){
+  const p=currentPage(), d=dims();
+  $("backBlock").style.display=appState.single?"none":"block";
+  let h="";
+  if(d.a4){
+    h=cardHTML("front","A4");
+  }else{
+    h+=cardHTML("front","FRONT");
+    if(!appState.single) h+=cardHTML("back","BACK");
+  }
+  $("cards").innerHTML=h;
+  $("pageTitle").textContent=appState.current+1;
+  $("queueCount").textContent=appState.pages.length+" Page"+(appState.pages.length>1?"s":"");
+  renderPageNav();
+  updateThumbs();
+}
+function renderPageNav(){
+  $("pageNav").innerHTML=appState.pages.map((_,i)=>'<button data-page="'+i+'" class="'+(i===appState.current?'active':'')+'">P'+(i+1)+'</button>').join("");
+  $("pageNav").querySelectorAll("button").forEach(b=>b.onclick=()=>{appState.current=+b.dataset.page;render();});
+}
+function updateThumbs(){
+  ["front","back"].forEach(side=>{
+    const s=currentPage()[side], drop=$(side+"Drop"), th=$(side+"Thumb");
+    if(s.url){th.src=s.url;drop.classList.add("has")}else{th.removeAttribute("src");drop.classList.remove("has")}
+  });
+}
+function setFile(side,file){
+  if(!file) return;
+  const s=currentPage()[side];
+  if(s.url && s.url.startsWith("blob:")) URL.revokeObjectURL(s.url);
+  currentPage()[side]={...blankSide(),url:URL.createObjectURL(file),name:file.name};
+  render(); openAdjust(side);
+}
+function bindDrop(side){
+  const drop=$(side+"Drop"), inp=$(side+"File");
+  inp.onchange=e=>setFile(side,e.target.files[0]);
+  ["dragenter","dragover"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add("drag")}));
+  ["dragleave","drop"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove("drag")}));
+  drop.addEventListener("drop",e=>{const f=e.dataTransfer.files[0];if(f&&f.type.startsWith("image/"))setFile(side,f)});
+}
+bindDrop("front");bindDrop("back");
 
-controls.forEach(id=>{
-  q(id).oninput=()=>{
-    const s=current();
-    s.z=+q("zoom").value; s.r=+q("rot").value; s.x=+q("x").value; s.y=+q("y").value;
-    sync(); render();
-  };
+document.querySelectorAll(".typeBtn").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll(".typeBtn").forEach(x=>x.classList.remove("active"));b.classList.add("active");
+  appState.type=b.dataset.type;$("customBox").style.display=appState.type==="custom"?"grid":"none";render();
+});
+$("customW").oninput=$("customH").oninput=render;
+$("singleSwitch").onclick=()=>{appState.single=!appState.single;$("singleSwitch").classList.toggle("on",appState.single);render()};
+
+document.querySelectorAll(".adjustBtn").forEach(b=>b.onclick=()=>openAdjust(b.dataset.side));
+document.querySelectorAll(".clearSide").forEach(b=>b.onclick=()=>{
+  const side=b.dataset.side,s=currentPage()[side];if(s.url&&s.url.startsWith("blob:"))URL.revokeObjectURL(s.url);
+  currentPage()[side]=blankSide();$(side+"File").value="";render();
 });
 
-function card(side,label){
-  const s=S[side], w=+q("cardW").value||85.6, h=+q("cardH").value||53.98;
-  if(!s.url){
-    return '<div class="idcard" style="width:'+w+'mm;height:'+h+'mm"><div class="empty">'+label+' photo चुनें</div></div>';
-  }
-  const filter=S.bw?'grayscale(100%)':'none';
-  const tr='translate('+s.x+'%,'+s.y+'%) scale('+(s.z/100)+') rotate('+s.r+'deg)';
-  return '<div class="idcard" style="width:'+w+'mm;height:'+h+'mm"><img src="'+s.url+'" style="transform:'+tr+';filter:'+filter+'"><span class="tag">'+label+'</span></div>';
+function openAdjust(side){
+  const s=currentPage()[side];if(!s.url){alert(side==="front"?"पहले Front photo चुनें।":"पहले Back photo चुनें।");return}
+  adjustSide=side;tempAdjust=cloneSide(s);$("modalTitle").textContent="ADJUST SCAN — "+side.toUpperCase();
+  syncModal();$("modal").classList.add("open");
 }
-
-function render(){
-  const m=q("layout").value;
-  let h="";
-  if(m==="both") h=card("front","Front")+card("back","Back");
-  if(m==="front") h=card("front","Front");
-  if(m==="back") h=card("back","Back");
-  if(m==="twofront") h=card("front","Front")+card("front","Front");
-  if(m==="twoback") h=card("back","Back")+card("back","Back");
-  q("cards").innerHTML=h;
+function syncModal(){
+  const s=tempAdjust,d=dims();$("cropImg").src=s.url;
+  $("cropFrame").classList.toggle("a4",d.a4);if(!d.a4){$("cropFrame").style.width=d.w+"mm";$("cropFrame").style.height=d.h+"mm"}
+  ["Zoom","X","Y","Rot","Bright","Contrast"].forEach(k=>{});
+  $("mZoom").value=s.z;$("mX").value=s.x;$("mY").value=s.y;$("mRot").value=s.r;$("mBright").value=s.bright;$("mContrast").value=s.contrast;
+  updateModalView();
+  document.querySelectorAll(".modeBtn").forEach(b=>b.classList.toggle("active",b.dataset.filter===s.filter));
 }
-q("layout").onchange=render;
-q("cardW").oninput=render;
-q("cardH").oninput=render;
+function updateModalView(){
+  const s=tempAdjust;
+  $("mZoomV").textContent=s.z;$("mXV").textContent=s.x;$("mYV").textContent=s.y;$("mRotV").textContent=s.r;$("mBrightV").textContent=s.bright;$("mContrastV").textContent=s.contrast;
+  $("cropImg").style.cssText=imgStyle(s);
+}
+[["mZoom","z"],["mX","x"],["mY","y"],["mRot","r"],["mBright","bright"],["mContrast","contrast"]].forEach(([id,key])=>{
+  $(id).oninput=()=>{tempAdjust[key]=+$(id).value;updateModalView()}
+});
+document.querySelectorAll(".modeBtn").forEach(b=>b.onclick=()=>{tempAdjust.filter=b.dataset.filter;document.querySelectorAll(".modeBtn").forEach(x=>x.classList.remove("active"));b.classList.add("active");updateModalView()});
+$("resetAdjust").onclick=()=>{const u=tempAdjust.url,n=tempAdjust.name;tempAdjust={...blankSide(),url:u,name:n};syncModal()};
+$("confirmAdjust").onclick=()=>{currentPage()[adjustSide]=cloneSide(tempAdjust);$("modal").classList.remove("open");render()};
+$("closeModal").onclick=()=>$("modal").classList.remove("open");
+$("modal").addEventListener("click",e=>{if(e.target===$("modal"))$("modal").classList.remove("open")});
 
-q("fitBtn").onclick=()=>{
-  ["front","back"].forEach(k=>{S[k].z=100;S[k].r=0;S[k].x=0;S[k].y=0});
-  sync();render();
+$("addPage").onclick=()=>{
+  if(appState.pages.length>=10){alert("एक साथ 10 pages तक रखें।");return}
+  appState.pages.push({front:blankSide(),back:blankSide()});appState.current=appState.pages.length-1;render();
 };
-q("swapBtn").onclick=()=>{
-  const t=S.front;S.front=S.back;S.back=t;render();sync();
+$("deletePage").onclick=()=>{
+  if(appState.pages.length===1){appState.pages=[{front:blankSide(),back:blankSide()}];appState.current=0;render();return}
+  appState.pages.splice(appState.current,1);appState.current=Math.max(0,appState.current-1);render();
 };
-q("colorBtn").onclick=()=>{
-  S.bw=false;q("colorBtn").classList.add("active");q("bwBtn").classList.remove("active");render();
+$("viewPages").onclick=()=>{document.querySelector(".previewOuter").scrollIntoView({behavior:"smooth",block:"start"})};
+$("resetAll").onclick=()=>{
+  if(!confirm("सभी pages और photos clear करें?"))return;
+  appState.pages=[{front:blankSide(),back:blankSide()}];appState.current=0;render();
 };
-q("bwBtn").onclick=()=>{
-  S.bw=true;q("bwBtn").classList.add("active");q("colorBtn").classList.remove("active");render();
+
+$("zoomIn").onclick=()=>{appState.previewScale=Math.min(1.25,appState.previewScale+.1);applyPreviewScale()};
+$("zoomOut").onclick=()=>{appState.previewScale=Math.max(.35,appState.previewScale-.1);applyPreviewScale()};
+function applyPreviewScale(){$("sheet").style.transform="scale("+appState.previewScale+")";$("previewZoom").textContent=Math.round(appState.previewScale*100)+"%"}
+
+function loadImage(url){return new Promise((res,rej)=>{const im=new Image();im.onload=()=>res(im);im.onerror=rej;im.src=url})}
+async function drawSide(ctx,s,xmm,ymm,wmm,hmm,scale){
+  if(!s.url)return;
+  const im=await loadImage(s.url),x=xmm*scale,y=ymm*scale,w=wmm*scale,h=hmm*scale;
+  ctx.save();ctx.beginPath();ctx.rect(x,y,w,h);ctx.clip();
+  ctx.translate(x+w/2+(s.x/100)*w,y+h/2+(s.y/100)*h);
+  ctx.rotate(s.r*Math.PI/180);
+  const z=s.z/100,fit=Math.max(w/im.width,h/im.height)*z;
+  const dw=im.width*fit,dh=im.height*fit;
+  ctx.filter=filterCss(s);ctx.drawImage(im,-dw/2,-dh/2,dw,dh);ctx.restore();
+  ctx.strokeStyle="#999";ctx.lineWidth=1;ctx.strokeRect(x,y,w,h);
+}
+async function makeCanvas(page){
+  const scale=6, canvas=document.createElement("canvas");canvas.width=210*scale;canvas.height=297*scale;
+  const ctx=canvas.getContext("2d");ctx.fillStyle="#fff";ctx.fillRect(0,0,canvas.width,canvas.height);
+  const d=dims();
+  if(d.a4){await drawSide(ctx,page.front,14,23,d.w,d.h,scale)}
+  else{await drawSide(ctx,page.front,14,23,d.w,d.h,scale);if(!appState.single)await drawSide(ctx,page.back,14+d.w+8,23,d.w,d.h,scale)}
+  return canvas;
+}
+$("jpgBtn").onclick=async()=>{
+  const c=await makeCanvas(currentPage()),a=document.createElement("a");
+  a.href=c.toDataURL("image/jpeg",.95);a.download="rohila-id-print-page-"+(appState.current+1)+".jpg";a.click();
 };
-q("printBtn").onclick=()=>window.print();
-q("clearBtn").onclick=()=>{
-  ["front","back"].forEach(k=>{if(S[k].url)URL.revokeObjectURL(S[k].url);S[k]={url:"",z:100,r:0,x:0,y:0}});
-  q("frontFile").value="";q("backFile").value="";
-  q("layout").value="both";q("side").value="front";S.bw=false;
-  q("colorBtn").classList.add("active");q("bwBtn").classList.remove("active");
-  sync();render();
-};
-window.onbeforeunload=()=>["front","back"].forEach(k=>{if(S[k].url)URL.revokeObjectURL(S[k].url)});
-sync();render();
+function printMarkup(page){
+  const d=dims();
+  const mk=(s)=>{
+    if(!s.url)return "";
+    return '<div class="printCard '+(d.a4?'a4':'')+'" style="width:'+d.w+'mm;height:'+d.h+'mm"><img src="'+s.url+'" style="'+imgStyle(s)+'"></div>';
+  };
+  return '<div class="printSheet"><div class="printCards">'+mk(page.front)+(!appState.single&&!d.a4?mk(page.back):"")+'</div></div>';
+}
+function preparePrint(all){
+  const pages=all?appState.pages:[currentPage()];
+  $("printArea").innerHTML=pages.map(printMarkup).join("");
+}
+$("printBtn").onclick=()=>{preparePrint(false);setTimeout(()=>window.print(),80)};
+$("pdfBtn").onclick=()=>{preparePrint(false);setTimeout(()=>window.print(),80)};
+$("printAllBtn").onclick=()=>{preparePrint(true);setTimeout(()=>window.print(),80)};
+render();
 </script>
 </body>
 </html>
