@@ -9,7 +9,7 @@ ZIP extract करें और सभी files GitHub repository के root �
 3. Firestore और Storage rules के लिए firestore.rules और storage.rules की सामग्री Firebase Console में publish करें.
 
 ## जरूरी बदलाव
-index.html में 919999999999 को अपने WhatsApp नंबर से बदलना है.
+index.html में 919772240449 को अपने WhatsApp नंबर से बदलना है.
 forms.js में # की जगह अपनी PDF file path दें, जैसे assets/forms/aadhaar.pdf.
 
 इस package में appointment, customers और notice की अलग files नहीं रखी गई हैं. Customer Diary मुख्य customer module है.
